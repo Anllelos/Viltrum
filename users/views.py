@@ -5,9 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 
 @login_required
-def profile(request):
+def edit_profile(request):
     data_context = {}
-    
     user_to_validate = get_object_or_404(User, id=request.user.id)
     profile_to_validate = get_object_or_404(ExtendedData, user=user_to_validate)
     upp_form = ProfilePicForm(request.POST or None, request.FILES or None, instance=profile_to_validate)
@@ -22,15 +21,19 @@ def profile(request):
     data_context['upp_form'] = upp_form
     data_context['profile'] = profile_to_validate
 
-    return render(request, 'profile.html', data_context)
+    return render(request, 'edit_profile.html', data_context)
 
 def create_user(request):
     user_form = CreateUserForm()
-    data_context = {'user_form':user_form}
+    user_extended_form = ProfilePicForm()
+    data_context = {'user_form':user_form, 'user_extended_form':user_extended_form}
     if request.method == 'POST':
         user_form = CreateUserForm(request.POST)
         if user_form.is_valid():
             user_form.save()
+            user_to_validate = User.objects.get(username=request.POST.get('username'))
+            user_extended_data = ExtendedData.objects.create(user=user_to_validate)
+            user_extended_data.save()
             return redirect('login')
     return render(request, 'register.html', data_context)
 
