@@ -20,6 +20,7 @@ from . import views
 urlpatterns = [
     path('home/', views.home, name='home'),  # Ruta para la vista home
     path('register/', views.create_user, name='register'),  # Ruta para la página de registro
+    path('profile/', views.profile, name='profile'),
     path('profile/edit', views.edit_profile, name='edit_profile'),  # Ruta para la página de editar perfil
     path('subir_stream/', views.subir_stream, name='subir_stream'),  # Ruta para subir stream
     path('subir_torneo/', views.subir_torneo, name='subir_torneo'),  # Ruta para subir torneo

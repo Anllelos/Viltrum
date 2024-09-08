@@ -4,6 +4,11 @@ from .models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 
+
+
+def profile(request):
+    return render(request, 'profile.html')
+
 @login_required
 def edit_profile(request):
     data_context = {}

@@ -13,6 +13,10 @@ body {
     min-height: 100vh;
 }
 
+main{
+    flex: 1;
+}
+
 /*--------------------------- Nav Bar -------------------------*/
 
 .header-container {

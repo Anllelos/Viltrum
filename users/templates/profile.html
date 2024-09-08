@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Viltrum">
+    <title>Editar Perfil</title>
+    {% load static %}
+    {% load extras %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/styleMyProfile.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo-container">
+                <img src="{% static 'images/ninjaviltrum.png' %}" alt="Logo" class="logo">
+            </div>
+            <nav class="nav-links">
+                <a href="{% url 'home' %}">Inicio</a>
+                <a href="#">Explorar</a>
+                <a href="#">Suscripciones</a>
+                <a href="#">Tienda</a>
+                <a href="#">Torneos</a>
+                <a href="#">Clasificaciones</a>
+                <a href="#">Equipos</a>
+            </nav>
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="auth-buttons">
+                <div class="dropdown-profile">
+                    <a href="#" aria-haspopup="true" aria-expanded="false" class="user-icon" id="userIcon">
+                        <i class="fa-solid fa-user"></i>
+                        {{ user }}
+                    </a>
+                    <div class="dropdown-content" id="dropdownMenu">
+                        <a href="{% url 'user_logout' %}">Cerrar sesión</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="profile-container">
+            <div class="profile-side-menu">
+                <a href="">Ver perfil</a>
+                <a href="">Editar perfil</a>
+                <a href="">Social</a>
+            </div>
+            <div class="profile-info">
+                <div class="profile-header">
+                    <div class="profile-banner"><img src="{% static 'images/bannerhome.gif' %}" alt="banner"></div>
+                    <div class="profile-image"><img src="{% static 'images/profile_placeholder.png' %}"
+                            alt="profile-image">
+                    </div>
+                    <div class="profile-header-info">
+                        <h2>{{user}}</h2>
+                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia perferendis amet sit natus
+                            autem ipsum vel deserunt blanditiis aliquam minus.</p>
+                    </div>
+                </div>
+                <div class="profile-body">
+                    <div class="profile-game">
+                        <img src="{% static 'images/Fortnite.png' %}" alt="game-image">
+                        <div class="profile-game-info">
+                            <h4>{{user}}</h4>
+                            <p>Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+                    <div class="profile-game">
+                        <img src="{% static 'images/LoL.png' %}" alt="game-image">
+                        <div class="profile-game-info">
+                            <h4>{{user}}</h4>
+                            <p>Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+                    <div class="profile-game">
+                        <img src="{% static 'images/Overwatch.png' %}" alt="game-image">
+                        <div class="profile-game-info">
+                            <h4>{{user}}</h4>
+                            <p>Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+                    <div class="profile-game">
+                        <img src="{% static 'images/RocketLeague.png' %}" alt="game-image">
+                        <div class="profile-game-info">
+                            <h4>{{user}}</h4>
+                            <p>Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-footer">
+                    <p>FOOTER Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias, est!</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="#">Acerca de</a>
+                <a href="#">Contacto</a>
+                <a href="#">Privacidad</a>
+                <a href="#">Términos</a>
+                <a href="#">Ayuda</a>
+            </div>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.sidebar ul li a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                // Remover la clase activa de todas las secciones y enlaces
+                document.querySelectorAll('.form-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.querySelectorAll('.sidebar ul li a').forEach(link => {
+                    link.classList.remove('active');
+                });
+
+                // Agregar la clase activa a la sección y al enlace seleccionados
+                const sectionId = this.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+                this.classList.add('active');
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var userIcon = document.getElementById('userIcon');
+            var dropdownMenu = document.getElementById('dropdownMenu');
+
+            userIcon.addEventListener('click', function (event) {
+                event.preventDefault();
+                dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+            });
+
+            document.addEventListener('click', function (event) {
+                if (!userIcon.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                    dropdownMenu.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
