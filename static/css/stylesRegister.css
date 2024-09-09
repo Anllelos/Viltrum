@@ -152,10 +152,18 @@ a:hover {
     text-decoration: underline;
 }
 
+#password-requirements{
+    display: none;
+    background-color: #444;
+    border-radius: 5px;
+}
+
 .invalid {
-    color: grey;
+    background-color: #444;
+    border-radius: 2px;
 }
 .valid {
-    color: rgb(2, 125, 240);
+    background-color: #0058db;
+    border-radius: 2px;
 }
 

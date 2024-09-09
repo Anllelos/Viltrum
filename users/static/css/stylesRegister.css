@@ -21,7 +21,8 @@ body {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     text-align: center;
     width: 100%;
-    max-width: 450px; /* Limita el ancho del contenedor */
+    max-width: 450px;
+    transition: 0.3s ease;
 }
 
 h2 {
@@ -152,10 +153,25 @@ a:hover {
     text-decoration: underline;
 }
 
-.invalid {
-    color: grey;
-}
-.valid {
-    color: rgb(2, 125, 240);
+#password-requirements, #password-confirmation{
+    display: none;
+    transition: 0.3s ease;
 }
 
+#password-requirements p, #password-confirmation p{
+    height: 25px;
+    padding: 5px;
+}
+
+.invalid {
+    background-color: #4444448e;
+    border-radius: 5px;
+}
+.valid {
+    background-color: #0058db;
+    border-radius: 3px;
+}
+
+.valid2 {
+    display: none;
+}
