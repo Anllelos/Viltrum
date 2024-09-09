@@ -50,6 +50,16 @@ body {
     align-items: center;
 }
 
+.auth-buttons .login-btn,
+.auth-buttons .register-btn {
+    color: white;
+    margin-left: 15px;
+    text-decoration: none;
+    background-color: #9147ff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
 .auth-buttons .user-icon {
     color: white;
     margin-left: 15px;
