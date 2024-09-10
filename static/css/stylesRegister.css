@@ -5,12 +5,19 @@
 
 body {
     color: white;
-    background: linear-gradient(45deg, rgb(56, 21, 39),black 60%, rgb(20, 44, 63));
+    background-color: #efeff1;
     display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
+    flex-direction: column;
     margin: 0;
+}
+
+main{
+    flex: 1;
+}
+
+.logo-container .logo {
+    max-width: 120px;
 }
 
 .login-container {
@@ -21,7 +28,10 @@ body {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     text-align: center;
     width: 100%;
-    max-width: 450px; /* Limita el ancho del contenedor */
+    max-width: 450px;
+    transition: 0.3s ease;
+    box-shadow: 1px 1px 10px black;
+    margin: 10px auto;
 }
 
 h2 {
@@ -152,18 +162,46 @@ a:hover {
     text-decoration: underline;
 }
 
-#password-requirements{
+#password-requirements, #password-confirmation{
     display: none;
-    background-color: #444;
-    border-radius: 5px;
+    transition: 0.3s ease;
+}
+
+#password-requirements p, #password-confirmation p{
+    height: 25px;
+    padding: 5px;
 }
 
 .invalid {
-    background-color: #444;
-    border-radius: 2px;
+    background-color: #4444448e;
+    border-radius: 5px;
 }
 .valid {
     background-color: #0058db;
-    border-radius: 2px;
+    border-radius: 3px;
 }
 
+.valid2 {
+    display: none;
+}
+
+/*Footer*/
+.footer-container {
+    padding: 20px;
+    background-color: #18181b;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-links a,
+.footer-social a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer-social a {
+    font-size: 20px;
+}

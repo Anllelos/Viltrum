@@ -5,12 +5,23 @@
 
 body {
     color: white;
-    background: linear-gradient(45deg, rgb(56, 21, 39),black 60%, rgb(20, 44, 63));
+    background-image: url('/static/images/login_background.gif');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;    
     display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
+    flex-direction: column;
     margin: 0;
+    backdrop-filter: blur(8px);
+}
+
+main{
+    flex: 1;
+}
+
+.logo-container .logo {
+    max-width: 120px;
 }
 
 .login-container {
@@ -23,6 +34,8 @@ body {
     width: 100%;
     max-width: 450px;
     transition: 0.3s ease;
+    box-shadow: 1px 1px 10px black;
+    margin: 10px auto;
 }
 
 h2 {
@@ -174,4 +187,25 @@ a:hover {
 
 .valid2 {
     display: none;
+}
+
+/*Footer*/
+.footer-container {
+    padding: 20px;
+    background-color: #18181b;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-links a,
+.footer-social a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer-social a {
+    font-size: 20px;
 }

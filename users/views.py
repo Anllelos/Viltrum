@@ -5,7 +5,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 
 
-
 def profile(request):
     return render(request, 'profile.html')
 
@@ -96,6 +95,7 @@ def subir_juego(request):
     return render(request, 'subir_juego.html', {'form': form})
 
 #Función para cerrar sesión
+@login_required
 def user_logout(request):
     logout(request)
     return redirect('home')

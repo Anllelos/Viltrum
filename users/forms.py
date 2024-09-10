@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from . import models
+from django.utils.translation import gettext_lazy as _
 
 #Form to create an User
 class CreateUserForm(UserCreationForm):
@@ -11,9 +12,15 @@ class CreateUserForm(UserCreationForm):
 
 #Form to authenticate User
 class AuthenticationFormUser(AuthenticationForm):
-    class Meta:
-        model = User
-        fields = ['username', 'password']
+    def get_invalid_login_error(self):
+        return self.error_class([_("Ah, ah, ah. You didn't say the magic word!")])
+
+    def confirm_login_allowed(self, user):
+        if not user.is_active:
+            raise forms.ValidationError(
+                _("Permission denied"),
+                code='inactive',
+            )
 
 #Form to update the profile pic
 class ProfilePicForm(forms.ModelForm): 

@@ -1,10 +1,10 @@
 /* Aplicar la fuente a toda la página */
 body {
     font-family: 'IBM Plex Sans', sans-serif;
-    background-color: #efeff1;
+    background-image: url('static/images/login_background.gif');
     margin: 0;
     padding: 0;
-}
+}   
 
 /* Estilos para el Header */
 .header-container {
