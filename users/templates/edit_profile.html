@@ -66,7 +66,7 @@
                         <img src="{{ profile.profile_img.url }}" alt="Foto de perfil" id="profile-pic">
                         {% else %}
                         <!-- Si no existe, muestra la imagen por defecto -->
-                        <img src="{% static 'images/placeholder.png' %}" alt="Foto de perfil" id="profile-pic">
+                        <img src="{% static 'images/profile_placeholder.png' %}" alt="Foto de perfil" id="profile-pic">
                         {% endif %}
                         <!-- Botón para cambiar la foto -->
                         <form method="POST" enctype="multipart/form-data">

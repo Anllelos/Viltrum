@@ -6,7 +6,10 @@ from django.contrib.auth import logout
 
 
 def profile(request):
-    return render(request, 'profile.html')
+    user_to_validate = get_object_or_404(User, id=request.user.id)
+    profile_to_validate = get_object_or_404(ExtendedData, user=user_to_validate)
+    data_context = {'profile':profile_to_validate}
+    return render(request, 'profile.html', data_context)
 
 @login_required
 def edit_profile(request):

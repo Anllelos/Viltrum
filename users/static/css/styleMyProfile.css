@@ -164,7 +164,6 @@ main{
     height: 130px;
     object-fit: cover;
     margin-top: -75px;
-    border: #333 4px solid;
 }
 
 .profile-header-info{

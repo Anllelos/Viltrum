@@ -37,12 +37,8 @@
 
       <h2>Iniciar Sesión</h2>
       {% if form.errors %}
-      {% for field, errors in form.errors.items %}
-        {% for error in errors %}
-          <p id="login-error">{{ error }}</p>
-        {% endfor %}
-      {% endfor %}
-    {% endif %}
+          <p id="login-error">Usuario o contraseña invalido.</p>
+       {% endif %}
       <form action="" method="POST">
         {% csrf_token %}
         <div class="login-data">

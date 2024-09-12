@@ -52,14 +52,20 @@
         <div class="profile-container">
             <div class="profile-side-menu">
                 <a href="">Ver perfil</a>
-                <a href="">Editar perfil</a>
+                <a href="{% url 'edit_profile' %}">Editar perfil</a>
                 <a href="">Social</a>
             </div>
             <div class="profile-info">
                 <div class="profile-header">
                     <div class="profile-banner"><img src="{% static 'images/bannerhome.gif' %}" alt="banner"></div>
-                    <div class="profile-image"><img src="{% static 'images/profile_placeholder.png' %}"
-                            alt="profile-image">
+                    <div class="profile-image">
+                        {% if profile.profile_img %}
+                        <!-- Si existe una imagen de perfil, la muestra -->
+                        <img src="{{ profile.profile_img.url }}" alt="Foto de perfil" id="profile-pic">
+                        {% else %}
+                        <!-- Si no existe, muestra la imagen por defecto -->
+                        <img src="{% static 'images/profile_placeholder.png' %}" alt="Foto de perfil" id="profile-pic">
+                        {% endif %}
                     </div>
                     <div class="profile-header-info">
                         <h2>{{user}}</h2>

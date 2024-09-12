@@ -149,7 +149,7 @@ label {
 }
 
 .login-button:hover {
-    box-shadow: 0px 0px 10px 5px rgb(38, 19, 90);
+    scale: 1.04;
     cursor: pointer;
 }
 
@@ -208,4 +208,9 @@ a:hover {
 
 .footer-social a {
     font-size: 20px;
+}
+
+#login-error{
+    color: #e80045;
+    padding: 5px;
 }
