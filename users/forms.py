@@ -54,3 +54,9 @@ class JuegoForm(forms.ModelForm):
     class Meta:
         model = models.Videojuego
         fields = ['nombre', 'portada']
+
+#Form to add game profile
+class PlayerStatsForm(forms.ModelForm):
+    class Meta:
+        model = models.PlayerStats
+        fields = ['user_game', 'game', 'rank', 'wins', 'losses', 'total_played'] 

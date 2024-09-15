@@ -35,7 +35,7 @@ main{
     max-width: 450px;
     transition: 0.3s ease;
     box-shadow: 1px 1px 10px black;
-    margin: 10px auto;
+    margin: 100px auto;
 }
 
 h2 {
@@ -214,3 +214,4 @@ a:hover {
     color: #e80045;
     padding: 5px;
 }
+

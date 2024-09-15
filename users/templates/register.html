@@ -7,7 +7,7 @@
     {% load static %}
     {% load extras %}
     <script src="{% static 'js/validateData.js' %}" defer></script>
-    <link type="text/css" rel="stylesheet" href="{% static 'css/stylesRegister.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/registerUser.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -55,6 +55,7 @@
             </div>
             <button type="submit" class="login-button">Registrarse</button>
             <p>¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a></p>
+            <p>¿Eres un patrocinador? <a href="#">Registrate aquí</a></p>
         </form>
         </main>
         <footer>

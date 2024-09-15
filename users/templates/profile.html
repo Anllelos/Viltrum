@@ -12,7 +12,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
         rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="{% static 'css/styleMyProfile.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/myProfile.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -51,7 +51,7 @@
     <main>
         <div class="profile-container">
             <div class="profile-side-menu">
-                <a href="">Ver perfil</a>
+                <a href="{% url 'games_stats' %}">Editar juegos</a>
                 <a href="{% url 'edit_profile' %}">Editar perfil</a>
                 <a href="">Social</a>
             </div>
@@ -68,40 +68,33 @@
                         {% endif %}
                     </div>
                     <div class="profile-header-info">
-                        <h2>{{user}}</h2>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia perferendis amet sit natus
+                        <h2 class="username">{{user}}</h2>
+                        <div class="user_description">
+                            <h3>Sobre mi:</h3>
+                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia perferendis amet sit natus
                             autem ipsum vel deserunt blanditiis aliquam minus.</p>
+                        </div>
                     </div>
                 </div>
                 <div class="profile-body">
-                    <div class="profile-game">
-                        <img src="{% static 'images/Fortnite.png' %}" alt="game-image">
-                        <div class="profile-game-info">
-                            <h4>{{user}}</h4>
-                            <p>Lorem ipsum dolor sit amet.</p>
+                    {% if game_exist %}
+                        <p>Aún no has registrado ningun juego.</p>
+                    {% else %}
+                        {% for game in games %}
+                        <div class="profile-game">
+                            {% with image_url='images/'|add:game.game|add:'.png' %}
+                            <img src="{% static image_url %}" alt="{{game.game}}">
+                            {% endwith %}
+                            <div class="profile-game-info">
+                                <h4>{{game.user_game}}</h4>
+                                <p>Juego: {{game.get_game_display}}</p>
+                                <p>Rango: {{game.rank}}</p>
+                                <p>Winrate: {{ game.winrate|floatformat:2 }}%</p>
+                                <p>Tiempo total jugado: {{game.total_played}}h</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="profile-game">
-                        <img src="{% static 'images/LoL.png' %}" alt="game-image">
-                        <div class="profile-game-info">
-                            <h4>{{user}}</h4>
-                            <p>Lorem ipsum dolor sit amet.</p>
-                        </div>
-                    </div>
-                    <div class="profile-game">
-                        <img src="{% static 'images/Overwatch.png' %}" alt="game-image">
-                        <div class="profile-game-info">
-                            <h4>{{user}}</h4>
-                            <p>Lorem ipsum dolor sit amet.</p>
-                        </div>
-                    </div>
-                    <div class="profile-game">
-                        <img src="{% static 'images/RocketLeague.png' %}" alt="game-image">
-                        <div class="profile-game-info">
-                            <h4>{{user}}</h4>
-                            <p>Lorem ipsum dolor sit amet.</p>
-                        </div>
-                    </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
                 <div class="profile-footer">
                     <p>FOOTER Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias, est!</p>

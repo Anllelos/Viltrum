@@ -42,3 +42,28 @@ class Clasificacion(models.Model):
 
     def __str__(self):
         return self.nombre
+
+#Model to add game stadistics to the user
+class PlayerStats(models.Model):
+    TYPE_CHOICES = [
+    ("LoL", "League of Legends"),
+    ("D2", "Dota 2"),
+    ("CSGO", "Counter-Strike: Global Offensive"),
+    ("VAL", "Valorant"),
+    ("OW", "Overwatch"),
+    ("PUBG", "PlayerUnknown's Battlegrounds"),
+    ("FORT", "Fortnite"),
+    ("Apex", "Apex Legends"),
+    ("R6", "Rainbow Six Siege"),
+    ("RL", "Rocket League")
+    ]   
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_game = models.CharField(max_length=50)
+    game = models.CharField(max_length=5, choices=TYPE_CHOICES)
+    rank = models.CharField(max_length=50)
+    wins = models.IntegerField(default=0)
+    losses = models.IntegerField(default=0)
+    total_played = models.IntegerField(default=0)
+
+    class Meta:
+        unique_together = ('user', 'game')

@@ -172,12 +172,12 @@ main{
     margin-top: -10px;
 }
 
-.profile-header-info h2{
+.username{
     width: 30%;
     text-align: center;
 }
 
-.profile-header-info p{
+.user_description{
     width: 70%;
 }
 

@@ -9,7 +9,7 @@
     <link
       type="text/css"
       rel="stylesheet"
-      href="{% static 'css/stylesRegister.css' %}"
+      href="{% static 'css/registerUser.css' %}"
     />
     <script src="{% static 'js/validateData.js' %}" defer></script>
     <link
@@ -52,6 +52,7 @@
           </div>
         </div>
         <button type="submit" class="login-button">Iniciar sesión</button>
+        <a href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a>
         <p>
           ¿No tienes una cuenta?
           <a href="{% url 'register' %}">Regístrate aquí</a>
