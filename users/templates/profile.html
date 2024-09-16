@@ -4,15 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Viltrum">
-    <title>Editar Perfil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de {{ profile_user.username }}</title>
     {% load static %}
-    {% load extras %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
-        rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="{% static 'css/myProfile.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/myProfile.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -36,72 +34,82 @@
                 <button type="submit"><i class="fas fa-search"></i></button>
             </div>
             <div class="auth-buttons">
+                {% if user.is_authenticated %}
                 <div class="dropdown-profile">
-                    <a href="#" aria-haspopup="true" aria-expanded="false" class="user-icon" id="userIcon">
-                        <i class="fa-solid fa-user"></i>
-                        {{ user }}
-                    </a>
-                    <div class="dropdown-content" id="dropdownMenu">
-                        <a href="{% url 'user_logout' %}">Cerrar sesión</a>
-                    </div>
+                  <a
+                    href="#"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    class="user-icon"
+                    id="userIcon"
+                  >
+                    <i class="fa-solid fa-user"></i>
+                    {{ user }}
+                  </a>
+                  <div class="dropdown-content" id="dropdownMenu">
+                    <a href="{% url 'profile' username=user.username %}">Perfil</a>
+                    <a href="{% url 'user_logout' %}">Cerrar sesión</a>
+                  </div>
                 </div>
+                {% else %}
+                <a href="{% url 'login' %}" class="login-btn">Iniciar Sesión</a>
+                <a href="{% url 'register' %}" class="register-btn">Regístrate</a>
+                {% endif %}
             </div>
         </div>
     </header>
+
     <main>
         <div class="profile-container">
-            <div class="profile-side-menu">
-                <a href="{% url 'games_stats' %}">Editar juegos</a>
-                <a href="{% url 'edit_profile' %}">Editar perfil</a>
-                <a href="">Social</a>
-            </div>
-            <div class="profile-info">
-                <div class="profile-header">
-                    <div class="profile-banner"><img src="{% static 'images/bannerhome.gif' %}" alt="banner"></div>
+            <div class="profile-header">
+                <div class="profile-banner">
+                    <img src="{% if profile.profile_banner %}{{ profile.profile_banner.url }}{% else %}http://via.placeholder.com/770x200{% endif %}" alt="Banner">
+                </div>
+                <div class="profile-header-user">
                     <div class="profile-image">
-                        {% if profile.profile_img %}
-                        <!-- Si existe una imagen de perfil, la muestra -->
-                        <img src="{{ profile.profile_img.url }}" alt="Foto de perfil" id="profile-pic">
-                        {% else %}
-                        <!-- Si no existe, muestra la imagen por defecto -->
-                        <img src="{% static 'images/profile_placeholder.png' %}" alt="Foto de perfil" id="profile-pic">
-                        {% endif %}
+                        <img src="{% if profile.profile_img %}{{ profile.profile_img.url }}{% else %}https://ui-avatars.com/api/?name={{user}}{% endif %}" alt="Foto de perfil" id="profile-pic">
+                        <h2 class="username">{{ profile_user.username }}</h2>
                     </div>
-                    <div class="profile-header-info">
-                        <h2 class="username">{{user}}</h2>
-                        <div class="user_description">
-                            <h3>Sobre mi:</h3>
-                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia perferendis amet sit natus
-                            autem ipsum vel deserunt blanditiis aliquam minus.</p>
-                        </div>
+                    <a class="send-message">Enviar mensaje  <i class="fa-solid fa-message"></i></a>
+                </div>
+                <div class="profile-header-info">
+                    <h3>Sobre mí:</h3>
+                    <p>{{ profile.about_me|default:"El usuario no ha agregado información aún." }}</p>
+                </div>
+            </div>
+            <div class="profile-body">
+                {% if game_exist %}
+                <p>Aún no has registrado ningún juego.</p>
+                {% else %}
+                {% for game in games %}
+                <div class="profile-game">
+                    {% with image_url='images/'|add:game.game|add:'.png' %}
+                    <img src="{% static image_url %}" alt="{{ game.get_game_display }}">
+                    {% endwith %}
+                    <div class="profile-game-info">
+                        <h4>{{ game.user_game }}</h4>
+                        <p>
+                            Juego: {{ game.get_game_display }} <br>
+                            Rango: {{ game.rank }} <br>
+                            Winrate: {{ game.winrate|floatformat:2 }}% <br>
+                            Tiempo total jugado: {{ game.total_played }}h
+                        </p>
                     </div>
                 </div>
-                <div class="profile-body">
-                    {% if game_exist %}
-                        <p>Aún no has registrado ningun juego.</p>
-                    {% else %}
-                        {% for game in games %}
-                        <div class="profile-game">
-                            {% with image_url='images/'|add:game.game|add:'.png' %}
-                            <img src="{% static image_url %}" alt="{{game.game}}">
-                            {% endwith %}
-                            <div class="profile-game-info">
-                                <h4>{{game.user_game}}</h4>
-                                <p>Juego: {{game.get_game_display}}</p>
-                                <p>Rango: {{game.rank}}</p>
-                                <p>Winrate: {{ game.winrate|floatformat:2 }}%</p>
-                                <p>Tiempo total jugado: {{game.total_played}}h</p>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-                <div class="profile-footer">
-                    <p>FOOTER Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias, est!</p>
-                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="profile-footer">
+                <a href="#"><i class="fab fa-facebook-f"></i> Lorem</a>
+                <a href="#"><i class="fab fa-twitter"></i> @Lorem</a>
+                <a href="#"><i class="fab fa-instagram"></i> Lorem</a>
+                <a href="#"><i class="fab fa-youtube"></i> Lorem</a>
+                <a href="#"><i class="fa-brands fa-twitch"></i> Lorem</a>
             </div>
         </div>
     </main>
+
     <footer>
         <div class="footer-container">
             <div class="footer-links">
@@ -121,25 +129,6 @@
     </footer>
 
     <script>
-        document.querySelectorAll('.sidebar ul li a').forEach(link => {
-            link.addEventListener('click', function (e) {
-                e.preventDefault();
-
-                // Remover la clase activa de todas las secciones y enlaces
-                document.querySelectorAll('.form-section').forEach(section => {
-                    section.classList.remove('active');
-                });
-                document.querySelectorAll('.sidebar ul li a').forEach(link => {
-                    link.classList.remove('active');
-                });
-
-                // Agregar la clase activa a la sección y al enlace seleccionados
-                const sectionId = this.getAttribute('data-section');
-                document.getElementById(sectionId).classList.add('active');
-                this.classList.add('active');
-            });
-        });
-
         document.addEventListener('DOMContentLoaded', function () {
             var userIcon = document.getElementById('userIcon');
             var dropdownMenu = document.getElementById('dropdownMenu');

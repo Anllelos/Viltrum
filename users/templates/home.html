@@ -69,7 +69,7 @@
               {{ user }}
             </a>
             <div class="dropdown-content" id="dropdownMenu">
-              <a href="{% url 'profile' %}">Perfil</a>
+              <a href="{% url 'profile' username=user.username %}">Perfil</a>
               <a href="{% url 'user_logout' %}">Cerrar sesión</a>
             </div>
           </div>

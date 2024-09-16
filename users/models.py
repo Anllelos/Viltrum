@@ -3,7 +3,9 @@ from django.contrib.auth.models import User
 
 # Model for extra information for the user
 class ExtendedData(models.Model):
-    profile_img = models.ImageField(null=True, blank=True, upload_to="images/")
+    profile_img = models.ImageField(null=True, blank=True, upload_to="images/profileimg")
+    profile_banner = models.ImageField(null=True, blank=True, upload_to="images/profilebanner")
+    user_description = models.TextField(null=True, blank=True)
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
 
 

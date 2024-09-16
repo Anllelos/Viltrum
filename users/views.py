@@ -1,45 +1,53 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.models import User
 from .forms import *
 from .models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 
-@login_required
-def profile(request):
-    user_to_validate = get_object_or_404(User, id=request.user.id)
+def profile(request, username):
+    # Buscar al usuario por el nombre de usuario en lugar del ID del request
+    user_to_validate = get_object_or_404(User, username=username)
     extended_data_table = get_object_or_404(ExtendedData, user=user_to_validate)
     game_stats_table = PlayerStats.objects.filter(user=user_to_validate)
-    data_context = {'profile':extended_data_table}
+    
+    data_context = {'profile': extended_data_table, 'profile_user': user_to_validate}
+
+    # Si hay estadísticas de juegos, calcular el winrate
     if game_stats_table.exists():
         for game in game_stats_table:
-            total_games =  game.wins + game.losses
-            if total_games > 0:
-                game.winrate = (game.wins/total_games) * 100
-            else:
-                game.winrate = 0
+            total_games = game.wins + game.losses
+            game.winrate = (game.wins / total_games) * 100 if total_games > 0 else 0
         data_context['games'] = game_stats_table
     else:
         data_context['game_exist'] = True
+
     return render(request, 'profile.html', data_context)
 
+
+
 @login_required
-def edit_profile(request):
+def edit_profile(request, username):
     data_context = {}
-    user_to_validate = get_object_or_404(User, id=request.user.id)
+    user_to_validate = get_object_or_404(User, username=username)
     profile_to_validate = get_object_or_404(ExtendedData, user=user_to_validate)
     upp_form = ProfilePicForm(request.POST or None, request.FILES or None, instance=profile_to_validate)
 
-    if request.method == 'POST':
-        if upp_form.is_valid():
-            upp_form.save()
-            data_context['message'] = 'Imagen Actualizada'
-        else:
-            data_context['message'] = 'Error al actualizar la imagen'
+    # Verificar si el usuario autenticado está editando su propio perfil
+    if request.user.username == username:
+        if request.method == 'POST':
+            if upp_form.is_valid():
+                upp_form.save()
+                data_context['message'] = 'Imagen Actualizada'
+            else:
+                data_context['message'] = 'Error al actualizar la imagen'
 
-    data_context['upp_form'] = upp_form
-    data_context['profile'] = profile_to_validate
-
-    return render(request, 'edit_profile.html', data_context)
+        data_context['upp_form'] = upp_form
+        data_context['profile'] = profile_to_validate
+        return render(request, 'edit_profile.html', data_context)
+    else:
+        # Si el usuario autenticado no es el dueño del perfil, redirige o muestra un mensaje de error
+        return redirect('edit_profile', username=request.user.username)
 
 def create_user(request):
     user_form = CreateUserForm()
