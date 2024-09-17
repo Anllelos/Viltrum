@@ -48,6 +48,8 @@
                   </a>
                   <div class="dropdown-content" id="dropdownMenu">
                     <a href="{% url 'profile' username=user.username %}">Perfil</a>
+                    <a href="{% url 'edit_profile' username=user.username %}">Editar Perfil</a>
+                    <a href="{% url 'games_stats' %}">Añadir Estadísticas</a>
                     <a href="{% url 'user_logout' %}">Cerrar sesión</a>
                   </div>
                 </div>

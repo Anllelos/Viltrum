@@ -13,12 +13,12 @@ class CreateUserForm(UserCreationForm):
 #Form to authenticate User
 class AuthenticationFormUser(AuthenticationForm):
     def get_invalid_login_error(self):
-        return self.error_class([_("Ah, ah, ah. You didn't say the magic word!")])
+        return self.error_class([_("XXXXXXXX")])
 
     def confirm_login_allowed(self, user):
         if not user.is_active:
             raise forms.ValidationError(
-                _("Permission denied"),
+                _("XXXXXXX"),
                 code='inactive',
             )
 
@@ -60,3 +60,14 @@ class PlayerStatsForm(forms.ModelForm):
     class Meta:
         model = models.PlayerStats
         fields = ['user_game', 'game', 'rank', 'wins', 'losses', 'total_played'] 
+
+#Edit User Info Form
+class EditUserForm(forms.ModelForm):
+    class Meta:
+        model = models.User
+        fields = []
+
+class EditExtendedDataForm(forms.ModelForm):
+    class Meta:
+        model = models.ExtendedData
+        fields = []

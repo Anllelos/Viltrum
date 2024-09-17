@@ -13,6 +13,9 @@
         rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="{% static 'css/editProfile.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet"/>
+<!-- Cropper.js JS -->
+    <script src="https://unpkg.com/cropperjs"></script>
 </head>
 
 <body>
@@ -41,6 +44,9 @@
                         {{ user }}
                     </a>
                     <div class="dropdown-content" id="dropdownMenu">
+                        <a href="{% url 'profile' username=user.username %}">Perfil</a>
+                        <a href="{% url 'edit_profile' username=user.username %}">Editar Perfil</a>
+                        <a href="{% url 'games_stats' %}">Añadir Estadísticas</a>
                         <a href="{% url 'user_logout' %}">Cerrar sesión</a>
                     </div>
                 </div>
@@ -61,17 +67,17 @@
                 <div id="personal-info" class="form-section active">
                     <h2>Información Personal</h2>
                     <div class="photo-section">
-                        {% if profile.profile_img %}
-                        <!-- Si existe una imagen de perfil, la muestra -->
-                        <img src="{{ profile.profile_img.url }}" alt="Foto de perfil" id="profile-pic">
-                        {% else %}
-                        <!-- Si no existe, muestra la imagen por defecto -->
-                        <img src="{% static 'images/profile_placeholder.png' %}" alt="Foto de perfil" id="profile-pic">
-                        {% endif %}
+                        <img src="{% if profile.profile_img %}{{ profile.profile_img.url }}{% else %}https://ui-avatars.com/api/?name={{user}}{% endif %}" alt="Foto de perfil" id="profile-pic">
                         <!-- Botón para cambiar la foto -->
                         <form method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
-                            {{ upp_form.profile_img }}
+                            <div>
+                                <img id="imagePreview" src="{% if profile.image %}{{ profile.image.url }}{% endif %}" alt="Profile Image" style="max-width: 100%;">
+                            </div>
+                            <input type="file" id="imageInput" accept="image/*">
+                            <!-- Campo oculto para la imagen recortada -->
+                            <input type="hidden" id="croppedImage" name="cropped_image">
+                            <button type="button" id="cropButton">Recortar Imagen</button>
                             <button type="submit" class="change-photo-btn">
                                 <span class="fa-regular fa-image"></span>
                                 Guardar imagen
@@ -194,6 +200,53 @@
                 }
             });
         });
+    </script>
+    <script>
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+        let cropper;
+    
+        // Cuando el usuario selecciona una imagen
+        imageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+    
+            reader.onload = function(event) {
+                imagePreview.src = event.target.result;
+    
+                // Inicializa Cropper.js
+                if (cropper) {
+                    cropper.destroy();
+                }
+                cropper = new Cropper(imagePreview, {
+                    aspectRatio: 1,  // relación de aspecto cuadrada
+                    viewMode: 1,
+                    movable: false,
+                    cropBoxResizable: true,
+                });
+            };
+    
+            reader.readAsDataURL(file);
+        });
+    
+        // Recortar la imagen
+        document.getElementById('cropButton').addEventListener('click', function() {
+    if (cropper) {
+        const canvas = cropper.getCroppedCanvas({
+            width: 300,
+            height: 300,
+        });
+
+        // Convierte el canvas a un Data URL y asigna al campo oculto
+        canvas.toBlob(function(blob) {
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                document.getElementById('croppedImage').value = reader.result;
+            };
+            reader.readAsDataURL(blob);  // Convierte el blob a un Data URL
+        });
+    }
+});
     </script>
 </body>
 

@@ -4,6 +4,8 @@ from .forms import *
 from .models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.core.files.base import ContentFile
+import base64
 
 def profile(request, username):
     # Buscar al usuario por el nombre de usuario en lugar del ID del request
@@ -33,9 +35,17 @@ def edit_profile(request, username):
     profile_to_validate = get_object_or_404(ExtendedData, user=user_to_validate)
     upp_form = ProfilePicForm(request.POST or None, request.FILES or None, instance=profile_to_validate)
 
-    # Verificar si el usuario autenticado está editando su propio perfil
     if request.user.username == username:
         if request.method == 'POST':
+            cropped_image = request.POST.get('cropped_image')
+            
+            # Procesar la imagen recortada
+            if cropped_image:
+                format, imgstr = cropped_image.split(';base64,') 
+                ext = format.split('/')[-1]
+                img_data = ContentFile(base64.b64decode(imgstr), name=f"profile_{request.user.username}.{ext}")
+                profile_to_validate.profile_img = img_data
+
             if upp_form.is_valid():
                 upp_form.save()
                 data_context['message'] = 'Imagen Actualizada'
@@ -46,7 +56,6 @@ def edit_profile(request, username):
         data_context['profile'] = profile_to_validate
         return render(request, 'edit_profile.html', data_context)
     else:
-        # Si el usuario autenticado no es el dueño del perfil, redirige o muestra un mensaje de error
         return redirect('edit_profile', username=request.user.username)
 
 def create_user(request):
