@@ -45,19 +45,19 @@ class Clasificacion(models.Model):
     def __str__(self):
         return self.nombre
 
-#Model to add game stadistics to the user
+# Model to add game statistics to the user
 class PlayerStats(models.Model):
     TYPE_CHOICES = [
-    ("LoL", "League of Legends"),
-    ("D2", "Dota 2"),
-    ("CSGO", "Counter-Strike: Global Offensive"),
-    ("VAL", "Valorant"),
-    ("OW", "Overwatch"),
-    ("PUBG", "PlayerUnknown's Battlegrounds"),
-    ("FORT", "Fortnite"),
-    ("Apex", "Apex Legends"),
-    ("R6", "Rainbow Six Siege"),
-    ("RL", "Rocket League")
+        ("LoL", "League of Legends"),
+        ("D2", "Dota 2"),
+        ("CSGO", "Counter-Strike: Global Offensive"),
+        ("VAL", "Valorant"),
+        ("OW", "Overwatch"),
+        ("PUBG", "PlayerUnknown's Battlegrounds"),
+        ("FORT", "Fortnite"),
+        ("Apex", "Apex Legends"),
+        ("R6", "Rainbow Six Siege"),
+        ("RL", "Rocket League")
     ]   
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     user_game = models.CharField(max_length=50)
@@ -68,64 +68,37 @@ class PlayerStats(models.Model):
     total_played = models.IntegerField(default=0)
 
     class Meta:
-<<<<<<< HEAD
         unique_together = ('user', 'game')
+
 
 # Definimos el modelo para cada juego
 class Game(models.Model):
-    # Nombre del juego
-    name = models.CharField(max_length=100)
-    
-    # Descripción del juego
-    description = models.TextField()
-    
-    # Imagen de portada del juego, se guarda en una carpeta 'games/covers/'
-    cover_image = models.ImageField(upload_to='games/covers/', null=True, blank=True)
-    
-    # Esta función devuelve el nombre del juego cuando lo llamamos
+    name = models.CharField(max_length=100)  # Nombre del juego
+    description = models.TextField()  # Descripción del juego
+    cover_image = models.ImageField(upload_to='games/covers/', null=True, blank=True)  # Imagen de portada
+
     def __str__(self):
         return self.name
 
 
 # Modelo para almacenar imágenes subidas por los usuarios asociadas a un juego
 class GameImage(models.Model):
-    # Relación: una imagen pertenece a un juego
-    game = models.ForeignKey(Game, related_name='images', on_delete=models.CASCADE)
-    
-    # Archivo de imagen que el usuario sube
-    image = models.ImageField(upload_to='games/images/')
-    
-    # Relación: la imagen es subida por un usuario
-    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    
-    # Fecha de subida automática cuando se crea la imagen
-    upload_date = models.DateTimeField(auto_now_add=True)
-    
-    # Esta función devuelve el nombre del juego y el usuario que subió la imagen
+    game = models.ForeignKey(Game, related_name='images', on_delete=models.CASCADE)  # Relación con el juego
+    image = models.ImageField(upload_to='games/images/')  # Imagen subida
+    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)  # Usuario que sube la imagen
+    upload_date = models.DateTimeField(auto_now_add=True)  # Fecha de subida automática
+
     def __str__(self):
         return f"Image of {self.game.name} by {self.uploaded_by.username}"
 
 
 # Modelo para crear torneos asociados a un juego
 class Tournament(models.Model):
-    # Relación: un torneo pertenece a un juego
-    game = models.ForeignKey(Game, related_name='tournaments', on_delete=models.CASCADE)
-    
-    # Nombre del torneo
-    name = models.CharField(max_length=100)
-    
-    # Descripción del torneo
-    description = models.TextField()
-    
-    # Fecha de inicio del torneo
-    start_date = models.DateTimeField()
-    
-    # Fecha de fin del torneo
-    end_date = models.DateTimeField()
-    
-    # Esta función devuelve el nombre del torneo y el juego asociado
+    game = models.ForeignKey(Game, related_name='tournaments', on_delete=models.CASCADE)  # Relación con el juego
+    name = models.CharField(max_length=100)  # Nombre del torneo
+    description = models.TextField()  # Descripción del torneo
+    start_date = models.DateTimeField()  # Fecha de inicio
+    end_date = models.DateTimeField()  # Fecha de fin
+
     def __str__(self):
         return f"Tournament {self.name} for {self.game.name}"
-=======
-        unique_together = ('user', 'game')
->>>>>>> 0cdfd5264c961bbdab099fe6aae0f930606ec6f9
