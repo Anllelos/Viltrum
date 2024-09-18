@@ -1,0 +1,290 @@
+{% load static %}
+{% load extras %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="ValorQuest" />
+    <title>Iniciar Sesión</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/gameStats.css' %}" />
+    <script src="{% static 'js/validateData.js' %}" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo-container">
+                <img src="{% static 'images/ninjaviltrum.png' %}" alt="Logo" class="logo" />
+            </div>
+            <nav class="nav-links">
+                <a href="#">Inicio</a>
+                <a href="#">Explorar</a>
+                <a href="#">Suscripciones</a>
+                <a href="#">Tienda</a>
+                <a href="#">Torneos</a>
+                <a href="#">Clasificaciones</a>
+                <a href="#">Equipos</a>
+            </nav>
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar" />
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="auth-buttons">
+                {% if user.is_authenticated %}
+                <div class="dropdown-profile">
+                    <a href="#" aria-haspopup="true" aria-expanded="false" class="user-icon" id="userIcon">
+                        <i class="fa-solid fa-user"></i>
+                        {{ user }}
+                    </a>
+                    <div class="dropdown-content" id="dropdownMenu">
+                        <a href="{% url 'profile' username=user.username %}">Perfil</a>
+                        <a href="{% url 'edit_profile' username=user.username %}">Editar Perfil</a>
+                        <a href="{% url 'games_stats' %}">Añadir Estadísticas</a>
+                        <a href="{% url 'user_logout' %}">Cerrar sesión</a>
+                    </div>
+                </div>
+                {% else %}
+                <a href="{% url 'login' %}" class="login-btn">Iniciar Sesión</a>
+                <a href="{% url 'register' %}" class="register-btn">Regístrate</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+    <main>
+        <video id="bgVideo" autoplay muted loop playsinline>
+            <source id="videoSource" src="" type="video/mp4">
+            Tu navegador no soporta videos en HTML5.
+        </video>
+        <div class="form-container">
+            <form action="" method="POST">
+                {% csrf_token %}
+                {% if player_stats_form.errors %}
+                <br>
+                <p>Hay error UwU</p>
+                {% for error in player_stats_form.errors %}
+                <p>{{error}}</p>
+                <br>
+                {% endfor %}
+                {% endif %}
+                {% if game_exist%}
+                <span>Ya registraste este juego</span>
+                {% endif %}
+                <div class="form-group">
+                    <span class="input-label">Juego</span>
+                    {{player_stats_form.game|set_attr:"class=form-select"}}
+                </div>
+                <div class="form-group">
+                    <span class="input-label">Nombre de usuario en juego</span>
+                    {{player_stats_form.user_game|set_attr:"class=form-input,placeholder=Nombre de Usuario"}}
+                </div>
+                <div class="form-group">
+                <span class="input-label">Rango</span>
+                <select id="rank" name="rank" class="form-select">
+                    <!-- Las opciones se llenarán dinámicamente -->
+                </select>
+                </div>
+                <div class="form-group">
+                    <span class="input-label">Partidas ganadas</span>
+                {{player_stats_form.wins|set_attr:"class=form-input"}}
+                </div>
+                <div class="form-group">
+                    <span class="input-label">Partidas perdidas</span>
+                {{player_stats_form.losses|set_attr:"class=form-input"}}
+                </div>
+                <div class="form-group">
+                    <span class="input-label">Horas totales jugadas</span>
+                {{player_stats_form.total_played|set_attr:"class=form-input"}}
+                </div>
+                <button type="submit" class="form-button">Guardar datos</button>
+            </form>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="#">Acerca de</a>
+                <a href="#">Contacto</a>
+                <a href="#">Privacidad</a>
+                <a href="#">Términos</a>
+                <a href="#">Ayuda</a>
+            </div>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+<script>
+    const gameRanks = {
+        "LoL": [
+            ("Iron", "Iron"),
+            ("Bronze", "Bronze"),
+            ("Silver", "Silver"),
+            ("Gold", "Gold"),
+            ("Platinum", "Platinum"),
+            ("Diamond", "Diamond"),
+            ("Master", "Master"),
+            ("Grandmaster", "Grandmaster"),
+            ("Challenger", "Challenger"),
+        ],
+        "D2": [
+            ("Herald", "Herald"),
+            ("Guardian", "Guardian"),
+            ("Crusader", "Crusader"),
+            ("Archon", "Archon"),
+            ("Legend", "Legend"),
+            ("Ancient", "Ancient"),
+            ("Divine", "Divine"),
+            ("Immortal", "Immortal"),
+        ],
+        "CSGO": [
+            ("Silver I", "Silver I"),
+            ("Silver II", "Silver II"),
+            ("Silver III", "Silver III"),
+            ("Silver IV", "Silver IV"),
+            ("Silver Elite", "Silver Elite"),
+            ("Silver Elite Master", "Silver Elite Master"),
+            ("Gold Nova I", "Gold Nova I"),
+            ("Gold Nova II", "Gold Nova II"),
+            ("Gold Nova III", "Gold Nova III"),
+            ("Gold Nova Master", "Gold Nova Master"),
+            ("Master Guardian I", "Master Guardian I"),
+            ("Master Guardian II", "Master Guardian II"),
+            ("Master Guardian Elite", "Master Guardian Elite"),
+            ("Distinguished Master Guardian", "Distinguished Master Guardian"),
+            ("Legendary Eagle", "Legendary Eagle"),
+            ("Legendary Eagle Master", "Legendary Eagle Master"),
+            ("Supreme Master First Class", "Supreme Master First Class"),
+            ("Global Elite", "Global Elite"),
+        ],
+        "VAL": [
+            ("Iron", "Iron"),
+            ("Bronze", "Bronze"),
+            ("Silver", "Silver"),
+            ("Gold", "Gold"),
+            ("Platinum", "Platinum"),
+            ("Diamond", "Diamond"),
+            ("Immortal", "Immortal"),
+            ("Radiant", "Radiant"),
+        ],
+        "OW": [
+            ("Bronze", "Bronze"),
+            ("Silver", "Silver"),
+            ("Gold", "Gold"),
+            ("Platinum", "Platinum"),
+            ("Diamond", "Diamond"),
+            ("Master", "Master"),
+            ("Grandmaster", "Grandmaster"),
+            ("Top 500", "Top 500"),
+        ],
+        "PUBG": [
+            ("Bronze", "Bronze"),
+            ("Silver", "Silver"),
+            ("Gold", "Gold"),
+            ("Platinum", "Platinum"),
+            ("Diamond", "Diamond"),
+            ("Master", "Master"),
+            ("Grandmaster", "Grandmaster"),
+        ],
+        "FORT": [
+            ("Open", "Open"),
+            ("Contender", "Contender"),
+            ("Champion", "Champion"),
+            ("Unreal", "Unreal"),
+        ],
+        "Apex": [
+            ("Bronze", "Bronze"),
+            ("Silver", "Silver"),
+            ("Gold", "Gold"),
+            ("Platinum", "Platinum"),
+            ("Diamond", "Diamond"),
+            ("Master", "Master"),
+            ("Apex Predator", "Apex Predator"),
+        ],
+        "R6": [
+            ("Copper", "Copper"),
+            ("Bronze", "Bronze"),
+            ("Silver", "Silver"),
+            ("Gold", "Gold"),
+            ("Platinum", "Platinum"),
+            ("Diamond", "Diamond"),
+            ("Champion", "Champion"),
+        ],
+        "RL": [
+            ("Bronze", "Bronze"),
+            ("Silver", "Silver"),
+            ("Gold", "Gold"),
+            ("Platinum", "Platinum"),
+            ("Diamond", "Diamond"),
+            ("Champion", "Champion"),
+            ("Grand Champion", "Grand Champion"),
+            ("Supersonic Legend", "Supersonic Legend"),
+        ],
+    }
+
+    const gameSelect = document.getElementById("id_game");
+    const rankSelect = document.getElementById("rank");
+
+    function updateRankOptions(game) {
+        rankSelect.innerHTML = ""; // Limpiar las opciones actuales
+
+        if (game in gameRanks) {
+            gameRanks[game].forEach(function (rank) {
+                const option = document.createElement("option");
+                option.value = rank;
+                option.textContent = rank;
+                rankSelect.appendChild(option);
+            });
+        }
+    }
+
+    gameSelect.addEventListener('change', function () {
+        updateRankOptions(this.value);
+    });
+
+    // Inicializa con las opciones correctas cuando se carga la página
+    updateRankOptions(gameSelect.value);
+</script>
+<script>
+    const videos = {
+    "LoL": "https://motionbgs.com/media/1228/jinx-shattered-reflection.960x540.mp4",
+    "D2": "https://motionbgs.com/media/4179/windranger-dota-2.960x540.mp4",
+    "CSGO": "https://motionbgs.com/media/3403/neon-csgo.960x540.mp4",
+    "VAL": "https://motionbgs.com/media/3046/yoru-from-valorant.960x540.mp4",
+    "OW": "https://motionbgs.com/media/4/dva-overwatch.960x540.mp4",
+    "PUBG": "https://motionbgs.com/media/4817/pubg-mobile.960x540.mp4",
+    "FORT": "https://motionbgs.com/media/4774/fortnite-highwire.960x540.mp4",
+    "Apex": "https://motionbgs.com/media/1744/loba-from-apex-legends.960x540.mp4",
+    "R6": "https://motionbgs.com/media/6225/rainbow-six-siege-r6.960x540.mp4",
+    "RL": "https://motionbgs.com/media/622/rocket-league.960x540.mp4"
+    };
+    const videoBg = document.getElementById("bgVideo");
+    const videoSrc = document.getElementById("videoSource")
+    const gameSelection = document.getElementById("id_game");
+    gameSelection.addEventListener('change', function(){
+        const gameSelected = this.value;
+        if (gameSelected in videos) {
+        // Desvanecer el video actual
+        videoBg.style.opacity = 0;
+
+        // Esperar a que el video actual se haya desvanecido antes de cambiar la fuente
+        videoBg.addEventListener('transitionend', function() {
+            // Cambiar la fuente del video
+            videoSrc.src = videos[gameSelected];
+            videoBg.load();
+
+            // Desvanecer el nuevo video
+            videoBg.style.opacity = 1;
+        }, { once: true });
+    }
+    });
+
+</script>
+<script src="{% static 'js/dropMenu.js' %}"></script>
+
+</html>

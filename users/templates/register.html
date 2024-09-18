@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="ValorQuest">
+    <title>Registro</title>
+    {% load static %}
+    {% load extras %}
+    <script src="{% static 'js/validateData.js' %}" defer></script>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/registerUser.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <main>
+    <div class="login-container">
+        <h2>Registro</h2>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="login-data">
+                <div class="input-group">
+                    {{user_form.first_name|set_attr:"class=login-input,id=name,placeholder=Nombre"}}
+                    <label for="nombre">Nombre completo</label>
+                </div>
+                <div class="input-group">
+                    {{user_form.username|set_attr:"class=login-input,id=username,placeholder=Usuario"}}
+                    <label for="usuario">Nombre de usuario</label>
+                    {% if user_form.username.errors %}
+                        {% for error in user_form.username.errors %}
+                            <span>{{error}}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="input-group">
+                    {{user_form.email|set_attr:"class=login-input,id=email,placeholder=Correo"}}
+                    <label for="email">Correo electrónico</label>
+                </div>
+                <div class="input-group">
+                    {{user_form.password1|set_attr:"class=login-input,id=id_password1,placeholder=Contraseña"}}
+                    <label for="password">Contraseña</label>
+                </div>
+                <div class="input-group">
+                    {{user_form.password2|set_attr:"class=login-input,id=id_password2,placeholder=Repetir Contraseña"}}
+                    <label for="confirm-password">Confirmar contraseña</label>
+                </div>
+            </div>
+            <div id="password-requirements">
+                <p id="length" class="invalid">Al menos 8 caracteres</p>
+                <p id="number" class="invalid">Al menos un número</p>
+                <p id="uppercase" class="invalid">Al menos una letra mayúscula</p>
+                <p id="lowercase" class="invalid">Al menos una letra minúscula</p>
+                <p id="special" class="invalid">Al menos un carácter especial</p>
+            </div>
+            <div id="password-confirmation">
+                <p id="confirm-password" class="invalid">Las contraseñas no son iguales</p>
+            </div>
+            <button type="submit" class="login-button">Registrarse</button>
+            <p>¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a></p>
+            <p>¿Eres un patrocinador? <a href="#">Registrate aquí</a></p>
+        </form>
+        </main>
+        <footer>
+            <div class="footer-container">
+              <div class="footer-links">
+                <a href="#">Acerca de</a>
+                <a href="#">Contacto</a>
+                <a href="#">Privacidad</a>
+                <a href="#">Términos</a>
+                <a href="#">Ayuda</a>
+              </div>
+              <div class="footer-social">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+              </div>
+            </div>
+          </footer>
+    </div>
+
+    <!-- JavaScript para validación de contraseña -->
+    <script>
+        const passwordInput = document.getElementById('id_password1');
+        const requirementsBox = document.getElementById('password-requirements');
+
+        passwordInput.addEventListener('focus', function() {
+            requirementsBox.style.display = 'block';
+        });
+
+        passwordInput.addEventListener('blur', function() {
+            requirementsBox.style.display = 'none';
+        });
+
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            const length = document.getElementById('length');
+            const number = document.getElementById('number');
+            const uppercase = document.getElementById('uppercase');
+            const lowercase = document.getElementById('lowercase');
+            const special = document.getElementById('special');
+
+            length.className = password.length >= 8 ? 'valid' : 'invalid';
+            number.className = /\d/.test(password) ? 'valid' : 'invalid';
+            uppercase.className = /[A-Z]/.test(password) ? 'valid' : 'invalid';
+            lowercase.className = /[a-z]/.test(password) ? 'valid' : 'invalid';
+            special.className = /[^A-Za-z0-9]/.test(password) ? 'valid' : 'invalid';
+        });
+    </script>
+    <script>
+        const password1 = document.getElementById('id_password1');
+        const passwordInput2 = document.getElementById('id_password2');
+        const confirmationBox = document.getElementById('password-confirmation');
+
+        passwordInput2.addEventListener('focus', function() {
+            confirmationBox.style.display = 'block';
+        });
+
+        passwordInput2.addEventListener('blur', function() {
+            confirmationBox.style.display = 'none';
+        });
+
+    passwordInput2.addEventListener('input', function(){
+        const password2 = this.value;
+        const confirmation = document.getElementById('confirm-password');
+        confirmation.className = password1.value == password2 && password2 !== "" ? 'valid2' : 'invalid';
+    });
+    </script>
+</body>
+</html>
