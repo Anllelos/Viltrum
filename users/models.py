@@ -68,6 +68,7 @@ class PlayerStats(models.Model):
     total_played = models.IntegerField(default=0)
 
     class Meta:
+<<<<<<< HEAD
         unique_together = ('user', 'game')
 
 # Definimos el modelo para cada juego
@@ -125,3 +126,6 @@ class Tournament(models.Model):
     # Esta función devuelve el nombre del torneo y el juego asociado
     def __str__(self):
         return f"Tournament {self.name} for {self.game.name}"
+=======
+        unique_together = ('user', 'game')
+>>>>>>> 0cdfd5264c961bbdab099fe6aae0f930606ec6f9

@@ -3,7 +3,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from . import models
 from django.utils.translation import gettext_lazy as _
+<<<<<<< HEAD
 from .models import GameImage
+=======
+>>>>>>> 0cdfd5264c961bbdab099fe6aae0f930606ec6f9
 
 #Form to create an User
 class CreateUserForm(UserCreationForm):
@@ -71,6 +74,7 @@ class EditUserForm(forms.ModelForm):
 class EditExtendedDataForm(forms.ModelForm):
     class Meta:
         model = models.ExtendedData
+<<<<<<< HEAD
         fields = []
 
 class GameImageForm(forms.ModelForm):
@@ -80,3 +84,6 @@ class GameImageForm(forms.ModelForm):
         
         # El único campo que el usuario tiene que rellenar es la imagen
         fields = ['image']
+=======
+        fields = []
+>>>>>>> 0cdfd5264c961bbdab099fe6aae0f930606ec6f9
