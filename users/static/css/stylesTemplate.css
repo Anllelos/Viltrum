@@ -1,0 +1,121 @@
+/* Aplicar la fuente a toda la página */
+body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background-color: #efeff1;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos para el Header */
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #18181b;
+}
+
+.logo-container .logo {
+    max-width: 120px;
+}
+
+.nav-links a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+}
+
+.search-bar input {
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
+
+.search-bar button {
+    background-color: #2d2d2d;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.auth-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.auth-buttons .login-btn,
+.auth-buttons .register-btn {
+    color: white;
+    margin-left: 15px;
+    text-decoration: none;
+    background-color: #9147ff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.auth-buttons .user-icon {
+    color: white;
+    margin-left: 15px;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.dropdown-profile {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 3;
+    min-width: 160px;
+    border-radius: 5px;
+    margin-top: 5px;
+    right: 0;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #444;
+}
+
+/* Estilos de la página */
+
+
+/* Estilos para el Footer */
+.footer-container {
+    padding: 20px;
+    background-color: #18181b;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-links a,
+.footer-social a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer-social a {
+    font-size: 20px;
+}

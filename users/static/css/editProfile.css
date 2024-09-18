@@ -6,7 +6,7 @@
 
 body {
     color: white;
-    background: linear-gradient(45deg, rgb(56, 21, 39), black 60%, rgb(20, 44, 63));
+    background: #555;
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -99,13 +99,10 @@ main{
 /*---------------Form Container--------------*/
 
 .profile-container {
-    background: linear-gradient(#111, #111) padding-box, linear-gradient(45deg, rgb(199, 2, 94), rgb(2, 125, 240)) border-box;
-    border: 3px solid transparent;
-    border-radius: 10px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    background-color: #333;
     width: 100%;
-    max-width: 800px;
-    min-height: 695px;
+    max-width: 900px;
+    min-height: 700px;
     margin: 40px auto;
     padding: 25px 0px;
     text-align: center;
@@ -154,10 +151,19 @@ form {
     margin-bottom: 20px;
 }
 
+#cropButton{
+    background-color: #444;
+    color: white;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    margin: 10px;
+}
+
 .change-photo-btn {
     padding: 12px;
     width: 100%;
-    background: linear-gradient(#111, #111) padding-box, linear-gradient(45deg, rgb(199, 2, 94), rgb(2, 125, 240)) border-box;
+    background: #444;
     border: 1px solid transparent;
     border-radius: 10px;
     color: #d3d3d3;
@@ -166,7 +172,7 @@ form {
 }
 
 .change-photo-btn:hover {
-    box-shadow: 0px 0px 10px 5px rgb(38, 19, 90);
+    cursor: pointer;
 }
 
 .profile-data {
@@ -189,7 +195,7 @@ form {
 .profile-input {
     background: none;
     border: none;
-    border-bottom: rgb(70, 70, 70) 2px solid;
+    border-bottom: rgb(199, 2, 94) 2px solid;
     padding: 12px;
     width: 100%;
     color: #d3d3d3;
@@ -242,7 +248,7 @@ label {
     font-weight: bold;
     cursor: pointer;
     border: none;
-    background: linear-gradient(45deg, rgb(199, 2, 94), rgb(2, 125, 240));
+    background: #444;
     color: white;
 }
 
