@@ -72,10 +72,9 @@
                         <form method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div>
-                                <img id="imagePreview" src="{% if profile.image %}{{ profile.image.url }}{% endif %}" alt="Profile Image" style="max-width: 100%;">
+                                <img id="imagePreview" src="{% if profile.image %}{{ profile.image.url }}{% endif %}" style="max-width: 100%;">
                             </div>
                             <input type="file" id="imageInput" accept="image/*">
-                            <!-- Campo oculto para la imagen recortada -->
                             <input type="hidden" id="croppedImage" name="cropped_image">
                             <button type="button" id="cropButton">Recortar Imagen</button>
                             <button type="submit" class="change-photo-btn">
@@ -89,11 +88,6 @@
                             <div class="input-group">
                                 <input type="text" id="username" placeholder="Usuario" required class="profile-input">
                                 <label for="username">Nombre de Usuario</label>
-                            </div>
-                            <div class="input-group">
-                                <input type="email" id="email" placeholder="correo@mail.com" required
-                                    class="profile-input">
-                                <label for="email">Correo electrónico</label>
                             </div>
                             <div class="input-group">
                                 <input type="text" id="name" placeholder="Nombre" required class="profile-input">
@@ -113,6 +107,11 @@
                     <h2>Seguridad</h2>
                     <form>
                         <div class="profile-data">
+                            <div class="input-group">
+                                <input type="email" id="email" placeholder="correo@mail.com" required
+                                    class="profile-input">
+                                <label for="email">Correo electrónico</label>
+                            </div>
                             <div class="input-group">
                                 <input type="password" id="password" placeholder="Contraseña" required
                                     class="profile-input">

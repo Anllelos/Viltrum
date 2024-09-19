@@ -66,7 +66,7 @@ class PlayerStatsForm(forms.ModelForm):
 class EditUserForm(forms.ModelForm):
     class Meta:
         model = models.User
-        fields = []
+        fields = ['username', 'first_name', 'email']
 
 class EditExtendedDataForm(forms.ModelForm):
     class Meta:

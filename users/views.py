@@ -225,3 +225,6 @@ def games_stats(request):
         else:
             print(player_stats_form.errors)
     return render(request, 'game_stats.html', data_context)
+
+def sponsor_profile(request):
+    return render(request, 'sponsor_profile.html')
