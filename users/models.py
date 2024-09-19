@@ -45,19 +45,19 @@ class Clasificacion(models.Model):
     def __str__(self):
         return self.nombre
 
-#Model to add game stadistics to the user
+# Model to add game statistics to the user
 class PlayerStats(models.Model):
     TYPE_CHOICES = [
-    ("LoL", "League of Legends"),
-    ("D2", "Dota 2"),
-    ("CSGO", "Counter-Strike: Global Offensive"),
-    ("VAL", "Valorant"),
-    ("OW", "Overwatch"),
-    ("PUBG", "PlayerUnknown's Battlegrounds"),
-    ("FORT", "Fortnite"),
-    ("Apex", "Apex Legends"),
-    ("R6", "Rainbow Six Siege"),
-    ("RL", "Rocket League")
+        ("LoL", "League of Legends"),
+        ("D2", "Dota 2"),
+        ("CSGO", "Counter-Strike: Global Offensive"),
+        ("VAL", "Valorant"),
+        ("OW", "Overwatch"),
+        ("PUBG", "PlayerUnknown's Battlegrounds"),
+        ("FORT", "Fortnite"),
+        ("Apex", "Apex Legends"),
+        ("R6", "Rainbow Six Siege"),
+        ("RL", "Rocket League")
     ]   
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     user_game = models.CharField(max_length=50)
@@ -69,3 +69,36 @@ class PlayerStats(models.Model):
 
     class Meta:
         unique_together = ('user', 'game')
+
+
+# Definimos el modelo para cada juego
+class Game(models.Model):
+    name = models.CharField(max_length=100)  # Nombre del juego
+    description = models.TextField()  # Descripción del juego
+    cover_image = models.ImageField(upload_to='games/covers/', null=True, blank=True)  # Imagen de portada
+
+    def __str__(self):
+        return self.name
+
+
+# Modelo para almacenar imágenes subidas por los usuarios asociadas a un juego
+class GameImage(models.Model):
+    game = models.ForeignKey(Game, related_name='images', on_delete=models.CASCADE)  # Relación con el juego
+    image = models.ImageField(upload_to='games/images/')  # Imagen subida
+    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)  # Usuario que sube la imagen
+    upload_date = models.DateTimeField(auto_now_add=True)  # Fecha de subida automática
+
+    def __str__(self):
+        return f"Image of {self.game.name} by {self.uploaded_by.username}"
+
+
+# Modelo para crear torneos asociados a un juego
+class Tournament(models.Model):
+    game = models.ForeignKey(Game, related_name='tournaments', on_delete=models.CASCADE)  # Relación con el juego
+    name = models.CharField(max_length=100)  # Nombre del torneo
+    description = models.TextField()  # Descripción del torneo
+    start_date = models.DateTimeField()  # Fecha de inicio
+    end_date = models.DateTimeField()  # Fecha de fin
+
+    def __str__(self):
+        return f"Tournament {self.name} for {self.game.name}"

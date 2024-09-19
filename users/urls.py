@@ -18,7 +18,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('home/', views.home, name='home'),  # Ruta para la vista home
+    path('', views.home, name='home'),  # Ruta para la vista home
     path('register/', views.create_user, name='register'),  # Ruta para la página de registro
     path('profile/<str:username>', views.profile, name='profile'),
     path('profile/<str:username>/edit', views.edit_profile, name='edit_profile'),  # Ruta para la página de editar perfil
