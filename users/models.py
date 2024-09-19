@@ -1,12 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django_countries.fields import CountryField
 
 # Model for extra information for the user
 class ExtendedData(models.Model):
+    # Campos opcionales para actualización posterior
     profile_img = models.ImageField(null=True, blank=True, upload_to="images/profileimg")
     profile_banner = models.ImageField(null=True, blank=True, upload_to="images/profilebanner")
     user_description = models.TextField(null=True, blank=True)
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    
+    # Campos obligatorios en la creación
+    country = CountryField(blank_label='Selecciona tu país', null=True, blank=True)
+    birthdate = models.DateField(null=True, blank=True)
+    user = models.OneToOneField(User, null=False, on_delete=models.CASCADE)
 
 
 # Nuevos modelos

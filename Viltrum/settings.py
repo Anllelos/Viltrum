@@ -15,6 +15,8 @@ from pathlib import Path
 import os
 #Import to read .env
 from decouple import config
+#Redirect by name
+from django.urls import reverse_lazy
 
 """ API_KEY_STEAM = config('API_KEY_STEAM')
 API_KEY_RIOT = config('API_KEY_RIOT')
@@ -48,12 +50,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #Biblioteca de países
+    'django_countries',
 ]
 
 #Loggin set up
 LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/home'
-LOGOUT_REDIRECT_URL = '/home'
+LOGIN_REDIRECT_URL = reverse_lazy('home')
+LOGOUT_REDIRECT_URL = reverse_lazy('home')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

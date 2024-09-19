@@ -60,16 +60,29 @@ def edit_profile(request, username):
 
 def create_user(request):
     user_form = CreateUserForm()
-    user_extended_form = ProfilePicForm()
-    data_context = {'user_form':user_form, 'user_extended_form':user_extended_form}
+    sponsor_form = CreateSponsorForm()
+    user_extended_form = CreateExtendedDataForm()
+    data_context = {'user_form':user_form, 'sponsor_form':sponsor_form ,'user_extended_form':user_extended_form}
+
     if request.method == 'POST':
-        user_form = CreateUserForm(request.POST)
-        if user_form.is_valid():
-            user_form.save()
-            user_to_validate = User.objects.get(username=request.POST.get('username'))
-            user_extended_data = ExtendedData.objects.create(user=user_to_validate)
-            user_extended_data.save()
-            return redirect('login')
+        form_type = request.POST.get('submit_form')
+        if form_type == 'user_form':
+            user_form = CreateUserForm(request.POST)
+            if user_form.is_valid():
+                user_form.save()
+                user_to_validate = User.objects.get(username=request.POST.get('username'))                    
+                user_extended_data = ExtendedData.objects.create(user=user_to_validate, birthday=request.POST.get('birthday'), country=request.POST.get('country'))
+                user_extended_data.save()
+                return redirect('login')
+        elif form_type == 'sponsor_form':
+            sponsor_form = CreateSponsorForm(request.POST)
+            if sponsor_form.is_valid():
+                sponsor_form.save()
+                user_to_validate = User.objects.get(username=request.POST.get('username'))
+                user_extended_data = ExtendedData.objects.create(user=user_to_validate, country=request.POST.get('country'))
+                user_extended_data.save()
+                return redirect('login')
+
     return render(request, 'register.html', data_context)
 
 #Función para visualizar la pantalla principal con todos los datos

@@ -1,3 +1,4 @@
 Librerias de Python usadas:
 - pillow (Para procesar imagenes)
 - python-decouple (Para leer el archivo .env)
+- django-countries (Crear formularios con países de manera rápida)
