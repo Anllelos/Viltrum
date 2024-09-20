@@ -1,12 +1,25 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django_countries.fields import CountryField
 
 # Modelo para almacenar información adicional del usuario
 class ExtendedData(models.Model):
+<<<<<<< HEAD
     profile_img = models.ImageField(null=True, blank=True, upload_to="images/profileimg")  # Imagen de perfil
     profile_banner = models.ImageField(null=True, blank=True, upload_to="images/profilebanner")  # Banner de perfil
     user_description = models.TextField(null=True, blank=True)  # Descripción del usuario
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)  # Relación uno a uno con el usuario
+=======
+    # Campos opcionales para actualización posterior
+    profile_img = models.ImageField(null=True, blank=True, upload_to="images/profileimg")
+    profile_banner = models.ImageField(null=True, blank=True, upload_to="images/profilebanner")
+    user_description = models.TextField(null=True, blank=True)
+    
+    # Campos obligatorios en la creación
+    country = CountryField(blank_label='Selecciona tu país', null=True, blank=True)
+    birthdate = models.DateField(null=True, blank=True)
+    user = models.OneToOneField(User, null=False, on_delete=models.CASCADE)
+>>>>>>> 9c3c028b8289ffdb922f6da48ca423cd28a70492
 
 # Modelo para videojuegos
 class Videojuego(models.Model):

@@ -4,12 +4,43 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from . import models
 from django.utils.translation import gettext_lazy as _
 from .models import GameImage
+from django_countries.fields import CountryField
+from django.contrib.auth.models import Group
 
 # Form to create a User
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'email', 'last_name', 'password1', 'password2']
+    #Deifinir rol de usuario
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        if commit:
+            user.save()
+            player_group, created = Group.objects.get_or_create(name='Gamer')
+            user.groups.add(player_group)
+        
+        return user
+
+class CreateSponsorForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+    #Definir rol de sponsor
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        if commit:
+            user.save()
+            sponsor_group, created = Group.objects.get_or_create(name='Sponsor')
+            user.groups.add(sponsor_group)
+        
+        return user
+
+class CreateExtendedDataForm(forms.ModelForm):
+    birthdate = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))
+    class Meta:
+        model = models.ExtendedData
+        fields = ['country', 'birthdate']
 
 # Form to authenticate User
 class AuthenticationFormUser(AuthenticationForm):

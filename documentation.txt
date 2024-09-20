@@ -1,3 +1,0 @@
-Librerias de Python usadas:
-- pillow (Para procesar imagenes)
-- python-decouple (Para leer el archivo .env)
