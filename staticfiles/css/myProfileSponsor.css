@@ -1,0 +1,239 @@
+/* Aplicar la fuente a toda la página */
+body {
+    color: white;
+    font-family: 'IBM Plex Sans', sans-serif;
+    background-color: #efeff1;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+main{
+    flex: 1;
+}
+
+/* Estilos para el Header */
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #18181b;
+}
+
+.logo-container .logo {
+    max-width: 120px;
+}
+
+.nav-links a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+}
+
+.search-bar input {
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
+
+.search-bar button {
+    background-color: #2d2d2d;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.auth-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.auth-buttons .login-btn,
+.auth-buttons .register-btn {
+    color: white;
+    margin-left: 15px;
+    text-decoration: none;
+    background-color: #9147ff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.auth-buttons .user-icon {
+    color: white;
+    margin-left: 15px;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.dropdown-profile {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 3;
+    min-width: 160px;
+    border-radius: 5px;
+    margin-top: 5px;
+    right: 0;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #444;
+}
+
+/*-- Estilos de la página --*/
+
+.profile-container{
+    width: 98%;
+    margin: auto;
+    background-color: #333;
+    padding: 15px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/*-- Profile Header --*/
+.profile-banner {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    background-color: rgb(150, 150, 150);   
+    overflow: hidden;
+}
+
+.profile-banner img {
+    object-fit: cover;
+    width: 100%;
+}
+
+.profile-header-user {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: -75px;
+}
+
+.profile-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 30px;
+    z-index: 1;
+}
+
+.profile-image img {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+}
+
+.username {
+    margin: var(--margin-spacing);
+}
+
+.send-message {
+    margin-right: 30px;
+    text-decoration: none;
+    color: var(--text-color);
+    background-color: var(--main-color);
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.profile-header-info {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    margin-top: -50px;
+}
+
+.profile-header-info h3, 
+.profile-header-info p {
+    margin: var(--margin-spacing);
+}
+
+/*-- Profile Body --*/
+.profile-body{
+    background-color: #444;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    flex-wrap: wrap;
+    padding: 15px;
+    gap: 10px;  
+}
+
+.profile-products{
+    display: flex;
+    flex-direction: column;
+    background-color: #555;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.profile-products img{
+    position: relative;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    background-color: rgb(214, 214, 214);
+    border: none;
+    border-bottom: #000000 2 px solid;
+}
+
+.profile-products-info{
+    margin-left: 10px;
+}
+
+.profile-header-info a{
+    text-decoration: none;
+    color: white;
+}
+
+
+/* Estilos para el Footer */
+.footer-container {
+    padding: 20px;
+    background-color: #18181b;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-links a,
+.footer-social a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer-social a {
+    font-size: 20px;
+}

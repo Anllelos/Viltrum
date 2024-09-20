@@ -1,239 +1,272 @@
-/* Aplicar la fuente a toda la página */
+/* Global styles */
 body {
-    font-family: 'IBM Plex Sans', sans-serif;
-    background-color: #efeff1;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #fff;
+}
+
+h1, h2, h3, p {
     margin: 0;
     padding: 0;
 }
 
-/* Estilos para el Header */
-.header-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    background-color: #18181b;
+a {
+    text-decoration: none;
+    color: #fff;
 }
 
-.logo-container .logo {
-    max-width: 120px;
+a:hover {
+    color: #b3b3b3;
+}
+
+/* Header */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #1f1f1f;
+    border-bottom: 1px solid #333;
+}
+
+.logo-container img {
+    height: 50px;
 }
 
 .nav-links a {
-    color: white;
     margin: 0 15px;
-    text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
+    color: #fff;
 }
 
-.search-bar {
-    display: flex;
-    align-items: center;
+.nav-links a:hover {
+    color: #8a8a8a;
 }
 
-.search-bar input {
-    padding: 5px;
-    border-radius: 5px;
-    border: none;
-    outline: none;
-}
-
-.search-bar button {
-    background-color: #2d2d2d;
-    border: none;
-    padding: 5px;
-    cursor: pointer;
-}
-
+/* Auth Buttons */
 .auth-buttons {
     display: flex;
+    gap: 15px;
+}
+
+.auth-buttons .register-btn,
+.auth-buttons .login-btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.auth-buttons .register-btn {
+    background-color: #6c63ff;
+    border: none;
+    color: #fff;
+}
+
+.auth-buttons .register-btn:hover {
+    background-color: #5751cc;
+}
+
+.auth-buttons .login-btn {
+    background-color: transparent;
+    border: 2px solid #6c63ff;
+    color: #6c63ff;
+}
+
+.auth-buttons .login-btn:hover {
+    background-color: #6c63ff;
+    color: #fff;
+}
+
+/* Hero Section */
+.hero-section {
+    position: relative;
+    height: 400px;
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
-.auth-buttons .login-btn,
-.auth-buttons .register-btn {
-    color: white;
-    margin-left: 15px;
-    text-decoration: none;
-    background-color: #9147ff;
-    padding: 5px 10px;
-    border-radius: 5px;
-}
-
-.auth-buttons .user-icon {
-    color: white;
-    margin-left: 15px;
-    font-size: 16px;
-    text-decoration: none;
-}
-
-.dropdown-profile {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #333;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    min-width: 160px;
-    border-radius: 5px;
-    margin-top: 5px;
-    right: 0;
-}
-
-.dropdown-content a {
-    color: white;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    background-color: #444;
-}
-
-/* Estilos para el Hero Section */
-.hero-section {
-    position: relative;
-    text-align: center;
-    color: white;
-    padding: 100px 0; /* Ajusta el espacio para que sea más prominente */
-    background-image: url('https://upload-os-bbs.hoyolab.com/upload/2024/07/07/244570541/bad4bd158529164f7d71f44d98a77eb2_6769761301970742193.gif');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover; /* Hace que la imagen cubra todo el contenedor */
-}
-
-.banner {
-    background-image: url('https://upload-os-bbs.hoyolab.com/upload/2024/04/18/190435749/d90e47fd41f4d9c5af89b660a44f9a26_4231239746869581868.gif');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover; /* Hace que la imagen cubra todo el contenedor */
-    padding: 50px;
-    border-radius: 15px; /* Bordes redondeados para un mejor estilo */
-    max-width: 1000px; /* Limita el ancho del banner */
-    margin: 0 auto; /* Centra el banner */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Añade una sombra para destacar */
-}
-
-
-.banner h1 {
-    font-size: 3em; /* Texto más grande para el título */
-    margin-bottom: 20px;
-}
-
-.banner p {
-    font-size: 1.5em;
-    color: #f0f0f0;
-}
-
-/* Para asegurarnos de que el texto sea legible en el banner */
-.hero-section::before {
-    content: '';
+.hero-section .background-gif {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5); /* Un fondo semitransparente */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.hero-section .overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    padding: 50px;
+    border-radius: 10px;
     z-index: 1;
 }
 
-.banner h1, .banner p {
-    position: relative;
-    z-index: 2; /* Asegura que el texto esté por encima del fondo semitransparente */
+.hero-section h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
 }
 
-/* Estilos para las Portadas de Videojuegos */
-.game-covers-section {
-    padding: 40px 20px;
+.hero-section p {
+    font-size: 16px;
+    margin-bottom: 15px;
 }
 
-.game-covers-section h2 {
+
+/* Brand Carousel */
+.brand-carousel-section {
+    padding: 30px 20px; /* Reduced padding */
+    background-color: #1f1f1f;
     text-align: center;
-    margin-bottom: 30px;
-    font-size: 2em;
 }
 
-.game-cover-carousel {
-    margin: 0 auto;
-    max-width: 1200px; /* Ajusta según sea necesario */
+.brand-carousel-section h2 {
+    margin-bottom: 20px; /* Reduced margin */
+    font-size: 24px; /* Reduced font size */
+    font-weight: 600;
 }
 
-.game-cover-card {
-    background-color: white;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    padding: 10px;
-    transition: transform 0.3s;
-}
-
-.game-cover-card img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.game-cover-card p {
-    margin-top: 10px;
-    font-weight: 500;
-}
-
-.game-cover-card:hover {
-    transform: translateY(-5px);
-}
-
-/* Estilos para el Main */
-main {
-    padding: 20px;
-    background-color: #efeff1;
-}
-
-.content-section, .tournaments-section, .leaderboards-section, .teams-section {
-    padding: 40px 20px;
-}
-
-.streaming-grid, .tournament-grid, .leaderboard-grid, .team-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    padding: 20px;
-}
-
-.streaming-card, .tournament-card, .leaderboard-card, .team-card {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    transition: transform 0.3s;
-}
-
-.streaming-card:hover, .tournament-card:hover, .leaderboard-card:hover, .team-card:hover {
-    transform: translateY(-5px);
-}
-
-/* Estilos para el Footer */
-.footer-container {
-    padding: 20px;
-    background-color: #18181b;
-    color: white;
+.brand-carousel {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 }
 
-.footer-links a,
-.footer-social a {
-    color: white;
-    text-decoration: none;
-    margin: 0 10px;
+.brand-carousel .brand-item img {
+    height: 30px; /* Further reduced logo size */
+    transition: transform 0.3s ease;
 }
 
-.footer-social a {
-    font-size: 20px;
+.brand-carousel .brand-item img:hover {
+    transform: scale(1.2); /* Enlarged on hover */
+}
+
+/* Festival Section */
+.festival-section {
+    background: url('../images/INICIO/fondorojo.jpg') no-repeat center center/cover;
+    padding: 20px 20px; /* Reduced padding */
+    display: flex; /* Flex for layout */
+    justify-content: space-between; /* Aligned content */
+    gap: 20px;
+    height: 550px; /* Reduced height */
+}
+
+
+.festival-content {
+    flex: 1;
+    padding: 10px;
+}
+
+.festival-content h2 {
+    font-size: 44px; /* Reduced font size */
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.festival-content p {
+    font-size: 24px;
+    line-height: 1.4;
+    margin-bottom: 15px;
+}
+
+.festival-content a {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #ff0000;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.festival-content a:hover {
+    background-color: #cc0000;
+}
+
+.festival-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.festival-image img {
+    max-width: 45%; /* Reduced image size */
+    border-radius: 5px;
+}
+
+/* Activities Section */
+.activities-section {
+    padding: 40px 20px; /* Reduced padding */
+    background-color: #121212;
+    text-align: center;
+}
+
+.activities-section h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+.activities-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+}
+
+.activity-card {
+    background-color: #1f1f1f;
+    padding: 15px;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    width: 28%; /* Adjusted width */
+}
+
+.activity-card img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.activity-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.activity-card p {
+    font-size: 14px;
+    color: #b3b3b3;
+}
+
+.activity-card:hover {
+    transform: scale(1.05);
+}
+
+/* Footer */
+.footer-container {
+    background-color: #1f1f1f;
+    padding: 15px 20px; /* Reduced padding */
+    text-align: center;
+    border-top: 1px solid #333;
+}
+
+.footer-container p {
+    margin-bottom: 5px;
+    font-size: 12px; /* Reduced font size */
+}
+
+.footer-links a {
+    margin: 0 5px;
+    font-size: 12px;
+    color: #8a8a8a;
+}
+
+.footer-links a:hover {
+    color: #fff;
 }

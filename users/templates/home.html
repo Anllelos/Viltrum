@@ -1,217 +1,133 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content="Home Screen" />
-    <title>Página Principal</title>
-    {% load static %}
-    <!-- Font Import -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
-    <link type="text/css" rel="stylesheet" href="{% static 'css/home.css' %}" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <!-- Slick Carousel CSS -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
-    />
-  </head>
-
-  <body>
-    <!-- Header -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Home Screen">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viltrum - Plataforma de eSports</title>
+    <!-- Fuente desde Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+    <!-- Enlace al archivo CSS -->
+    <link type="text/css" rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+    <!-- Header Mejorado -->
     <header>
-      <div class="header-container">
-        <div class="logo-container">
-          <a href="{% url 'home' %}">
-          <img
-            src="{% static 'images/ninjaviltrum.png' %}"
-            alt="Logo"
-            class="logo"
-          />
-          </a>
-        </div>
-        <nav class="nav-links">
-          <a href="#">Inicio</a>
-          <a href="#">Explorar</a>
-          <a href="#">Suscripciones</a>
-          <a href="#">Tienda</a>
-          <a href="#">Torneos</a>
-          <a href="#">Clasificaciones</a>
-          <a href="#">Equipos</a>
-        </nav>
-        <div class="search-bar">
-          <input type="text" placeholder="Buscar" />
-          <button type="submit"><i class="fas fa-search"></i></button>
-        </div>
-        <div class="auth-buttons">
-          {% if user.is_authenticated %}
-          <div class="dropdown-profile">
-            <a
-              href="#"
-              aria-haspopup="true"
-              aria-expanded="false"
-              class="user-icon"
-              id="userIcon"
-            >
-              <i class="fa-solid fa-user"></i>
-              {{ user }}
-            </a>
-            <div class="dropdown-content" id="dropdownMenu">
-              <a href="{% url 'profile' username=user.username %}">Perfil</a>
-              <a href="{% url 'edit_profile' username=user.username %}">Editar Perfil</a>
-              <a href="{% url 'games_stats' %}">Añadir Estadísticas</a>
-              <a href="{% url 'user_logout' %}">Cerrar sesión</a>
+        <div class="header-container">
+            <!-- Logo -->
+            <div class="logo-container">
+                <a href="{% url 'home' %}">
+                    <img src="{% static 'images/ninjaviltrum.png' %}" alt="Logo" class="logo">
+                </a>
             </div>
-          </div>
-          {% else %}
-          <a href="{% url 'login' %}" class="login-btn">Iniciar Sesión</a>
-          <a href="{% url 'register' %}" class="register-btn">Regístrate</a>
-          {% endif %}
+            <!-- Navegación -->
+            <nav class="nav-links">
+                <a href="#">Inicio</a>
+                <a href="#">Explorar</a>
+                <a href="#">Suscripciones</a>
+                <a href="#">Tienda</a>
+                <a href="#">Torneos</a>
+                <a href="#">Clasificaciones</a>
+                <a href="#">Equipos</a>
+            </nav>
+            <!-- Botones de Registro/Iniciar Sesión -->
+            <div class="auth-buttons">
+                <button class="login-btn">Iniciar Sesión</button>
+                <button class="register-btn">Regístrate</button>
+            </div>
         </div>
-      </div>
     </header>
 
-    <!-- Main Content -->
-    <main>
-      <!-- Banner Section -->
-      <div class="hero-section">
-        <div class="banner">
-          <h1>Bienvenido a la plataforma de eSports</h1>
+    <!-- Sección de Hero -->
+    <section class="hero-section">
+      <div class="overlay">
+          <h1>Bienvenido a Viltrum</h1>
+          <p>Únete a torneos, compite en equipos y escala en las clasificaciones.</p>
+      </div>
+      <img src="https://media1.tenor.com/m/nFCWEjg4XDoAAAAd/zenless-zone-zero-zzz.gif" alt="Background GIF" class="background-gif">
+    </section>
+  
+  
+
+    <!-- Carrusel de Patrocinadores -->
+    <section class="brand-carousel-section">
+        <h2>Patrocinadores</h2>
+        <div class="brand-carousel">
+            <div class="brand-item">
+                <img src="{% static 'images/INICIO/TELCEL.png' %}" alt="Telcel">
+            </div>
+            <div class="brand-item">
+                <img src="{% static 'images/INICIO/HISENSE.png' %}" alt="Hisense">
+            </div>
+            <div class="brand-item">
+                <img src="{% static 'images/INICIO/AMAZONADS.png' %}" alt="Amazon Ads">
+            </div>
+            <div class="brand-item">
+                <img src="{% static 'images/INICIO/LENOVO.png' %}" alt="Lenovo">
+            </div>
+            <div class="brand-item">
+                <img src="{% static 'images/INICIO/INTEL.png' %}" alt="Intel">
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Festival -->
+    <section class="festival-section">
+      <div class="festival-content">
+          <h2>Viltrum - Plataforma de eSports</h2>
           <p>
-            Únete a torneos, compite en equipos y escala en las clasificaciones.
+              Viltrum es la plataforma definitiva para los apasionados de los eSports. Ofrecemos un espacio dinámico donde los jugadores de todos los niveles pueden participar en torneos emocionantes, formar equipos y competir por la gloria en las clasificaciones. Con una comunidad en constante crecimiento, Viltrum se convierte en el hogar de los mejores talentos y aficionados de todo el mundo.
           </p>
-        </div>
+          <p>
+              Nuestra plataforma te brinda la oportunidad de mostrar tus habilidades, conectar con otros jugadores y escalar hasta la cima en un entorno competitivo pero inclusivo. ¿Eres un espectador? También puedes disfrutar viendo las partidas en vivo y apoyar a tus equipos y jugadores favoritos. ¡Aquí, cada partida cuenta!
+          </p>
+          <p>
+              Únete a nosotros y vive la emoción de los eSports en un entorno diseñado para que todos puedan brillar. ¡Viltrum es donde el futuro de los deportes electrónicos se juega hoy!
+          </p>
+          <a href="#">Registrarse ahora</a>
       </div>
+      <div class="festival-image">
+          <img src="{% static 'images/INICIO/chicojugando.jpg' %}" alt="Viltrum Image">
+      </div>
+    </section>
+  
 
-      <!-- Sección de Portadas de Videojuegos -->
-      <div class="game-covers-section">
-        <h2>Explorar Juegos</h2>
-        <div class="game-cover-carousel">
-          {% for juego in videojuegos %}
-          <div class="game-cover-card">
-            <img src="{{ juego.portada.url }}" alt="{{ juego.nombre }}" />
-            <p>{{ juego.nombre }}</p>
-          </div>
-          {% endfor %}
+    <!-- Sección de Actividades -->
+    <section class="activities-section">
+        <h2>¿Qué hacer en Viltrum?</h2>
+        <div class="activities-container">
+            <!-- Cuadro 1: Azul -->
+            <div class="activity-card">
+              <img src="{% static 'images/INICIO/AZUL.jpg' %}" alt="Cuadro Azul">
+                <h3>Compite en Torneos</h3>
+                <p>Únete a nuestros torneos regulares y muestra tus habilidades frente a los mejores jugadores.</p>
+            </div>
+            <!-- Cuadro 2: Rojo -->
+            <div class="activity-card">
+              <img src="{% static 'images/INICIO/ROJO.jpg' %}" alt="Cuadro Rojo">
+                <h3>Crea Equipos</h3>
+                <p>Forma equipos con otros jugadores y escala juntos hasta la cima de las clasificaciones.</p>
+            </div>
+            <!-- Cuadro 3: Amarillo -->
+            <div class="activity-card">
+                <img src="{% static 'images/INICIO/AMARILLO.jpg' %}" alt="Cuadro Amarillo">
+                <h3>Espectadores</h3>
+                <p>Disfruta viendo partidas en vivo y apoya a tus jugadores favoritos en cada torneo.</p>
+            </div>
         </div>
-      </div>
-
-      <!-- Otras secciones existentes -->
-      <div class="content-section">
-        <h2>Streamings Destacados</h2>
-        <div class="streaming-grid">
-          <div class="streaming-card">Stream 1</div>
-          <div class="streaming-card">Stream 2</div>
-          <div class="streaming-card">Stream 3</div>
-          <div class="streaming-card">Stream 4</div>
-        </div>
-      </div>
-      <div class="tournaments-section">
-        <h2>Torneos Activos</h2>
-        <div class="tournament-grid">
-          <div class="tournament-card">Torneo 1</div>
-          <div class="tournament-card">Torneo 2</div>
-          <div class="tournament-card">Torneo 3</div>
-          <div class="tournament-card">Torneo 4</div>
-        </div>
-      </div>
-      <div class="leaderboards-section">
-        <h2>Clasificaciones</h2>
-        <div class="leaderboard-grid">
-          <div class="leaderboard-card">Clasificación 1</div>
-          <div class="leaderboard-card">Clasificación 2</div>
-          <div class="leaderboard-card">Clasificación 3</div>
-          <div class="leaderboard-card">Clasificación 4</div>
-        </div>
-      </div>
-      <div class="teams-section">
-        <h2>Equipos Populares</h2>
-        <div class="team-grid">
-          <div class="team-card">Equipo 1</div>
-          <div class="team-card">Equipo 2</div>
-          <div class="team-card">Equipo 3</div>
-          <div class="team-card">Equipo 4</div>
-        </div>
-      </div>
-    </main>
+    </section>
 
     <!-- Footer -->
-    <footer>
-      <div class="footer-container">
+    <footer class="footer-container">
+        <p>© 2024 Viltrum. Todos los derechos reservados.</p>
         <div class="footer-links">
-          <a href="#">Acerca de</a>
-          <a href="#">Contacto</a>
-          <a href="#">Privacidad</a>
-          <a href="#">Términos</a>
-          <a href="#">Ayuda</a>
+            <a href="#">Acerca de</a>
+            <a href="#">Contacto</a>
+            <a href="#">Privacidad</a>
+            <a href="#">Términos</a>
+            <a href="#">Ayuda</a>
         </div>
-        <div class="footer-social">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-youtube"></i></a>
-        </div>
-      </div>
     </footer>
-
-    <!-- Slick Carousel JS -->
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
-    ></script>
-    <script type="text/javascript">
-      $(document).ready(function () {
-        $(".game-cover-carousel").slick({
-          slidesToShow: 4,
-          slidesToScroll: 1,
-          autoplay: true,
-          autoplaySpeed: 2000,
-          dots: true,
-          arrows: true,
-          responsive: [
-            {
-              breakpoint: 1024,
-              settings: {
-                slidesToShow: 3,
-                slidesToScroll: 1,
-              },
-            },
-            {
-              breakpoint: 768,
-              settings: {
-                slidesToShow: 2,
-                slidesToScroll: 1,
-              },
-            },
-            {
-              breakpoint: 480,
-              settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1,
-              },
-            },
-          ],
-        });
-      });
-    </script>
-    <script src="{% static 'js/dropMenu.js' %}"></script>
-  </body>
+</body>
 </html>

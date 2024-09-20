@@ -1,3 +1,6 @@
+import os
+import glob
+from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from .forms import *
@@ -25,8 +28,6 @@ def profile(request, username):
         data_context['game_exist'] = True
 
     return render(request, 'profile.html', data_context)
-
-
 
 @login_required
 def edit_profile(request, username):
@@ -74,8 +75,21 @@ def create_user(request):
 
 #Función para visualizar la pantalla principal con todos los datos
 def home(request):
-    videojuegos = Videojuego.objects.all()  # Obtén todos los juegos de la base de datos
-    return render(request, 'home.html', {'videojuegos': videojuegos})
+    videojuegos = Videojuego.objects.all()  # Obtener todos los juegos de la base de datos
+
+    # Directorio de las imágenes del carrusel
+    carrusel_dir = os.path.join(settings.BASE_DIR, 'static/images/CarruselHome')
+
+    # Usar glob para encontrar todas las imágenes
+    carrusel_images = glob.glob(os.path.join(carrusel_dir, '*'))
+
+    # Normalizar la ruta para asegurarse de que las barras estén correctamente formateadas
+    carrusel_images = [os.path.basename(os.path.normpath(image)) for image in carrusel_images if image.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
+
+    return render(request, 'home.html', {
+        'videojuegos': videojuegos,
+        'carrusel_images': carrusel_images,  # Pasamos las imágenes del carrusel al template
+    })
 
 @login_required
 #Función para subir los streams
@@ -102,7 +116,7 @@ def subir_torneo(request):
     return render(request, 'subir_torneo.html', {'form': form})
 
 @login_required
-#Función para subir un las clasificaciones
+#Función para subir las clasificaciones
 def subir_clasificacion(request):
     if request.method == 'POST':
         form = ClasificacionForm(request.POST, request.FILES)
@@ -132,7 +146,6 @@ def user_logout(request):
     return redirect('home')
 
 #Player stats upload
-
 @login_required
 def games_stats(request):
     player_stats_form = PlayerStatsForm()

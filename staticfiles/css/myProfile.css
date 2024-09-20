@@ -1,0 +1,273 @@
+/*-------------------- General Styles ---------------------*/
+
+:root {
+    --main-color: #555;
+    --text-color: #ffffff;
+    --margin-spacing: 10px;
+}
+
+* {
+    font-family: 'IBM Plex Sans', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    color: white;
+    background-color: #efeff1;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main{
+    flex: 1;
+}
+
+/*--------------------------- Nav Bar -------------------------*/
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #18181b;
+}
+
+.logo-container .logo {
+    max-width: 120px;
+}
+
+.nav-links a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+}
+
+.search-bar input {
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
+
+.search-bar button {
+    background-color: #2d2d2d;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.auth-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.auth-buttons .login-btn,
+.auth-buttons .register-btn {
+    color: white;
+    margin-left: 15px;
+    text-decoration: none;
+    background-color: #9147ff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.auth-buttons .user-icon {
+    color: white;
+    margin-left: 15px;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.dropdown-profile {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    min-width: 160px;
+    border-radius: 5px;
+    margin-top: 5px;
+    right: 0;
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #444;
+}
+
+
+/*-----------------Main container------------------*/
+
+.profile-container{
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    background-color: #333;
+    padding: 15px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/*-- Profile Header --*/
+.profile-banner {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    background-color: rgb(150, 150, 150);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.profile-banner img {
+    object-fit: cover;
+    width: 100%;
+}
+
+.profile-header-user {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: -75px;
+}
+
+.profile-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 30px;
+    z-index: 1;
+}
+
+.profile-image img {
+    border-radius: 50%;
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+}
+
+.username {
+    margin: var(--margin-spacing);
+}
+
+.send-message {
+    margin-right: 30px;
+    text-decoration: none;
+    color: var(--text-color);
+    background-color: var(--main-color);
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.profile-header-info {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    margin-top: -50px;
+}
+
+.profile-header-info h3, 
+.profile-header-info p {
+    margin: var(--margin-spacing);
+}
+
+/*-- Profile Body --*/
+.profile-body{
+    background-color: #444;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    gap: 10px;
+    justify-content: center;
+}
+
+.profile-game{
+    display: flex;
+    width: 49%;
+    background-color: #555;
+    overflow: hidden;
+    padding: 5px;
+}
+
+.profile-game img{
+    position: relative;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    margin: auto 20px;
+    background-color: white;
+}
+
+.profile-game-info{
+    margin-left: 10px;
+}
+
+/*-- Profile Footer --*/
+
+.profile-footer{
+    text-align: center;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #444;
+    margin-top: 10px;
+    border-radius: 10px;
+
+}
+
+.profile-footer a {
+    font-size: 18px;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    display: inline-flex; /* Para centrar el contenido dentro del círculo */
+    justify-content: center;
+    align-items: center;
+}
+
+/*-----------------Footer-------------------*/
+
+.footer-container {
+    padding: 20px;
+    background-color: #18181b;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-links a,
+.footer-social a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer-social a {
+    font-size: 20px;
+}

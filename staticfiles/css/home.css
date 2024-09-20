@@ -1,0 +1,256 @@
+/* Global styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #fff;
+}
+
+h1, h2, h3, p {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+}
+
+a:hover {
+    color: #b3b3b3;
+}
+
+/* Header */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #1f1f1f;
+    border-bottom: 1px solid #333;
+}
+
+.logo-container img {
+    height: 50px;
+}
+
+.nav-links a {
+    margin: 0 15px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.nav-links a:hover {
+    color: #8a8a8a;
+}
+
+/* Auth Buttons */
+.auth-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.auth-buttons .register-btn,
+.auth-buttons .login-btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.auth-buttons .register-btn {
+    background-color: #6c63ff;
+    border: none;
+    color: #fff;
+}
+
+.auth-buttons .register-btn:hover {
+    background-color: #5751cc;
+}
+
+.auth-buttons .login-btn {
+    background-color: transparent;
+    border: 2px solid #6c63ff;
+    color: #6c63ff;
+}
+
+.auth-buttons .login-btn:hover {
+    background-color: #6c63ff;
+    color: #fff;
+}
+
+/* Hero Section */
+.hero-section {
+    background: url('../images/login_background.gif') no-repeat center center/cover;
+    height: 400px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-section .overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    padding: 50px;
+    border-radius: 10px;
+}
+
+.hero-section h1 {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.hero-section p {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+/* Brand Carousel */
+.brand-carousel-section {
+    padding: 50px 30px;
+    background-color: #1f1f1f;
+    text-align: center;
+}
+
+.brand-carousel-section h2 {
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.brand-carousel {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.brand-carousel .brand-item img {
+    height: 70px;
+    filter: grayscale(100%);
+    transition: filter 0.3s ease;
+}
+
+.brand-carousel .brand-item img:hover {
+    filter: grayscale(0);
+}
+
+/* Activities Section */
+.activities-section {
+    padding: 50px 30px;
+    background-color: #121212;
+    text-align: center;
+}
+
+.activities-section h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.activities-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.activity-card {
+    background-color: #1f1f1f;
+    padding: 20px;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    width: 30%;
+}
+
+.activity-card img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.activity-card h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.activity-card p {
+    font-size: 16px;
+    color: #b3b3b3;
+}
+
+.activity-card:hover {
+    transform: scale(1.05);
+}
+
+/* Footer */
+.footer-container {
+    background-color: #1f1f1f;
+    padding: 20px 30px;
+    text-align: center;
+    border-top: 1px solid #333;
+}
+
+.footer-container p {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.footer-links a {
+    margin: 0 10px;
+    font-size: 14px;
+    color: #8a8a8a;
+}
+
+.footer-links a:hover {
+    color: #fff;
+}
+
+/* Activities Section */
+.activities-section {
+    padding: 50px 30px;
+    background-color: #121212;
+    text-align: center;
+}
+
+.activities-section h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.activities-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.activity-card {
+    background-color: #1f1f1f;
+    padding: 20px;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    width: 30%;
+}
+
+.activity-card img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.activity-card h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.activity-card p {
+    font-size: 16px;
+    color: #b3b3b3;
+}
+
+.activity-card:hover {
+    transform: scale(1.05);
+}
+
