@@ -7,7 +7,7 @@ from .models import GameImage
 from django_countries.fields import CountryField
 from django.contrib.auth.models import Group
 
-# Form to create a User
+# Formulario para crear usuario jugador "Gamer"
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
@@ -21,7 +21,8 @@ class CreateUserForm(UserCreationForm):
             user.groups.add(player_group)
         
         return user
-
+    
+# Formulario para crear usuario sponsor "sponsor"
 class CreateSponsorForm(UserCreationForm):
     class Meta:
         model = User
@@ -36,11 +37,16 @@ class CreateSponsorForm(UserCreationForm):
         
         return user
 
-class CreateExtendedDataForm(forms.ModelForm):
+class UserExtendedDataForm(forms.ModelForm):
     birthdate = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))
     class Meta:
         model = models.ExtendedData
         fields = ['country', 'birthdate']
+
+class SponsorExtendedDataForm(forms.ModelForm):
+    class Meta:
+        model = models.ExtendedData
+        fields = ['country']
 
 # Form to authenticate User
 class AuthenticationFormUser(AuthenticationForm):

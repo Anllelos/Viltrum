@@ -6,26 +6,56 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.core.files.base import ContentFile
 import base64
+from django.http import Http404
 
-def profile(request, username):
+
+
+#Verificación de roles dentro de la página
+def profile_redirect(request):
+    user = request.user
+
+    if not user.is_authenticated:
+        return redirect('login') 
+
+    # Verifica si el usuario es patrocinador "Sponsor"
+    if user.groups.filter(name='Sponsor').exists():
+        return redirect('profile_sponsor', username=user.username)
+
+    # Verifica si el usuario es jugador "Gamer"
+    elif user.groups.filter(name='Gamer').exists():
+        return redirect('profile', username=user.username)
+
+    return redirect('home')
+
+def profile_user(request, username):
     # Buscar al usuario por el nombre de usuario en lugar del ID del request
     user_to_validate = get_object_or_404(User, username=username)
-    extended_data_table = get_object_or_404(ExtendedData, user=user_to_validate)
-    game_stats_table = PlayerStats.objects.filter(user=user_to_validate)
+    if user_to_validate.groups.filter(name='Gamer').exists():
+        extended_data_table = get_object_or_404(ExtendedData, user=user_to_validate)
+        game_stats_table = PlayerStats.objects.filter(user=user_to_validate)
     
-    data_context = {'profile': extended_data_table, 'profile_user': user_to_validate}
+        data_context = {'profile': extended_data_table, 'profile_user': user_to_validate}
 
-    # Si hay estadísticas de juegos, calcular el winrate
-    if game_stats_table.exists():
-        for game in game_stats_table:
-            total_games = game.wins + game.losses
-            game.winrate = (game.wins / total_games) * 100 if total_games > 0 else 0
-        data_context['games'] = game_stats_table
+        # Si hay estadísticas de juegos, calcular el winrate
+        if game_stats_table.exists():
+            for game in game_stats_table:
+                total_games = game.wins + game.losses
+                game.winrate = (game.wins / total_games) * 100 if total_games > 0 else 0
+            data_context['games'] = game_stats_table
+        else:
+            data_context['game_exist'] = True
+
+        return render(request, 'profile.html', data_context)
     else:
-        data_context['game_exist'] = True
+        raise Http404("No existe ese usuario")
 
-    return render(request, 'profile.html', data_context)
-
+def profile_sponsor(request, username):
+    user_to_validate = get_object_or_404(User, username=username)
+    if user_to_validate.groups.filter(name='Sponsor').exists():
+        data_context = {'profile_sponsor': user_to_validate}
+        return render(request, 'profile_sponsor.html', data_context)
+    else:
+        raise Http404("No existe ese usuario")
 
 
 @login_required
@@ -61,19 +91,22 @@ def edit_profile(request, username):
 def create_user(request):
     user_form = CreateUserForm()
     sponsor_form = CreateSponsorForm()
-    user_extended_form = CreateExtendedDataForm()
-    data_context = {'user_form': user_form, 'sponsor_form': sponsor_form, 'user_extended_form': user_extended_form}
+    user_extended_form = UserExtendedDataForm()
+    sponsor_extended_form = SponsorExtendedDataForm()
+    data_context = {'user_form': user_form, 
+                    'sponsor_form': sponsor_form, 
+                    'user_extended_form': user_extended_form, 
+                    'sponsor_extended_form':sponsor_extended_form
+                    }
 
     if request.method == 'POST':
         form_type = request.POST.get('submit_form')
         if form_type == 'user_form':
             user_form = CreateUserForm(request.POST)
-            user_extended_form = CreateExtendedDataForm(request.POST)
+            user_extended_form = UserExtendedDataForm(request.POST)
 
             if user_form.is_valid() and user_extended_form.is_valid():
                 user = user_form.save()
-                #Asignación de roles
-                #-----------------# 
                 extended_data = user_extended_form.save(commit=False)
                 extended_data.user = user
                 extended_data.save()
@@ -84,12 +117,10 @@ def create_user(request):
 
         elif form_type == 'sponsor_form':
             sponsor_form = CreateSponsorForm(request.POST)
-            user_extended_form = CreateExtendedDataForm(request.POST)
+            user_extended_form = SponsorExtendedDataForm(request.POST)
 
             if sponsor_form.is_valid() and user_extended_form.is_valid():
                 sponsor = sponsor_form.save()
-                #Asignación de roles
-                #-----------------# 
                 extended_data = user_extended_form.save(commit=False)
                 extended_data.user = sponsor
                 extended_data.save()
@@ -254,5 +285,3 @@ def games_stats(request):
             print(player_stats_form.errors)
     return render(request, 'game_stats.html', data_context)
 
-def sponsor_profile(request):
-    return render(request, 'sponsor_profile.html')

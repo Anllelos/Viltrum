@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="description" content="" />
-  <title>Sponsor | {{user}}</title>
+  <title>Sponsor | {{profile_sponsor.username}}</title>
   {% load static %}
   <!-- Font Import -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -49,8 +49,7 @@
             {{ user }}
           </a>
           <div class="dropdown-content" id="dropdownMenu">
-            <a href="{% url 'profile' username=user.username %}">Perfil</a>
-            <a href="{% url 'edit_profile' username=user.username %}">Editar Perfil</a>
+            <a href="{% url 'redirect_profile' %}">Perfil</a>
             <a href="{% url 'games_stats' %}">Añadir Estadísticas</a>
             <a href="{% url 'user_logout' %}">Cerrar sesión</a>
           </div>
@@ -71,8 +70,8 @@
         </div>
         <div class="profile-header-user">
           <div class="profile-image">
-            <img src="https://ui-avatars.com/api/?name=Razer" alt="Foto de perfil" id="profile-pic">
-            <h2 class="username">Sponsor Name</h2>
+            <img src="https://ui-avatars.com/api/?name={{profile_sponsor.username}}" alt="Foto de perfil" id="profile-pic">
+            <h2 class="username">{{profile_sponsor.username}}</h2>
           </div>
         </div>
         <div class="profile-header-info">

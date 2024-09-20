@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django_countries.fields import CountryField
 
-# Model for extra information for the user
+# Modelo para información extra de usuarios (Jugadores Y Patrocinadores)
 class ExtendedData(models.Model):
     # Campos opcionales para actualización posterior
     profile_img = models.ImageField(null=True, blank=True, upload_to="images/profileimg")
@@ -13,6 +13,39 @@ class ExtendedData(models.Model):
     country = CountryField(blank_label='Selecciona tu país', null=True, blank=True)
     birthdate = models.DateField(null=True, blank=True)
     user = models.OneToOneField(User, null=False, on_delete=models.CASCADE)
+
+# Modelo para agregar estadísticas de juego
+class PlayerStats(models.Model):
+    TYPE_CHOICES = [
+        ("LoL", "League of Legends"),
+        ("D2", "Dota 2"),
+        ("CSGO", "Counter-Strike: Global Offensive"),
+        ("VAL", "Valorant"),
+        ("OW", "Overwatch"),
+        ("PUBG", "PlayerUnknown's Battlegrounds"),
+        ("FORT", "Fortnite"),
+        ("Apex", "Apex Legends"),
+        ("R6", "Rainbow Six Siege"),
+        ("RL", "Rocket League")
+    ]   
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_game = models.CharField(max_length=50)
+    game = models.CharField(max_length=5, choices=TYPE_CHOICES)
+    rank = models.CharField(max_length=50)
+    wins = models.IntegerField(default=0)
+    losses = models.IntegerField(default=0)
+    total_played = models.IntegerField(default=0)
+
+    class Meta:
+        unique_together = ('user', 'game')
+
+# Modelo para agregar productos de patrocinador
+class SponsorProducts(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product_name = models.CharField(max_length=254)
+    product_description = models.CharField(max_length=512)
+    product_image = models.ImageField(null=True, blank=True, upload_to="images/sponsorProducts")
+
 
 
 # Nuevos modelos
@@ -50,32 +83,6 @@ class Clasificacion(models.Model):
 
     def __str__(self):
         return self.nombre
-
-# Model to add game statistics to the user
-class PlayerStats(models.Model):
-    TYPE_CHOICES = [
-        ("LoL", "League of Legends"),
-        ("D2", "Dota 2"),
-        ("CSGO", "Counter-Strike: Global Offensive"),
-        ("VAL", "Valorant"),
-        ("OW", "Overwatch"),
-        ("PUBG", "PlayerUnknown's Battlegrounds"),
-        ("FORT", "Fortnite"),
-        ("Apex", "Apex Legends"),
-        ("R6", "Rainbow Six Siege"),
-        ("RL", "Rocket League")
-    ]   
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    user_game = models.CharField(max_length=50)
-    game = models.CharField(max_length=5, choices=TYPE_CHOICES)
-    rank = models.CharField(max_length=50)
-    wins = models.IntegerField(default=0)
-    losses = models.IntegerField(default=0)
-    total_played = models.IntegerField(default=0)
-
-    class Meta:
-        unique_together = ('user', 'game')
-
 
 # Definimos el modelo para cada juego
 class Game(models.Model):
