@@ -18,6 +18,7 @@
             <h2>Registro</h2>
             <form action="" method="POST">
                 {% csrf_token %}
+                <input type="hidden" name="submit_form" value="user_form">
                 <div class="login-data">
                     <div class="input-group">
                         <input type="text" name="first_name" maxlength="150" class="login-input" id="name" placeholder="Nombre">
@@ -66,6 +67,48 @@
                 <p>¿Eres un patrocinador? <a href="#">Registrate aquí</a></p>
             </form>
         </div>
+        <!-- Formulario de pruebas para sponsor temporal -->
+         <p>-------------------------------------------------------------------------------------</p>
+         <div>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="submit_form" value="sponsor_form">
+                <div class="login-data">
+                    <div class="input-group">
+                        <input type="text" name="username" maxlength="150" class="login-input" id="username" placeholder="Nombre de usuario">
+                        <label for="username">Usuario</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" name="email" maxlength="254" class="login-input" id="email" placeholder="Correo">
+                        <label for="email">Correo</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" name="password1" autocomplete="new-password" class="login-input" id="id_password1" placeholder="Contraseña" aria-describedby="id_password1_helptext">
+                        <label for="password1">Contraseña</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" name="password2" autocomplete="new-password" class="login-input" id="id_password2" placeholder="Repetir Contraseña" aria-describedby="id_password2_helptext">
+                        <label for="password2">Confirmar Contraseña</label>
+                    </div>
+                    <div class="input-group">
+                        {{user_extended_form.country}}
+                    </div>
+                </div>
+                <div id="password-requirements">
+                    <p id="length" class="invalid">Al menos 8 caracteres</p>
+                    <p id="number" class="invalid">Al menos un número</p>
+                    <p id="uppercase" class="invalid">Al menos una letra mayúscula</p>
+                    <p id="lowercase" class="invalid">Al menos una letra minúscula</p>
+                    <p id="special" class="invalid">Al menos un carácter especial</p>
+                </div>
+                <div id="password-confirmation">
+                    <p id="confirm-password" class="invalid">Las contraseñas no son iguales</p>
+                </div>
+                <button type="submit" class="login-button">Registrarse</button>
+                <p>¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a></p>
+                <p>¿Eres un patrocinador? <a href="#">Registrate aquí</a></p>
+            </form>
+         </div>
     </main>
     <footer>
         <div class="footer-container">

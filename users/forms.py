@@ -22,7 +22,7 @@ class CreateUserForm(UserCreationForm):
         
         return user
 
-class CreateSponsorForm():
+class CreateSponsorForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
@@ -36,7 +36,8 @@ class CreateSponsorForm():
         
         return user
 
-class CreateExtendedDataForm():
+class CreateExtendedDataForm(forms.ModelForm):
+    birthdate = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))
     class Meta:
         model = models.ExtendedData
         fields = ['country', 'birthdate']

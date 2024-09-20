@@ -62,26 +62,41 @@ def create_user(request):
     user_form = CreateUserForm()
     sponsor_form = CreateSponsorForm()
     user_extended_form = CreateExtendedDataForm()
-    data_context = {'user_form':user_form, 'sponsor_form':sponsor_form ,'user_extended_form':user_extended_form}
+    data_context = {'user_form': user_form, 'sponsor_form': sponsor_form, 'user_extended_form': user_extended_form}
 
     if request.method == 'POST':
         form_type = request.POST.get('submit_form')
         if form_type == 'user_form':
             user_form = CreateUserForm(request.POST)
-            if user_form.is_valid():
-                user_form.save()
-                user_to_validate = User.objects.get(username=request.POST.get('username'))                    
-                user_extended_data = ExtendedData.objects.create(user=user_to_validate, birthday=request.POST.get('birthday'), country=request.POST.get('country'))
-                user_extended_data.save()
+            user_extended_form = CreateExtendedDataForm(request.POST)
+
+            if user_form.is_valid() and user_extended_form.is_valid():
+                user = user_form.save()
+                #Asignación de roles
+                #-----------------# 
+                extended_data = user_extended_form.save(commit=False)
+                extended_data.user = user
+                extended_data.save()
+
                 return redirect('login')
+            else:
+                print("Error en los formularios: ", user_form.errors, user_extended_form.errors)
+
         elif form_type == 'sponsor_form':
             sponsor_form = CreateSponsorForm(request.POST)
-            if sponsor_form.is_valid():
-                sponsor_form.save()
-                user_to_validate = User.objects.get(username=request.POST.get('username'))
-                user_extended_data = ExtendedData.objects.create(user=user_to_validate, country=request.POST.get('country'))
-                user_extended_data.save()
+            user_extended_form = CreateExtendedDataForm(request.POST)
+
+            if sponsor_form.is_valid() and user_extended_form.is_valid():
+                sponsor = sponsor_form.save()
+                #Asignación de roles
+                #-----------------# 
+                extended_data = user_extended_form.save(commit=False)
+                extended_data.user = sponsor
+                extended_data.save()
+
                 return redirect('login')
+            else:
+                print("Error en los formularios: ", sponsor_form.errors, user_extended_form.errors)
 
     return render(request, 'register.html', data_context)
 
