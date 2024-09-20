@@ -11,11 +11,13 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-#Import to read static directory
+# Import to read static directory
 import os
-#Import to read .env
+# Import to read .env
 from decouple import config
-#Redirect by name
+# Import to evaluate lists from the environment
+from ast import literal_eval
+# Redirect by name
 from django.urls import reverse_lazy
 
 """ API_KEY_STEAM = config('API_KEY_STEAM')
@@ -35,10 +37,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure--g9c3^4^y%@jkz%*edeqy=j&t4o+zu4qr&zo_)6^$1he2lgf+p'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1').split(',')
-
+# ALLOWED_HOSTS using literal_eval to handle list inputs from environment variables
+ALLOWED_HOSTS = literal_eval(config('ALLOWED_HOSTS', default="['127.0.0.1']"))
 
 # Application definition
 
@@ -50,11 +52,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #Biblioteca de países
+    # Biblioteca de países
     'django_countries',
 ]
 
-#Loggin set up
+# Loggin set up
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = reverse_lazy('home')
 LOGOUT_REDIRECT_URL = reverse_lazy('home')
@@ -69,7 +71,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-#Manejo de mensajes
+# Manejo de mensajes
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 ROOT_URLCONF = 'Viltrum.urls'
@@ -142,6 +144,7 @@ STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'users/static'),)
 
+# Media files (uploads)
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -151,12 +154,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-#Email configuration - Password reset
+# Email configuration - Password reset
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'sviltrum@gmail.com'
-#EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
 DEFAULT_FROM_EMAIL = 'no-reply@viltrum.com'
