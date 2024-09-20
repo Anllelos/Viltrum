@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-import os
-from pathlib import Path
-=======
 """
 Django settings for Viltrum project.
 
@@ -15,13 +11,11 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-# Import to read static directory
+#Import to read static directory
 import os
-# Import to read .env
+#Import to read .env
 from decouple import config
-# Import to evaluate lists from the environment
-from ast import literal_eval
-# Redirect by name
+#Redirect by name
 from django.urls import reverse_lazy
 
 """ API_KEY_STEAM = config('API_KEY_STEAM')
@@ -29,25 +23,25 @@ API_KEY_RIOT = config('API_KEY_RIOT')
 """
 
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
->>>>>>> 9c3c028b8289ffdb922f6da48ca423cd28a70492
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
 # Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
+
+# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure--g9c3^4^y%@jkz%*edeqy=j&t4o+zu4qr&zo_)6^$1he2lgf+p'
-<<<<<<< HEAD
-DEBUG = True
-=======
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True, cast=bool)
+DEBUG = True
 
-# ALLOWED_HOSTS using literal_eval to handle list inputs from environment variables
->>>>>>> 9c3c028b8289ffdb922f6da48ca423cd28a70492
 ALLOWED_HOSTS = ['*']
 
+
 # Application definition
+
 INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'django.contrib.admin',
@@ -56,14 +50,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Biblioteca de países
+    #Biblioteca de países
     'django_countries',
 ]
 
-<<<<<<< HEAD
-=======
-# Loggin set up
->>>>>>> 9c3c028b8289ffdb922f6da48ca423cd28a70492
+#Loggin set up
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = reverse_lazy('home')
 LOGOUT_REDIRECT_URL = reverse_lazy('home')
@@ -78,12 +69,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-<<<<<<< HEAD
-=======
-# Manejo de mensajes
+#Manejo de mensajes
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
->>>>>>> 9c3c028b8289ffdb922f6da48ca423cd28a70492
 ROOT_URLCONF = 'Viltrum.urls'
 
 TEMPLATES = [
@@ -104,7 +92,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Viltrum.wsgi.application'
 
+
 # Database
+# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -112,7 +103,10 @@ DATABASES = {
     }
 }
 
+
 # Password validation
+# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -128,21 +122,19 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 # Internationalization
+# https://docs.djangoproject.com/en/5.1/topics/i18n/
+
 LANGUAGE_CODE = 'en-us'
+
 TIME_ZONE = 'UTC'
+
 USE_I18N = True
+
 USE_TZ = True
 
-# Static files
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Asegúrate de añadir esta línea
 
-<<<<<<< HEAD
-# Media files
-MEDIA_URL = '/media/'
-=======
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
@@ -150,28 +142,21 @@ STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'users/static'),)
 
-# Media files (uploads)
 MEDIA_URL = 'media/'
->>>>>>> 9c3c028b8289ffdb922f6da48ca423cd28a70492
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
+# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-<<<<<<< HEAD
-# Email configuration
-=======
 
-# Email configuration - Password reset
+#Email configuration - Password reset
 
->>>>>>> 9c3c028b8289ffdb922f6da48ca423cd28a70492
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'sviltrum@gmail.com'
-<<<<<<< HEAD
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-=======
->>>>>>> 9c3c028b8289ffdb922f6da48ca423cd28a70492
+#EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
 DEFAULT_FROM_EMAIL = 'no-reply@viltrum.com'
