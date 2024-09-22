@@ -8,10 +8,6 @@ class ExtendedData(models.Model):
     profile_banner = models.ImageField(null=True, blank=True, upload_to="images/profilebanner")  # Banner de perfil
     user_description = models.TextField(null=True, blank=True)  # Descripción del usuario
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)  # Relación uno a uno con el usuario
-    # Campos opcionales para actualización posterior
-    profile_img = models.ImageField(null=True, blank=True, upload_to="images/profileimg")
-    profile_banner = models.ImageField(null=True, blank=True, upload_to="images/profilebanner")
-    user_description = models.TextField(null=True, blank=True)
     
     # Campos obligatorios en la creación
     country = CountryField(blank_label='Selecciona tu país', null=True, blank=True)
@@ -48,8 +44,8 @@ class PlayerStats(models.Model):
 # Modelo para agregar productos de patrocinador
 class SponsorProducts(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product_name = models.CharField(max_length=254)
-    product_description = models.CharField(max_length=512)
+    product_name = models.CharField(max_length=254, null=True)
+    product_description = models.CharField(max_length=512, null=True)
     product_image = models.ImageField(null=True, blank=True, upload_to="images/sponsorProducts")
 
 

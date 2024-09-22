@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="Home Screen" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Página Principal</title>
+
+  <!-- Font Import -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link type="text/css" rel="stylesheet" href="{% static 'css/sponsorProducts.css' %}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+</head>
+
+<body>
+  <header>
+    <div class="header-container">
+      <div class="logo-container">
+        <img src="{% static 'images/ninjaviltrum.png' %}" alt="Logo" class="logo">
+      </div>
+      <nav class="nav-links">
+        <a href="{% url 'home' %}">Inicio</a>
+        <a href="#">Explorar</a>
+        <a href="#">Suscripciones</a>
+        <a href="#">Tienda</a>
+        <a href="#">Torneos</a>
+        <a href="#">Clasificaciones</a>
+        <a href="#">Equipos</a>
+      </nav>
+      <div class="search-bar">
+        <input type="text" placeholder="Buscar">
+        <button type="submit"><i class="fas fa-search"></i></button>
+      </div>
+      <div class="auth-buttons">
+        {% if user.is_authenticated %}
+        <div class="dropdown-profile">
+          <a href="#" aria-haspopup="true" aria-expanded="false" class="user-icon" id="userIcon">
+            <i class="fa-solid fa-user"></i> {{ user }}
+          </a>
+          <div class="dropdown-content" id="dropdownMenu">
+            <a href="{% url 'redirect_profile' %}">Perfil</a>
+            <a href="{% url 'edit_profile' username=user.username %}">Editar Perfil</a>
+            <a href="{% url 'games_stats' %}">Añadir Estadísticas</a>
+            <a href="{% url 'user_logout' %}">Cerrar sesión</a>
+          </div>
+        </div>
+        {% else %}
+        <a href="{% url 'login' %}" class="login-btn">Iniciar Sesión</a>
+        <a href="{% url 'register' %}" class="register-btn">Regístrate</a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="form-container">
+      <form action="" method="POST" class="product-form">
+        {% csrf_token %}
+        <div id="drop-area">
+          <p>Arrastra y suelta una imagen aquí o haz clic para seleccionar</p>
+          <input type="file" id="fileElem" name="product_image" accept="image/*" onchange="handleFiles(this.files)"
+            required>
+          <label class="button" for="fileElem">Seleccionar un archivo</label>
+        </div>
+        <div class="product-information">
+          <label for="product_name">Nombre del producto:</label>
+          <input type="text" name="product_name" required>
+          <label for="message">Descripción:</label>
+          <textarea id="message" name="message" rows="6" maxlength="200" oninput="updateCounter()"></textarea>
+          <div id="counter">200 caracteres restantes</div>
+          <button type="submit">Registrar producto</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-links">
+        <a href="#">Acerca de</a>
+        <a href="#">Contacto</a>
+        <a href="#">Privacidad</a>
+        <a href="#">Términos</a>
+        <a href="#">Ayuda</a>
+      </div>
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script defer src="{% static 'js/dropMenu.js' %}"></script>
+  <script>let dropArea = document.getElementById("drop-area");
+
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      dropArea.addEventListener(eventName, preventDefaults, false);
+    });
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropArea.addEventListener(eventName, () => dropArea.classList.add('highlight'), false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropArea.addEventListener(eventName, () => dropArea.classList.remove('highlight'), false);
+    });
+
+    dropArea.addEventListener('drop', handleDrop, false);
+
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    function handleDrop(e) {
+      let dt = e.dataTransfer;
+      let files = dt.files;
+      handleFiles(files);
+    }
+
+    function handleFiles(files) {
+      document.getElementById('fileElem').files = files;
+    }
+  </script>
+
+<script>
+  function updateCounter() {
+      const textarea = document.getElementById('message');
+      const counter = document.getElementById('counter');
+      const maxLength = textarea.getAttribute('maxlength');
+      const remaining = maxLength - textarea.value.length;
+      counter.textContent = remaining + ' caracteres restantes';
+  }
+  
+  // Inicializar el contador al cargar la página
+  document.addEventListener('DOMContentLoaded', updateCounter);
+  </script>
+</body>
+
+</html>

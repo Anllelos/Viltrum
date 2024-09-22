@@ -85,68 +85,17 @@
       </div>
       <h2>Sponsor Products</h2>
       <div class="profile-body">
-
+        {% for product in products %}
         <div class="profile-products">
-          <img src="">
+          <img src="{% if product.product_image %}{{ product.product_image.url }}{% else %}https://ui-avatars.com/api/?name={{product.product_name}}{% endif %}" alt="{{product.product_name}}" id="profile-pic">
           <div class="profile-products-info">
-            <h3>Product Name</h3>
+            <h3>{{product.product_name}}</h3>
             <p>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. At illo aliquam, perspiciatis recusandae sit
-              reiciendis labore magnam doloremque inventore sunt.
+              {{product.product_description}}
             </p>
           </div>
         </div>
-        <div class="profile-products">
-          <img src="">
-          <div class="profile-products-info">
-            <h3>Product Name</h3>
-            <p>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. At illo aliquam, perspiciatis recusandae sit
-              reiciendis labore magnam doloremque inventore sunt.
-            </p>
-          </div>
-        </div>
-        <div class="profile-products">
-          <img src="">
-          <div class="profile-products-info">
-            <h3>Product Name</h3>
-            <p>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. At illo aliquam, perspiciatis recusandae sit
-              reiciendis labore magnam doloremque inventore sunt.
-            </p>
-          </div>
-        </div>
-        <div class="profile-products">
-          <img src="">
-          <div class="profile-products-info">
-            <h3>Product Name</h3>
-            <p>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. At illo aliquam, perspiciatis recusandae sit
-              reiciendis labore magnam doloremque inventore sunt.
-            </p>
-          </div>
-        </div>
-        <div class="profile-products">
-          <img src="">
-          <div class="profile-products-info">
-            <h3>Product Name</h3>
-            <p>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. At illo aliquam, perspiciatis recusandae sit
-              reiciendis labore magnam doloremque inventore sunt.
-            </p>
-          </div>
-        </div>
-        <div class="profile-products">
-          <img src="">
-          <div class="profile-products-info">
-            <h3>Product Name</h3>
-            <p>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. At illo aliquam, perspiciatis recusandae sit
-              reiciendis labore magnam doloremque inventore sunt.
-            </p>
-          </div>
-        </div>
-
+        {% endfor %}
       </div>
     </div>
   </main>

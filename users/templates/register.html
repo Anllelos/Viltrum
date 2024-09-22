@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 
@@ -5,111 +6,124 @@
     <meta charset="UTF-8">
     <meta name="description" content="ValorQuest">
     <title>Registro</title>
-    {% load static %}
-    {% load extras %}
     <script src="{% static 'js/validateData.js' %}" defer></script>
-    <link type="text/css" rel="stylesheet" href="{% static 'css/registerUser.css' %}">
+    <link rel="stylesheet" href="{% static 'css/registerUser.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
     <main>
         <div class="login-container">
-            <h2>Registro</h2>
-            <form action="" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="submit_form" value="user_form">
-                <div class="login-data">
-                    <div class="input-group">
-                        <input type="text" name="first_name" maxlength="150" class="login-input" id="name" placeholder="Nombre">
-                        <label for="first_name">Nombre</label>
+            <div id="form-type-buttons">
+                <ul>
+                    <li><a data-section="user-form" class="activeli">Soy jugador</a></li>
+                    <li><a data-section="sponsor-form">Soy patrocinador</a></li>
+                </ul>
+            </div>
+
+            <!-- Formulario de Jugadores -->
+            <div id="user-form" class="form-section active">
+                <h2>Registro Jugadores</h2>
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="submit_form" value="user_form">
+                    <div class="login-data">
+                        <div class="input-group name-data">
+                            <div class="input-wrapper">
+                                <input type="text" name="first_name" maxlength="150" class="login-input" placeholder="Nombre">
+                                <label for="first_name">Nombre</label>
+                            </div>
+                            <div class="input-wrapper">
+                                <input type="text" name="last_name" maxlength="150" class="login-input" placeholder="Apellido">
+                                <label for="last_name">Apellido</label>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" name="username" maxlength="150" class="login-input" placeholder="Nombre de usuario">
+                            <label for="username">Usuario</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" name="email" maxlength="254" class="login-input" placeholder="Correo">
+                            <label for="email">Correo</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" name="password1" autocomplete="new-password" class="login-input" placeholder="Contraseña">
+                            <label for="password1">Contraseña</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" name="password2" autocomplete="new-password" class="login-input" placeholder="Repetir Contraseña">
+                            <label for="password2">Confirmar Contraseña</label>
+                        </div>
+                        <div class="input-group">
+                            {{ user_extended_form.country }}
+                        </div>
+                        <div class="input-group">
+                            {{ user_extended_form.birthdate }}
+                        </div>
                     </div>
-                    <div class="input-group">
-                        <input type="text" name="last_name" maxlength="150" class="login-input" id="lastname" placeholder="Apellido">
-                        <label for="last_name">Apellido</label>
+
+                    <!-- Requisitos de contraseña -->
+                    <div id="password-requirements">
+                        <p id="length" class="invalid">Al menos 8 caracteres</p>
+                        <p id="number" class="invalid">Al menos un número</p>
+                        <p id="uppercase" class="invalid">Al menos una letra mayúscula</p>
+                        <p id="lowercase" class="invalid">Al menos una letra minúscula</p>
+                        <p id="special" class="invalid">Al menos un carácter especial</p>
                     </div>
-                    <div class="input-group">
-                        <input type="text" name="username" maxlength="150" class="login-input" id="username" placeholder="Nombre de usuario">
-                        <label for="username">Usuario</label>
+                    <div id="password-confirmation">
+                        <p id="confirm-password" class="invalid">Las contraseñas no son iguales</p>
                     </div>
-                    <div class="input-group">
-                        <input type="email" name="email" maxlength="254" class="login-input" id="email" placeholder="Correo">
-                        <label for="email">Correo</label>
+                    <button type="submit" class="login-button">Registrarse</button>
+                </form>
+            </div>
+
+            <!-- Formulario de Patrocinadores -->
+            <div id="sponsor-form" class="form-section">
+                <h2>Registro Patrocinadores</h2>
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="submit_form" value="sponsor_form">
+                    <div class="login-data">
+                        <div class="input-group">
+                            <input type="text" name="username" maxlength="150" class="login-input" placeholder="Nombre de usuario">
+                            <label for="username">Usuario</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" name="email" maxlength="254" class="login-input" placeholder="Correo">
+                            <label for="email">Correo</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" name="password1" autocomplete="new-password" class="login-input" placeholder="Contraseña">
+                            <label for="password1">Contraseña</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" name="password2" autocomplete="new-password" class="login-input" placeholder="Repetir Contraseña">
+                            <label for="password2">Confirmar Contraseña</label>
+                        </div>
+                        <div class="input-group">
+                            {{ user_extended_form.country }}
+                        </div>
                     </div>
-                    <div class="input-group">
-                        <input type="password" name="password1" autocomplete="new-password" class="login-input" id="id_password1" placeholder="Contraseña" aria-describedby="id_password1_helptext">
-                        <label for="password1">Contraseña</label>
+
+                    <!-- Requisitos de contraseña -->
+                    <div id="password-requirements">
+                        <p id="length" class="invalid">Al menos 8 caracteres</p>
+                        <p id="number" class="invalid">Al menos un número</p>
+                        <p id="uppercase" class="invalid">Al menos una letra mayúscula</p>
+                        <p id="lowercase" class="invalid">Al menos una letra minúscula</p>
+                        <p id="special" class="invalid">Al menos un carácter especial</p>
                     </div>
-                    <div class="input-group">
-                        <input type="password" name="password2" autocomplete="new-password" class="login-input" id="id_password2" placeholder="Repetir Contraseña" aria-describedby="id_password2_helptext">
-                        <label for="password2">Confirmar Contraseña</label>
+                    <div id="password-confirmation">
+                        <p id="confirm-password" class="invalid">Las contraseñas no son iguales</p>
                     </div>
-                    <div class="input-group">
-                        {{user_extended_form.country}}
-                    </div>
-                    <div class="input-group">
-                        {{user_extended_form.birthdate}}
-                    </div>
-                    
-                </div>
-                <div id="password-requirements">
-                    <p id="length" class="invalid">Al menos 8 caracteres</p>
-                    <p id="number" class="invalid">Al menos un número</p>
-                    <p id="uppercase" class="invalid">Al menos una letra mayúscula</p>
-                    <p id="lowercase" class="invalid">Al menos una letra minúscula</p>
-                    <p id="special" class="invalid">Al menos un carácter especial</p>
-                </div>
-                <div id="password-confirmation">
-                    <p id="confirm-password" class="invalid">Las contraseñas no son iguales</p>
-                </div>
-                <button type="submit" class="login-button">Registrarse</button>
-                <p>¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a></p>
-                <p>¿Eres un patrocinador? <a href="#">Registrate aquí</a></p>
-            </form>
+                    <button type="submit" class="login-button">Registrarse</button>
+                </form>
+            </div>
+
+            <p>¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a></p>
         </div>
-        <!-- Formulario de pruebas para sponsor temporal -->
-         <p>-------------------------------------------------------------------------------------</p>
-         <div>
-            <form action="" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="submit_form" value="sponsor_form">
-                <div class="login-data">
-                    <div class="input-group">
-                        <input type="text" name="username" maxlength="150" class="login-input" id="username" placeholder="Nombre de usuario">
-                        <label for="username">Usuario</label>
-                    </div>
-                    <div class="input-group">
-                        <input type="email" name="email" maxlength="254" class="login-input" id="email" placeholder="Correo">
-                        <label for="email">Correo</label>
-                    </div>
-                    <div class="input-group">
-                        <input type="password" name="password1" autocomplete="new-password" class="login-input" id="id_password1" placeholder="Contraseña" aria-describedby="id_password1_helptext">
-                        <label for="password1">Contraseña</label>
-                    </div>
-                    <div class="input-group">
-                        <input type="password" name="password2" autocomplete="new-password" class="login-input" id="id_password2" placeholder="Repetir Contraseña" aria-describedby="id_password2_helptext">
-                        <label for="password2">Confirmar Contraseña</label>
-                    </div>
-                    <div class="input-group">
-                        {{user_extended_form.country}}
-                    </div>
-                </div>
-                <div id="password-requirements">
-                    <p id="length" class="invalid">Al menos 8 caracteres</p>
-                    <p id="number" class="invalid">Al menos un número</p>
-                    <p id="uppercase" class="invalid">Al menos una letra mayúscula</p>
-                    <p id="lowercase" class="invalid">Al menos una letra minúscula</p>
-                    <p id="special" class="invalid">Al menos un carácter especial</p>
-                </div>
-                <div id="password-confirmation">
-                    <p id="confirm-password" class="invalid">Las contraseñas no son iguales</p>
-                </div>
-                <button type="submit" class="login-button">Registrarse</button>
-                <p>¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a></p>
-                <p>¿Eres un patrocinador? <a href="#">Registrate aquí</a></p>
-            </form>
-         </div>
     </main>
+
     <footer>
         <div class="footer-container">
             <div class="footer-links">
@@ -127,53 +141,53 @@
             </div>
         </div>
     </footer>
-    </div>
 
     <!-- JavaScript para validación de contraseña -->
     <script>
-        const passwordInput = document.getElementById('id_password1');
+        const passwordInputs = document.querySelectorAll('input[type="password"]');
         const requirementsBox = document.getElementById('password-requirements');
-
-        passwordInput.addEventListener('focus', function () {
-            requirementsBox.style.display = 'block';
+        const confirmationBox = document.getElementById('password-confirmation');
+        
+        passwordInputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                requirementsBox.style.display = 'block';
+                confirmationBox.style.display = 'block';
+            });
+            input.addEventListener('blur', () => {
+                requirementsBox.style.display = 'none';
+                confirmationBox.style.display = 'none';
+            });
+            input.addEventListener('input', validatePassword);
         });
 
-        passwordInput.addEventListener('blur', function () {
-            requirementsBox.style.display = 'none';
-        });
-
-        passwordInput.addEventListener('input', function () {
-            const password = this.value;
-            const length = document.getElementById('length');
-            const number = document.getElementById('number');
-            const uppercase = document.getElementById('uppercase');
-            const lowercase = document.getElementById('lowercase');
-            const special = document.getElementById('special');
-
-            length.className = password.length >= 8 ? 'valid' : 'invalid';
-            number.className = /\d/.test(password) ? 'valid' : 'invalid';
-            uppercase.className = /[A-Z]/.test(password) ? 'valid' : 'invalid';
-            lowercase.className = /[a-z]/.test(password) ? 'valid' : 'invalid';
-            special.className = /[^A-Za-z0-9]/.test(password) ? 'valid' : 'invalid';
-        });
+        function validatePassword() {
+            const password = passwordInputs[0].value;
+            const confirmPassword = passwordInputs[1].value;
+            
+            document.getElementById('length').className = password.length >= 8 ? 'valid' : 'invalid';
+            document.getElementById('number').className = /\d/.test(password) ? 'valid' : 'invalid';
+            document.getElementById('uppercase').className = /[A-Z]/.test(password) ? 'valid' : 'invalid';
+            document.getElementById('lowercase').className = /[a-z]/.test(password) ? 'valid' : 'invalid';
+            document.getElementById('special').className = /[^A-Za-z0-9]/.test(password) ? 'valid' : 'invalid';
+            document.getElementById('confirm-password').className = password === confirmPassword && confirmPassword !== "" ? 'valid2' : 'invalid';
+        }
     </script>
     <script>
-        const password1 = document.getElementById('id_password1');
-        const passwordInput2 = document.getElementById('id_password2');
-        const confirmationBox = document.getElementById('password-confirmation');
+        document.querySelectorAll('#form-type-buttons ul li a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
 
-        passwordInput2.addEventListener('focus', function () {
-            confirmationBox.style.display = 'block';
-        });
+                document.querySelectorAll('.form-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.querySelectorAll('#form-type-buttons ul li a').forEach(link => {
+                    link.classList.remove('activeli');
+                });
 
-        passwordInput2.addEventListener('blur', function () {
-            confirmationBox.style.display = 'none';
-        });
-
-        passwordInput2.addEventListener('input', function () {
-            const password2 = this.value;
-            const confirmation = document.getElementById('confirm-password');
-            confirmation.className = password1.value == password2 && password2 !== "" ? 'valid2' : 'invalid';
+                const sectionId = this.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+                this.classList.add('activeli');
+            });
         });
     </script>
 </body>

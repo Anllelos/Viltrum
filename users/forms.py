@@ -37,18 +37,20 @@ class CreateSponsorForm(UserCreationForm):
         
         return user
 
+#ExtendedData User
 class UserExtendedDataForm(forms.ModelForm):
     birthdate = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))
     class Meta:
         model = models.ExtendedData
         fields = ['country', 'birthdate']
 
+#ExtendedData Sponsor
 class SponsorExtendedDataForm(forms.ModelForm):
     class Meta:
         model = models.ExtendedData
         fields = ['country']
 
-# Form to authenticate User
+# Formulario para crear usuario
 class AuthenticationFormUser(AuthenticationForm):
     def get_invalid_login_error(self):
         return self.error_class([_("Invalid login")])
@@ -60,7 +62,7 @@ class AuthenticationFormUser(AuthenticationForm):
                 code='inactive',
             )
 
-# Form to update the profile pic
+# Formulario para actualizar la imagen de perfil
 class ProfilePicForm(forms.ModelForm): 
     class Meta:
         model = models.ExtendedData
@@ -99,16 +101,23 @@ class PlayerStatsForm(forms.ModelForm):
         model = models.PlayerStats
         fields = ['user_game', 'game', 'rank', 'wins', 'losses', 'total_played'] 
 
-# Edit User Info Form
+#Formulario para agregar productos del patrocinador
+class SponsorProductsForm(forms.ModelForm):
+    class Meta:
+        model = models.SponsorProducts
+        fields = ['product_name', 'product_description', 'product_image']
+
+# Formulario para editar información del usuario
 class EditUserForm(forms.ModelForm):
     class Meta:
         model = models.User
         fields = ['username', 'first_name', 'email']
 
+#Formulario para editar información adicional del usuario
 class EditExtendedDataForm(forms.ModelForm):
     class Meta:
         model = models.ExtendedData
-        fields = []
+        fields = ['user_description', 'country', 'birthdate']
 
 # Form to upload images for a game
 class GameImageForm(forms.ModelForm):

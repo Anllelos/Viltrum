@@ -46,19 +46,57 @@ def profile_user(request, username):
         else:
             data_context['game_exist'] = True
 
-        return render(request, 'profile.html', data_context)
+        return render(request, 'profile_user.html', data_context)
     else:
         raise Http404("No existe ese usuario")
 
 def profile_sponsor(request, username):
     user_to_validate = get_object_or_404(User, username=username)
     if user_to_validate.groups.filter(name='Sponsor').exists():
-        data_context = {'profile_sponsor': user_to_validate}
+        extended_data_table = ExtendedData.objects.filter(user=user_to_validate)
+        products_table = SponsorProducts.objects.filter(user=user_to_validate)
+        data_context = {'profile_sponsor': user_to_validate, 
+                        'extended_data':extended_data_table,
+                        'products':products_table}
         return render(request, 'profile_sponsor.html', data_context)
     else:
-        raise Http404("No existe ese usuario")
+        raise Http404("No existe ese patrocinador")
+
+
 @login_required
-def edit_profile(request, username):
+def edit_profile_user(request, username):
+    active_user = request.user
+    if active_user.groups.filter(name='Gamer').exists():
+        data_context = {}
+        user_to_validate = get_object_or_404(User, username=username)
+        profile_to_validate = get_object_or_404(ExtendedData, user=user_to_validate)
+        upp_form = ProfilePicForm(request.POST or None, request.FILES or None, instance=profile_to_validate)
+
+        if active_user.username == username:
+            if request.method == 'POST':
+                cropped_image = request.POST.get('cropped_image')
+            
+                # Procesar la imagen recortada
+                if cropped_image:
+                    format, imgstr = cropped_image.split(';base64,') 
+                    ext = format.split('/')[-1]
+                    img_data = ContentFile(base64.b64decode(imgstr), name=f"profile_{request.user.username}.{ext}")
+                    profile_to_validate.profile_img = img_data
+
+                if upp_form.is_valid():
+                    upp_form.save()
+                    data_context['message'] = 'Imagen Actualizada'
+                else:
+                    data_context['message'] = 'Error al actualizar la imagen'
+
+            data_context['upp_form'] = upp_form
+            data_context['profile'] = profile_to_validate
+            return render(request, 'edit_profile_user.html', data_context)
+        else:
+            return redirect('edit_profile_user', username=request.user.username)
+
+@login_required
+def edit_profile_sponsor(request, username):
     data_context = {}
     user_to_validate = get_object_or_404(User, username=username)
     profile_to_validate = get_object_or_404(ExtendedData, user=user_to_validate)
@@ -205,86 +243,20 @@ def user_logout(request):
 #Player stats upload
 @login_required
 def games_stats(request):
-    player_stats_form = PlayerStatsForm()
-    data_context = {'player_stats_form':player_stats_form}
-    if request.method == "POST":
-        active_user = request.user
-        active_user_id = active_user.id
-
-        player_stats_form = PlayerStatsForm(request.POST)
-        if player_stats_form.is_valid():
-            try:
-                game_validate = PlayerStats.objects.get(user=active_user_id, game=request.POST.get('game'))
-                if game_validate is not None:
-                    data_context['game_exist'] = True
-            except:
-                game = request.POST.get('game')
-                rank = request.POST.get('rank')
-
-                valid_rank = {
-                "LoL": [
-                "Iron", "Bronze", "Silver", "Gold", 
-                "Platinum", "Diamond", "Master", 
-                "Grandmaster", "Challenger"
-                ],
-                "D2": [
-                "Herald", "Guardian", "Crusader", 
-                "Archon", "Legend", "Ancient", 
-                "Divine", "Immortal"
-                ],
-                "CSGO": [
-                "Silver I", "Silver II", "Silver III", 
-                "Silver IV", "Silver Elite", "Silver Elite Master", 
-                "Gold Nova I", "Gold Nova II", "Gold Nova III", 
-                "Gold Nova Master", "Master Guardian I", 
-                "Master Guardian II", "Master Guardian Elite", 
-                "Distinguished Master Guardian", "Legendary Eagle", 
-                "Legendary Eagle Master", "Supreme Master First Class", 
-                "Global Elite"
-                ],
-                "VAL": [
-                "Iron", "Bronze", "Silver", "Gold", 
-                "Platinum", "Diamond", "Immortal", "Radiant"
-                ],
-                "OW": [
-                "Bronze", "Silver", "Gold", 
-                "Platinum", "Diamond", "Master", 
-                "Grandmaster", "Top 500"
-                ],
-                "PUBG": [
-                "Bronze", "Silver", "Gold", 
-                "Platinum", "Diamond", "Master", 
-                "Grandmaster"
-                ],
-                "FORT": [
-                "Open", "Contender", "Champion", "Unreal"
-                ],
-                "Apex": [
-                "Bronze", "Silver", "Gold", 
-                "Platinum", "Diamond", "Master", 
-                "Apex Predator"
-                ],
-                "R6": [
-                "Copper", "Bronze", "Silver", 
-                "Gold", "Platinum", "Diamond", 
-                "Champion"
-                ],
-                "FIFA": [
-                "Division 10", "Division 9", "Division 8", 
-                "Division 7", "Division 6", "Division 5", 
-                "Division 4", "Division 3", "Division 2", 
-                "Division 1", "Elite"
-                ],
-                "RL": [
-                "Bronze", "Silver", "Gold", 
-                "Platinum", "Diamond", "Champion", 
-                "Grand Champion", "Supersonic Legend"
-                ]
-                }
-                if rank not in valid_rank.get(game, []):
-                    player_stats_form.add_error("rank", "No es un rango válido para el juego seleccionado.")
-                else:
-                    # Crear una instancia del modelo, pero no guardarla todavía
+    active_user = request.user
+    if active_user.groups.filter(name='Gamer').exists():
+        player_stats_form = PlayerStatsForm()
+        data_context = {'player_stats_form':player_stats_form}
+        if request.method == "POST":
+            active_user_id = active_user.id
+            player_stats_form = PlayerStatsForm(request.POST)
+            if player_stats_form.is_valid():
+                try:
+                    game_validate = PlayerStats.objects.get(user=active_user_id, game=request.POST.get('game'))
+                    if game_validate is not None:
+                        data_context['game_exist'] = True
+                except:
+                # Crear una instancia del modelo, pero no guardarla todavía
                     player_stats = player_stats_form.save(commit=False)
                 
                 # Asignar el usuario activo
@@ -292,7 +264,29 @@ def games_stats(request):
 
                 # Guardar el objeto en la base de datos
                     player_stats.save()
-        else:
-            print(player_stats_form.errors)
-    return render(request, 'game_stats.html', data_context)
+            else:
+                print(player_stats_form.errors)
+        return render(request, 'game_stats.html', data_context)
+    else:
+        return redirect('home')
 
+
+@login_required
+def sponsor_products(request):
+    active_user = request.user
+    if active_user.groups.filter(name='Sponsor').exists():
+        product_form = SponsorProductsForm()
+        data_context = {'product_form':product_form}
+        if request.method == "POST":
+            product_form = SponsorProductsForm(request.POST, request.FILES)
+            if product_form.is_valid():
+                # Crea el objeto, pero no lo guarda todavía.
+                product = product_form.save(commit=False)
+                product.user = active_user  # Asigna el usuario.
+                product.save()  # Guarda el producto en la base de datos.
+                data_context['message'] = "Se ha guardado el producto con éxito"
+                return render(request, 'sponsor_products.html', data_context)
+        
+        return render(request, 'sponsor_products.html', data_context)
+    else:
+        return redirect('home')

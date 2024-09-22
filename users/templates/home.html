@@ -15,50 +15,37 @@
     <!-- Header Mejorado -->
     <header>
       <div class="header-container">
-        <div class="logo-container">
-          <a href="{% url 'home' %}">
-          <img
-            src="{% static 'images/ninjaviltrum.png' %}"
-            alt="Logo"
-            class="logo"
-          />
-          </a>
-        </div>
-        <nav class="nav-links">
-          <a href="#">Inicio</a>
-          <a href="#">Explorar</a>
-          <a href="#">Suscripciones</a>
-          <a href="#">Tienda</a>
-          <a href="#">Torneos</a>
-          <a href="#">Clasificaciones</a>
-          <a href="#">Equipos</a>
-        </nav>
-        <div class="search-bar">
-          <input type="text" placeholder="Buscar" />
-          <button type="submit"><i class="fas fa-search"></i></button>
-        </div>
-        <div class="auth-buttons">
-          {% if user.is_authenticated %}
-          <div class="dropdown-profile">
-            <a
-              href="#"
-              aria-haspopup="true"
-              aria-expanded="false"
-              class="user-icon"
-              id="userIcon"
-            >
-              <i class="fa-solid fa-user"></i>
-              {{ user }}
-            </a>
-            <div class="dropdown-content" id="dropdownMenu">
-              <a href="{% url 'redirect_profile' %}">Perfil</a>
-              <a href="{% url 'edit_profile' username=user.username %}">Editar Perfil</a>
-              <a href="{% url 'games_stats' %}">Añadir Estadísticas</a>
-              <a href="{% url 'user_logout' %}">Cerrar sesión</a>
-            </div>
-        </div>
-      {% endif %}
-    </header>
+          <div class="logo-container">
+              <img src="{% static 'images/ninjaviltrum.png' %}" alt="Logo" class="logo">
+          </div>
+          <nav class="nav-links">
+              <a href="{% url 'home' %}">Inicio</a>
+              <a href="#">Explorar</a>
+              <a href="#">Suscripciones</a>
+              <a href="#">Tienda</a>
+              <a href="#">Torneos</a>
+              <a href="#">Clasificaciones</a>
+              <a href="#">Equipos</a>
+          </nav>
+          <div class="search-bar">
+              <input type="text" placeholder="Buscar">
+              <button type="submit"><i class="fas fa-search"></i></button>
+          </div>
+          <div class="auth-buttons">
+              <div class="dropdown-profile">
+                  <a href="#" aria-haspopup="true" aria-expanded="false" class="user-icon" id="userIcon">
+                      <i class="fa-solid fa-user"></i>
+                      {{ user }}
+                  </a>
+                  <div class="dropdown-content" id="dropdownMenu">
+                      <a href="{% url 'redirect_profile' %}">Perfil</a>
+                      <a href="{% url 'games_stats' %}">Añadir Estadísticas</a>
+                      <a href="{% url 'user_logout' %}">Cerrar sesión</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </header>
 
     <!-- Sección de Hero -->
     <section class="hero-section">
@@ -150,5 +137,6 @@
             <a href="#">Ayuda</a>
         </div>
     </footer>
+    <script src="{% static 'dropMenu.js' %}"></script>
 </body>
 </html>
