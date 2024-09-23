@@ -85,6 +85,7 @@
       </div>
       <h2>Sponsor Products</h2>
       <div class="profile-body">
+        {% if products %}
         {% for product in products %}
         <div class="profile-products">
           <img src="{% if product.product_image %}{{ product.product_image.url }}{% else %}https://ui-avatars.com/api/?name={{product.product_name}}{% endif %}" alt="{{product.product_name}}" id="profile-pic">
@@ -96,6 +97,9 @@
           </div>
         </div>
         {% endfor %}
+        {% else %}
+        <p>El patrocinador aún no ha registrado productos.</p>
+        {% endif %}
       </div>
     </div>
   </main>

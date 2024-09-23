@@ -62,15 +62,6 @@ class AuthenticationFormUser(AuthenticationForm):
                 code='inactive',
             )
 
-# Formulario para actualizar la imagen de perfil
-class ProfilePicForm(forms.ModelForm): 
-    class Meta:
-        model = models.ExtendedData
-        fields = ['profile_img']
-    def __init__(self, *args, **kwargs):
-        super(ProfilePicForm, self).__init__(*args, **kwargs)
-        self.fields['profile_img'].label = 'Imagen de Perfil'
-
 # Form to create stream
 class StreamForm(forms.ModelForm):
     class Meta:
@@ -107,20 +98,32 @@ class SponsorProductsForm(forms.ModelForm):
         model = models.SponsorProducts
         fields = ['product_name', 'product_description', 'product_image']
 
-# Formulario para editar información del usuario
-class EditUserForm(forms.ModelForm):
-    class Meta:
-        model = models.User
-        fields = ['username', 'first_name', 'email']
-
-#Formulario para editar información adicional del usuario
-class EditExtendedDataForm(forms.ModelForm):
-    class Meta:
-        model = models.ExtendedData
-        fields = ['user_description', 'country', 'birthdate']
-
 # Form to upload images for a game
 class GameImageForm(forms.ModelForm):
     class Meta:
         model = GameImage
         fields = ['image']
+        
+# Formulario para editar información del usuario
+class EditUserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email']
+
+#Formulario para editar información adicional del usuario
+class EditExtendedDataUserForm(forms.ModelForm):
+    class Meta:
+        model = models.ExtendedData
+        fields = ['user_description', 'country', 'birthdate']
+
+#Formulario para subir la imagen de perfil
+class ProfilePicForm(forms.ModelForm): 
+    class Meta:
+        model = models.ExtendedData
+        fields = ['profile_img']
+
+#Formulario para subir el banner de perfil
+class BannerPicForm(forms.ModelForm):
+    class Meta:
+        model = models.ExtendedData
+        fields = ['profile_banner']

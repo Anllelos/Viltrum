@@ -66,34 +66,60 @@ def profile_sponsor(request, username):
 @login_required
 def edit_profile_user(request, username):
     active_user = request.user
-    if active_user.groups.filter(name='Gamer').exists():
-        data_context = {}
-        user_to_validate = get_object_or_404(User, username=username)
-        profile_to_validate = get_object_or_404(ExtendedData, user=user_to_validate)
-        upp_form = ProfilePicForm(request.POST or None, request.FILES or None, instance=profile_to_validate)
 
-        if active_user.username == username:
-            if request.method == 'POST':
-                cropped_image = request.POST.get('cropped_image')
-            
-                # Procesar la imagen recortada
-                if cropped_image:
-                    format, imgstr = cropped_image.split(';base64,') 
-                    ext = format.split('/')[-1]
-                    img_data = ContentFile(base64.b64decode(imgstr), name=f"profile_{request.user.username}.{ext}")
-                    profile_to_validate.profile_img = img_data
+    # Verifica si el usuario pertenece al grupo 'Gamer'
+    if not active_user.groups.filter(name='Gamer').exists():
+        return redirect('home')
 
-                if upp_form.is_valid():
-                    upp_form.save()
-                    data_context['message'] = 'Imagen Actualizada'
-                else:
-                    data_context['message'] = 'Error al actualizar la imagen'
+    # Verifica si el usuario actual es el mismo que el que se está editando
+    if active_user.username != username:
+        return redirect('edit_profile_user', username=active_user.username)
 
-            data_context['upp_form'] = upp_form
-            data_context['profile'] = profile_to_validate
-            return render(request, 'edit_profile_user.html', data_context)
-        else:
-            return redirect('edit_profile_user', username=request.user.username)
+    # Prellenar formularios con datos actuales
+    edit_user = EditUserForm(instance=active_user)
+    extended_data = ExtendedData.objects.get(user=active_user)
+    edit_extended_data_user = EditExtendedDataUserForm(instance=extended_data)
+    edit_profile_pic = ProfilePicForm(instance=extended_data)
+    edit_profile_banner = BannerPicForm(instance=extended_data)
+
+    data_context = {
+        'edit_user': edit_user,
+        'edit_extended_data_user': edit_extended_data_user,
+        'edit_profile_pic': edit_profile_pic,
+        'edit_profile_banner': edit_profile_banner
+    }
+
+    if request.method == 'POST':
+        form_type = request.POST.get('submit_form')
+        
+        if form_type == "personal_data":
+            edit_user = EditUserForm(request.POST, instance=active_user)
+            if edit_user.is_valid():
+                edit_user.save()
+
+        elif form_type == "extra_data":
+            edit_extended_data_user = EditExtendedDataUserForm(request.POST, instance=extended_data)
+            if edit_extended_data_user.is_valid():
+                edit_extended_data_user.save()
+            else:
+                print(edit_extended_data_user.errors)  # Para depurar
+
+        elif form_type == "profile_image":
+            edit_profile_pic = ProfilePicForm(request.POST, request.FILES, instance=extended_data)
+            if edit_profile_pic.is_valid():
+                profile_pic = edit_profile_pic.save(commit=False)
+                profile_pic.user = active_user  # Asignar usuario si es necesario
+                profile_pic.save()
+
+        elif form_type == "profile_banner":
+            edit_profile_banner = BannerPicForm(request.POST, request.FILES, instance=extended_data)
+            if edit_profile_banner.is_valid():
+                banner = edit_profile_banner.save(commit=False)
+                banner.user = active_user  # Asignar usuario si es necesario
+                banner.save()
+
+    return render(request, 'edit_profile_user.html', data_context)
+
 
 @login_required
 def edit_profile_sponsor(request, username):

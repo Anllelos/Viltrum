@@ -12,7 +12,6 @@ class ExtendedData(models.Model):
     # Campos obligatorios en la creación
     country = CountryField(blank_label='Selecciona tu país', null=True, blank=True)
     birthdate = models.DateField(null=True, blank=True)
-    user = models.OneToOneField(User, null=False, on_delete=models.CASCADE)
 
 # Modelo para agregar estadísticas de juego
 # Modelo para estadísticas de jugadores

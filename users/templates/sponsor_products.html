@@ -50,7 +50,7 @@
           </a>
           <div class="dropdown-content" id="dropdownMenu">
             <a href="{% url 'redirect_profile' %}">Perfil</a>
-            <a href="{% url 'edit_profile' username=user.username %}">Editar Perfil</a>
+            <a href="{% url 'redirect_profile' %}">Editar Perfil</a>
             <a href="{% url 'games_stats' %}">Añadir Estadísticas</a>
             <a href="{% url 'user_logout' %}">Cerrar sesión</a>
           </div>
@@ -65,19 +65,21 @@
 
   <main>
     <div class="form-container">
-      <form action="" method="POST" class="product-form">
+      <form action="" method="POST" class="product-form" enctype="multipart/form-data">
         {% csrf_token %}
+        {% if message %}
+          <span>¡{{message}}!</span>
+        {% endif %}
         <div id="drop-area">
           <p>Arrastra y suelta una imagen aquí o haz clic para seleccionar</p>
-          <input type="file" id="fileElem" name="product_image" accept="image/*" onchange="handleFiles(this.files)"
-            required>
+          <input type="file" id="fileElem" name="product_image" accept="image/*" onchange="handleFiles(this.files)" required>
           <label class="button" for="fileElem">Seleccionar un archivo</label>
         </div>
         <div class="product-information">
           <label for="product_name">Nombre del producto:</label>
           <input type="text" name="product_name" required>
-          <label for="message">Descripción:</label>
-          <textarea id="message" name="message" rows="6" maxlength="200" oninput="updateCounter()"></textarea>
+          <label for="product_description">Descripción:</label>
+          <textarea id="product_description" name="product_description" rows="6" maxlength="200" oninput="updateCounter()"></textarea>
           <div id="counter">200 caracteres restantes</div>
           <button type="submit">Registrar producto</button>
         </div>
@@ -106,7 +108,8 @@
   <!-- Scripts -->
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script defer src="{% static 'js/dropMenu.js' %}"></script>
-  <script>let dropArea = document.getElementById("drop-area");
+  <script>
+    let dropArea = document.getElementById("drop-area");
 
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
       dropArea.addEventListener(eventName, preventDefaults, false);
@@ -140,7 +143,7 @@
 
 <script>
   function updateCounter() {
-      const textarea = document.getElementById('message');
+      const textarea = document.getElementById('product_description');
       const counter = document.getElementById('counter');
       const maxLength = textarea.getAttribute('maxlength');
       const remaining = maxLength - textarea.value.length;
