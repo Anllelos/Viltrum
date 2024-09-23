@@ -10,6 +10,10 @@ from django.contrib.auth import logout
 from django.core.files.base import ContentFile
 import base64
 from django.http import Http404
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .models import Tournament, Notification
+from .forms import TournamentForm  
 
 #Verificación de roles dentro de la página
 def profile_redirect(request):
@@ -316,3 +320,45 @@ def sponsor_products(request):
         return render(request, 'sponsor_products.html', data_context)
     else:
         return redirect('home')
+
+@login_required
+def create_tournament(request):
+    if request.method == 'POST':
+        form = TournamentForm(request.POST)
+        if form.is_valid():
+            tournament = form.save(commit=False)
+            tournament.created_by = request.user
+            tournament.save()
+            return redirect('tournaments')
+    else:
+        form = TournamentForm()
+    return render(request, 'create_tournament.html', {'form': form})
+
+def list_tournaments(request):
+    tournaments = Tournament.objects.all()
+    return render(request, 'tournaments.html', {'tournaments': tournaments})
+
+@login_required
+def join_tournament(request, tournament_id):
+    tournament = get_object_or_404(Tournament, id=tournament_id)
+    notification = Notification.objects.create(
+        sender=request.user,
+        recipient=tournament.created_by,
+        tournament=tournament,
+        message=f"{request.user.username} wants to join the tournament {tournament.name}",
+    )
+    return redirect('tournaments')
+
+@login_required
+def manage_notifications(request):
+    notifications = Notification.objects.filter(recipient=request.user, is_read=False)
+    return render(request, 'notifications.html', {'notifications': notifications})
+
+@login_required
+def handle_notification(request, notification_id, action):
+    notification = get_object_or_404(Notification, id=notification_id)
+    if action == 'accept':
+        notification.tournament.participants.add(notification.sender)
+    notification.is_read = True
+    notification.save()
+    return redirect('notifications')

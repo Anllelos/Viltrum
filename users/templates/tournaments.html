@@ -1,0 +1,9 @@
+<h2>Available Tournaments</h2>
+<ul>
+    {% for tournament in tournaments %}
+        <li>{{ tournament.name }} - {{ tournament.game }}
+            <a href="{% url 'join_tournament' tournament.id %}">Register</a>
+        </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'create_tournament' %}">Create New Tournament</a>

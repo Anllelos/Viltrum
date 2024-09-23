@@ -1,0 +1,10 @@
+<h2>Notifications</h2>
+<ul>
+    {% for notification in notifications %}
+        <li>
+            {{ notification.message }}
+            <a href="{% url 'handle_notification' notification.id 'accept' %}">Accept</a>
+            <a href="{% url 'handle_notification' notification.id 'reject' %}">Reject</a>
+        </li>
+    {% endfor %}
+</ul>

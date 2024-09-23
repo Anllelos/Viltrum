@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.urls import path
 from . import views
+from django.urls import path
+from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),  # Ruta para la vista home
@@ -32,4 +34,11 @@ urlpatterns = [
     path('user_logout/', views.user_logout, name='user_logout'),  # Ruta para cerrar sesión
     path('profile/games_stats/', views.games_stats, name='games_stats'),                                         #| Guardar estadisticas de juegos   ]
     path('profile/products/', views.sponsor_products, name='sponsor_products'),                                  #| Guardar productos                ]
+
+    
+    path('tournaments/', views.list_tournaments, name='tournaments'),  
+    path('tournaments/create/', views.create_tournament, name='create_tournament'),  
+    path('tournaments/join/<int:tournament_id>/', views.join_tournament, name='join_tournament'), 
+    path('notifications/', views.manage_notifications, name='notifications'),  
+    path('notifications/handle/<int:notification_id>/<str:action>/', views.handle_notification, name='handle_notification'),  
 ]

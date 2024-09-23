@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django_countries.fields import CountryField
+from django.utils import timezone
+
 
 # Modelo para información extra de usuarios (Jugadores Y Patrocinadores)
 class ExtendedData(models.Model):
@@ -16,7 +18,6 @@ class ExtendedData(models.Model):
 # Modelo para agregar estadísticas de juego
 # Modelo para estadísticas de jugadores
 class PlayerStats(models.Model):
-    # Definición de las opciones de juegos disponibles
     TYPE_CHOICES = [
         ("LoL", "League of Legends"),
         ("D2", "Dota 2"),
@@ -68,15 +69,19 @@ class Stream(models.Model):
         return self.titulo  # Devuelve el título del stream
 
 # Modelo para torneos
-class Torneo(models.Model):
-    nombre = models.CharField(max_length=100)  # Nombre del torneo
-    descripcion = models.TextField()  # Descripción del torneo
-    fecha_inicio = models.DateField()  # Fecha de inicio del torneo
-    fecha_fin = models.DateField()  # Fecha de finalización del torneo
-    imagen = models.ImageField(upload_to='torneos/')  # Imagen asociada al torneo
+class Tournament(models.Model):
+    name = models.CharField(max_length=255)
+    max_members = models.IntegerField()
+    start_date = models.DateField()
+    end_date = models.DateField()
+    game = models.CharField(max_length=255)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="created_tournaments", null=True)  # Allow null temporarily
+    participants = models.ManyToManyField(User, related_name="joined_tournaments", blank=True)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.nombre  # Devuelve el nombre del torneo
+        return self.name
+
 
 # Modelo para clasificaciones
 class Clasificacion(models.Model):
@@ -106,13 +111,14 @@ class GameImage(models.Model):
     def __str__(self):
         return f"Image of {self.game.name} by {self.uploaded_by.username}"  # Muestra el juego y quién subió la imagen
 
-# Modelo para crear torneos asociados a un juego
-class Tournament(models.Model):
-    game = models.ForeignKey(Game, related_name='tournaments', on_delete=models.CASCADE)  # Relación con el juego
-    name = models.CharField(max_length=100)  # Nombre del torneo
-    description = models.TextField()  # Descripción del torneo
-    start_date = models.DateTimeField()  # Fecha de inicio del torneo
-    end_date = models.DateTimeField()  # Fecha de fin del torneo
+# Modelo de notificaciones
+class Notification(models.Model):
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sent_notifications")
+    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name="received_notifications")
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+    message = models.TextField()
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Tournament {self.name} for {self.game.name}"  # Devuelve el nombre del torneo y el juego asociado
+        return f"Notification from {self.sender} to {self.recipient}"

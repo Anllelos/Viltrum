@@ -6,6 +6,8 @@ from django.utils.translation import gettext_lazy as _
 from .models import GameImage
 from django_countries.fields import CountryField
 from django.contrib.auth.models import Group
+from django import forms
+from .models import Tournament
 
 # Formulario para crear usuario jugador "Gamer"
 class CreateUserForm(UserCreationForm):
@@ -68,11 +70,11 @@ class StreamForm(forms.ModelForm):
         model = models.Stream
         fields = ['titulo', 'descripcion', 'enlace', 'imagen']
 
-# Form to create tournament
-class TorneoForm(forms.ModelForm):
+# Form to create tournament (updated)
+class TournamentForm(forms.ModelForm):
     class Meta:
-        model = models.Torneo
-        fields = ['nombre', 'descripcion', 'fecha_inicio', 'fecha_fin', 'imagen']
+        model = Tournament
+        fields = ['name', 'max_members', 'start_date', 'end_date', 'game']  # Correct fields from the Tournament model
 
 # Form to create Clasification
 class ClasificacionForm(forms.ModelForm):
