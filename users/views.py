@@ -194,16 +194,18 @@ def create_user(request):
     return render(request, 'register.html', data_context)
 
 def home(request):
+
+    active_user = request.user
+    data_context = {'gamer':False}
+    if active_user.groups.filter(name='Gamer').exists():
+        data_context = {'gamer':True}
     videojuegos = Videojuego.objects.all()
 
     carrusel_dir = os.path.join(settings.BASE_DIR, 'static/images/CarruselHome')
     carrusel_images = glob.glob(os.path.join(carrusel_dir, '*'))
     carrusel_images = [os.path.basename(os.path.normpath(image)) for image in carrusel_images if image.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
 
-    return render(request, 'home.html', {
-        'videojuegos': videojuegos,
-        'carrusel_images': carrusel_images,
-    })
+    return render(request, 'home.html', data_context)
 
 # Corrected create_tournament function
 @login_required

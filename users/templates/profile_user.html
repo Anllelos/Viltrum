@@ -71,7 +71,7 @@
                         <img src="{% if profile.profile_img %}{{ profile.profile_img.url }}{% else %}https://ui-avatars.com/api/?name={{user}}{% endif %}" alt="Foto de perfil" id="profile-pic">
                         <h2 class="username">{{ profile_user.username }}</h2>
                     </div>
-                    <a class="send-message">Enviar mensaje  <i class="fa-solid fa-message"></i></a>
+                    <!-- <a class="send-message">Enviar mensaje  <i class="fa-solid fa-message"></i></a> -->
                 </div>
                 <div class="profile-header-info">
                     <h3>Sobre mí:</h3>
@@ -80,7 +80,7 @@
             </div>
             <div class="profile-body">
                 {% if game_exist %}
-                <p>Aún no has registrado ningún juego.</p>
+                    <p>Aún no has registrado ningún juego.</p>
                 {% else %}
                 {% for game in games %}
                 <div class="profile-game">

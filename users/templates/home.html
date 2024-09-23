@@ -42,9 +42,14 @@
                             {{ user }}
                         </a>
                         <div class="dropdown-content" id="dropdownMenu">
-                            <a href="{% url 'profile' username=user.username %}">Perfil</a>
-                            <a href="{% url 'edit_profile' username=user.username %}">Editar Perfil</a>
+                            <a href="{% url 'redirect_profile' %}">Perfil</a>
+                            {% if gamer %}
+                            <a href="{% url 'edit_profile_user' username=user.username %}">Editar Perfil</a>
                             <a href="{% url 'games_stats' %}">Añadir Estadísticas</a>
+                            {% else %}
+                            <a href="{% url 'sponsor_products' %}">Añadir Producto</a>
+                            <a href="{% url 'edit_profile_sponsor' username=user.username %}">Editar Perfil</a>
+                            {% endif %}
                             <a href="{% url 'user_logout' %}">Cerrar sesión</a>
                         </div>
                     </div>
@@ -181,7 +186,7 @@
             <a href="#">Ayuda</a>
         </div>
     </footer>
-    <script src="{% static 'dropMenu.js' %}"></script>
+    <script src="{% static 'js/dropMenu.js' %}"></script>
 </body>
 
 </html>
