@@ -35,16 +35,23 @@
             </div>
             <div class="auth-buttons">
                 <div class="dropdown-profile">
-                    <a href="#" aria-haspopup="true" aria-expanded="false" class="user-icon" id="userIcon">
-                        <i class="fa-solid fa-user"></i>
-                        {{ user }}
-                    </a>
-                    <div class="dropdown-content" id="dropdownMenu">
-                        <a href="{% url 'redirect_profile' %}">Perfil</a>
-                        <a href="{% url 'games_stats' %}">Añadir Estadísticas</a>
-                        <a href="{% url 'user_logout' %}">Cerrar sesión</a>
+                    {% if user.is_authenticated %}
+                    <div class="dropdown-profile">
+                        <a href="#" aria-haspopup="true" aria-expanded="false" class="user-icon" id="userIcon">
+                            <i class="fa-solid fa-user"></i>
+                            {{ user }}
+                        </a>
+                        <div class="dropdown-content" id="dropdownMenu">
+                            <a href="{% url 'profile' username=user.username %}">Perfil</a>
+                            <a href="{% url 'edit_profile' username=user.username %}">Editar Perfil</a>
+                            <a href="{% url 'games_stats' %}">Añadir Estadísticas</a>
+                            <a href="{% url 'user_logout' %}">Cerrar sesión</a>
+                        </div>
                     </div>
-                </div>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="login-btn">Iniciar Sesión</a>
+                        <a href="{% url 'register' %}" class="register-btn">Regístrate</a>
+                    {% endif %}
             </div>
         </div>
     </header>
