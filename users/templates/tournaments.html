@@ -1,9 +1,247 @@
-<h2>Available Tournaments</h2>
-<ul>
-    {% for tournament in tournaments %}
-        <li>{{ tournament.name }} - {{ tournament.game }}
-            <a href="{% url 'join_tournament' tournament.id %}">Register</a>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torneos Disponibles</title>
+    <style>
+        /* General Body and Background */
+        body {
+            background: linear-gradient(135deg, #6a00f4, #bc00dd, #ff4f8b);
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #1f1f1f;
+            border-bottom: 1px solid #333;
+        }
+
+        .logo-container img {
+            height: 50px;
+        }
+
+        .nav-links a {
+            margin: 0 15px;
+            padding: 10px 20px;
+            background-color: transparent;
+            color: #ffffff;
+            font-weight: 600;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: #2d2d2d;
+            color: #ff4f8b;
+        }
+
+        /* Search Bar */
+        .search-bar input[type="text"] {
+            padding: 10px;
+            border-radius: 25px;
+            border: none;
+            width: 200px;
+            font-size: 14px;
+        }
+
+        .search-bar button {
+            background-color: #ff4f8b;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        .search-bar button:hover {
+            background-color: #bc00dd;
+        }
+
+        .auth-buttons .user-icon {
+            background-color: #ff4f8b;
+            padding: 10px 15px;
+            border-radius: 5px;
+            color: white;
+        }
+
+        .auth-buttons .user-icon:hover {
+            background-color: #bc00dd;
+        }
+
+        /* Main Title */
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 36px;
+            color: #ffffff;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        /* Tournament List */
+        ul {
+            list-style: none;
+            padding: 0;
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        li {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        li div {
+            max-width: 70%;
+        }
+
+        strong {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+
+        .tournament-status {
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .time-remaining {
+            font-size: 14px;
+            color: #ff4f8b;
+        }
+
+        /* Buttons */
+        a, button {
+            background-color: #ff4f8b;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease;
+            box-shadow: 0px 4px 12px rgba(255, 79, 139, 0.5);
+        }
+
+        a:hover, button:hover {
+            background-color: #bc00dd;
+            box-shadow: 0px 6px 16px rgba(188, 0, 221, 0.6);
+        }
+
+        .new-tournament-link {
+            display: block;
+            text-align: center;
+            margin: 20px auto;
+            width: fit-content;
+            background-color: #6a00f4;
+        }
+
+        .new-tournament-link:hover {
+            background-color: #bc00dd;
+        }
+
+        /* Footer */
+        .footer-container {
+            background-color: #1f1f1f;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+
+        .footer-container p {
+            font-size: 12px;
+        }
+
+        .footer-links a {
+            margin: 0 10px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .footer-links a:hover {
+            color: #ff4f8b;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo-container">
+                <img src="logo.png" alt="Logo">
+            </div>
+            <nav class="nav-links">
+                <a href="#">Inicio</a>
+                <a href="#">Explorar</a>
+                <a href="#">Suscripciones</a>
+                <a href="#">Tienda</a>
+                <a href="{% url 'tournaments' %}">Torneos</a>
+                <a href="#">Clasificaciones</a>
+                <a href="#">Equipos</a>
+            </nav>
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar">
+                <button type="submit">Buscar</button>
+            </div>
+            <div class="auth-buttons">
+                <a href="#" class="user-icon">Usuario</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <h2>Torneos Disponibles</h2>
+
+    <ul>
+        {% for tournament in tournaments %}
+        <li>
+            <div>
+                <strong>{{ tournament.name }} - {{ tournament.game }}</strong><br>
+                <span class="tournament-status">Estado: {{ tournament.status }}</span><br>
+                <span class="time-remaining">Tiempo restante para inscribirse: {{ tournament.time_left_to_register|timesince }} </span>
+            </div>
+            <a href="{% url 'join_tournament' tournament.id %}">Inscribirse</a>
         </li>
-    {% endfor %}
-</ul>
-<a href="{% url 'create_tournament' %}">Create New Tournament</a>
+        {% empty %}
+        <li>No hay torneos disponibles en este momento.</li>
+        {% endfor %}
+    </ul>
+
+    <a class="new-tournament-link" href="{% url 'crear_torneo' %}">Crear Nuevo Torneo</a>
+
+    <!-- Footer -->
+    <footer class="footer-container">
+        <p>© 2024 Viltrum. Todos los derechos reservados.</p>
+        <div class="footer-links">
+            <a href="#">Acerca de</a>
+            <a href="#">Contacto</a>
+            <a href="#">Privacidad</a>
+            <a href="#">Términos</a>
+            <a href="#">Ayuda</a>
+        </div>
+    </footer>
+</body>
+</html>

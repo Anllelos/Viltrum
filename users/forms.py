@@ -70,11 +70,6 @@ class StreamForm(forms.ModelForm):
         model = models.Stream
         fields = ['titulo', 'descripcion', 'enlace', 'imagen']
 
-# Form to create tournament (updated)
-class TournamentForm(forms.ModelForm):
-    class Meta:
-        model = Tournament
-        fields = ['name', 'max_members', 'start_date', 'end_date', 'game']  # Correct fields from the Tournament model
 
 # Form to create Clasification
 class ClasificacionForm(forms.ModelForm):
@@ -129,3 +124,12 @@ class BannerPicForm(forms.ModelForm):
     class Meta:
         model = models.ExtendedData
         fields = ['profile_banner']
+
+
+class TournamentForm(forms.ModelForm):
+    class Meta:
+        model = Tournament
+        fields = ['name', 'game', 'start_date', 'end_date', 'max_members', 'banner']  # Include relevant fields only
+        widgets = {
+            'game': forms.Select(choices=Tournament.GAME_CHOICES)  # Dropdown for games
+        }

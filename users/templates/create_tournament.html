@@ -1,6 +1,286 @@
-<h2>Create Tournament</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Create Tournament</button>
-</form>
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Torneo</title>
+    <style>
+        /* General Body and Background */
+        body, html {
+            background: linear-gradient(135deg, #6a00f4, #bc00dd, #ff4f8b);
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            margin: 0;
+            padding: 0;
+            height: 100%; /* Ensures the body takes full height */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #1f1f1f;
+            border-bottom: 1px solid #333;
+        }
+
+        .logo-container img {
+            height: 50px;
+        }
+
+        .nav-links a {
+            margin: 0 15px;
+            padding: 10px 20px;
+            background-color: transparent;
+            color: #ffffff;
+            font-weight: 600;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: #2d2d2d;
+            color: #ff4f8b;
+        }
+
+        .search-bar input[type="text"] {
+            padding: 10px;
+            border-radius: 25px;
+            border: none;
+            width: 200px;
+            font-size: 14px;
+        }
+
+        .search-bar button {
+            background-color: #ff4f8b;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        .search-bar button:hover {
+            background-color: #bc00dd;
+        }
+
+        .auth-buttons .user-icon {
+            background-color: #ff4f8b;
+            padding: 10px 15px;
+            border-radius: 5px;
+            color: white;
+        }
+
+        .auth-buttons .user-icon:hover {
+            background-color: #bc00dd;
+        }
+
+        /* Main Title */
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 36px;
+            color: #ffffff;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        /* Form */
+        form {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px auto;
+            width: 50%;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: block;
+            color: white;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 14px;
+            color: #333;
+        }
+
+        input[type="file"] {
+            color: white;
+            padding: 10px;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #ff4f8b;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #bc00dd;
+        }
+
+        /* Error Messages */
+        .error-messages {
+            background-color: rgba(255, 0, 0, 0.2);
+            border: 1px solid red;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            color: red;
+        }
+
+        /* Footer */
+        .footer-container {
+            margin-top: auto;
+            background-color: #1f1f1f;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+
+        .footer-container p {
+            font-size: 12px;
+        }
+
+        .footer-links a {
+            margin: 0 10px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .footer-links a:hover {
+            color: #ff4f8b;
+        }
+
+        /* Create Tournament Button */
+        .btn-create {
+            text-align: center;
+            margin: 20px auto;
+            display: block;
+            background-color: #bc00dd;
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-create:hover {
+            background-color: #ff4f8b;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo-container">
+                <img src="{% static 'images/ninjaviltrum.png' %}" alt="Logo">
+            </div>
+            <nav class="nav-links">
+                <a href="{% url 'home' %}">Inicio</a>
+                <a href="#">Explorar</a>
+                <a href="#">Suscripciones</a>
+                <a href="#">Tienda</a>
+                <a href="{% url 'tournaments' %}">Torneos</a>
+                <a href="#">Clasificaciones</a>
+                <a href="#">Equipos</a>
+            </nav>
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar">
+                <button type="submit">Buscar</button>
+            </div>
+            <div class="auth-buttons">
+                <a href="#" class="user-icon">Usuario</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <h2>Crear Torneo</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Error display block -->
+        {% if form.errors %}
+        <div class="error-messages">
+            <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ field.label }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <!-- Render fields manually for better control -->
+        <label for="name">Nombre del Torneo</label>
+        {{ form.name }}
+
+        <label for="game">Juego</label>
+        {{ form.game }}
+
+        <label for="start_date">Fecha de Inicio</label>
+        {{ form.start_date }}
+
+        <label for="end_date">Fecha de Fin</label>
+        {{ form.end_date }}
+
+        <label for="max_members">Máximo de Miembros</label>
+        {{ form.max_members }}
+
+        <label for="banner">Banner del Torneo</label>
+        {{ form.banner }}
+
+        <button class="btn-create" type="submit">Crear Torneo</button>
+    </form>
+
+    <!-- Footer -->
+    <footer class="footer-container">
+        <p>© 2024 Viltrum. Todos los derechos reservados.</p>
+        <div class="footer-links">
+            <a href="#">Acerca de</a>
+            <a href="#">Contacto</a>
+            <a href="#">Privacidad</a>
+            <a href="#">Términos</a>
+            <a href="#">Ayuda</a>
+        </div>
+    </footer>
+</body>
+</html>

@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django_countries.fields import CountryField
 from django.utils import timezone
-
+from datetime import timedelta
 
 # Modelo para información extra de usuarios (Jugadores Y Patrocinadores)
 class ExtendedData(models.Model):
@@ -15,8 +15,7 @@ class ExtendedData(models.Model):
     country = CountryField(blank_label='Selecciona tu país', null=True, blank=True)
     birthdate = models.DateField(null=True, blank=True)
 
-# Modelo para agregar estadísticas de juego
-# Modelo para estadísticas de jugadores
+# Modelo para agregar estadísticas de jugadores
 class PlayerStats(models.Model):
     TYPE_CHOICES = [
         ("LoL", "League of Legends"),
@@ -48,7 +47,6 @@ class SponsorProducts(models.Model):
     product_description = models.CharField(max_length=512, null=True)
     product_image = models.ImageField(null=True, blank=True, upload_to="images/sponsorProducts")
 
-
 # Modelo para videojuegos
 class Videojuego(models.Model):
     nombre = models.CharField(max_length=100)  # Nombre del videojuego
@@ -68,16 +66,50 @@ class Stream(models.Model):
     def __str__(self):
         return self.titulo  # Devuelve el título del stream
 
-# Modelo para torneos
+
 class Tournament(models.Model):
+    GAME_CHOICES = [
+        ('game1', 'Game 1'),
+        ('game2', 'Game 2'),
+        ('game3', 'Game 3'),
+    ]
     name = models.CharField(max_length=255)
-    max_members = models.IntegerField()
-    start_date = models.DateField()
-    end_date = models.DateField()
-    game = models.CharField(max_length=255)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="created_tournaments", null=True)  # Allow null temporarily
-    participants = models.ManyToManyField(User, related_name="joined_tournaments", blank=True)
-    created_at = models.DateTimeField(default=timezone.now)
+    game = models.CharField(max_length=255, choices=GAME_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    registration_deadline = models.DateTimeField(default=timezone.now() + timedelta(hours=72))  # Default to 72 hours after creation
+    start_date = models.DateField(null=True, blank=True)  # Start date of the tournament
+    end_date = models.DateField(null=True, blank=True)  # End date of the tournament
+    status = models.CharField(max_length=20, default="open")  # Default status is "open"
+    max_members = models.IntegerField(default=20)  # Define max members
+    banner = models.ImageField(upload_to='tournament_banners/', null=True, blank=True)  # Optional tournament banner
+    members = models.ManyToManyField(User, related_name='tournaments', blank=True)
+
+    def is_full(self):
+        """Check if the tournament has reached the maximum number of members."""
+        return self.members.count() >= self.max_members
+
+    def has_registration_time_passed(self):
+        """Check if the registration period (72 hours) has passed."""
+        return timezone.now() > self.registration_deadline
+
+    def is_older_than_a_month(self):
+        """Check if the tournament is older than one month."""
+        return timezone.now() > self.created_at + timedelta(days=30)
+
+    def update_status(self):
+        """Update the status of the tournament based on conditions."""
+        if self.is_full() or self.has_registration_time_passed() or self.is_older_than_a_month():
+            self.status = 'closed'
+        else:
+            self.status = 'open'
+        self.save()
+
+    def time_left_to_register(self):
+        """Get the time left to register."""
+        remaining_time = self.registration_deadline - timezone.now()
+        if remaining_time.total_seconds() > 0:
+            return remaining_time
+        return timedelta(0)  # No time left
 
     def __str__(self):
         return self.name
@@ -122,3 +154,4 @@ class Notification(models.Model):
 
     def __str__(self):
         return f"Notification from {self.sender} to {self.recipient}"
+
