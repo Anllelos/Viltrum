@@ -385,5 +385,8 @@ def list_tournaments(request):
     return render(request, 'tournaments.html', {'tournaments': tournaments})
 
 def create_tournament(request):
-    # Your view logic here
-    return render(request, 'create_tournament.html')
+    form = TournamentForm()
+    data_context = {'form':form}
+    if request.method == "POST":
+        form = TournamentForm(request.POST)
+    return render(request, 'create_tournament.html', data_context)
