@@ -1,58 +1,17 @@
+{% extends 'template.html' %}
+
 {% load static %}
 {% load extras %}
-<!DOCTYPE html>
-<html lang="es">
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="description" content="ValorQuest" />
-    <title>Iniciar Sesión</title>
-    <link type="text/css" rel="stylesheet" href="{% static 'css/gameStats.css' %}" />
-    <script src="{% static 'js/validateData.js' %}" defer></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-</head>
+{% block title %}
+Viltrum | Estadísticas
+{% endblock %}
 
-<body>
-    <header>
-        <div class="header-container">
-            <div class="logo-container">
-                <img src="{% static 'images/ninjaviltrum.png' %}" alt="Logo" class="logo" />
-            </div>
-            <nav class="nav-links">
-                <a href="#">Inicio</a>
-                <a href="#">Explorar</a>
-                <a href="#">Suscripciones</a>
-                <a href="#">Tienda</a>
-                <a href="#">Torneos</a>
-                <a href="#">Clasificaciones</a>
-                <a href="#">Equipos</a>
-            </nav>
-            <div class="search-bar">
-                <input type="text" placeholder="Buscar" />
-                <button type="submit"><i class="fas fa-search"></i></button>
-            </div>
-            <div class="auth-buttons">
-                {% if user.is_authenticated %}
-                <div class="dropdown-profile">
-                    <a href="#" aria-haspopup="true" aria-expanded="false" class="user-icon" id="userIcon">
-                        <i class="fa-solid fa-user"></i>
-                        {{ user }}
-                    </a>
-                    <div class="dropdown-content" id="dropdownMenu">
-                        <a href="{% url 'profile' username=user.username %}">Perfil</a>
-                        <a href="{% url 'edit_profile' username=user.username %}">Editar Perfil</a>
-                        <a href="{% url 'games_stats' %}">Añadir Estadísticas</a>
-                        <a href="{% url 'user_logout' %}">Cerrar sesión</a>
-                    </div>
-                </div>
-                {% else %}
-                <a href="{% url 'login' %}" class="login-btn">Iniciar Sesión</a>
-                <a href="{% url 'register' %}" class="register-btn">Regístrate</a>
-                {% endif %}
-            </div>
-        </div>
-    </header>
-    <main>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/gameStats.css' %}">
+{% endblock %}
+
+{% block content %}
         <video id="bgVideo" autoplay muted loop playsinline>
             <source id="videoSource" src="" type="video/mp4">
             Tu navegador no soporta videos en HTML5.
@@ -100,25 +59,9 @@
                 <button type="submit" class="form-button">Guardar datos</button>
             </form>
         </div>
-    </main>
-    <footer>
-        <div class="footer-container">
-            <div class="footer-links">
-                <a href="#">Acerca de</a>
-                <a href="#">Contacto</a>
-                <a href="#">Privacidad</a>
-                <a href="#">Términos</a>
-                <a href="#">Ayuda</a>
-            </div>
-            <div class="footer-social">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-            </div>
-        </div>
-    </footer>
-</body>
+{% endblock %}
+
+{% block extra_js %}
 <script>
     const gameRanks = {
         "LoL": [
@@ -285,6 +228,4 @@
     });
 
 </script>
-<script src="{% static 'js/dropMenu.js' %}"></script>
-
-</html>
+{% endblock %}

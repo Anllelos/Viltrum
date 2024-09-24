@@ -1,128 +1,95 @@
 {% load static %}
+<!-- Template de Header & Footer -->
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="description" content="Home Screen" />
-  <title>Página Principal</title>
-  {% load static %}
-  <!-- Font Import -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
-    rel="stylesheet" />
-  <link type="text/css" rel="stylesheet" href="{% static 'css/stylesTemplate.css' %}" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Viltrum | Plataforma de eSports{% endblock %}</title>
+  <!-- Fuente desde Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+  <!-- Enlace al archivo CSS -->
+  <link type="text/css" rel="stylesheet" href="{% static 'css/template.css' %}">
+  <!-- Iconos desde Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <!-- Slick Carousel CSS -->
-  <link rel="stylesheet" type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
-  <link rel="stylesheet" type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+  {% block extra_css %}
+  {% endblock %}
 </head>
 
 <body>
+  <!-- Header -->
   <header>
     <div class="header-container">
       <div class="logo-container">
         <img src="{% static 'images/ninjaviltrum.png' %}" alt="Logo" class="logo">
       </div>
+      <!-- Barra de navegacion -->
       <nav class="nav-links">
         <a href="{% url 'home' %}">Inicio</a>
         <a href="#">Explorar</a>
         <a href="#">Suscripciones</a>
         <a href="#">Tienda</a>
-        <a href="#">Torneos</a>
+        <a href="{% url 'tournaments' %}">Torneos</a>
         <a href="#">Clasificaciones</a>
         <a href="#">Equipos</a>
       </nav>
+      <!-- Barra de busqueda -->
       <div class="search-bar">
         <input type="text" placeholder="Buscar">
-        <button type="submit"><i class="fas fa-search"></i></button>
+        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
       </div>
+      <!-- Barra de perfil -->
       <div class="auth-buttons">
-        {% if user.is_authenticated %}
         <div class="dropdown-profile">
-          <a href="#" aria-haspopup="true" aria-expanded="false" class="user-icon" id="userIcon">
-            <i class="fa-solid fa-user"></i>
-            {{ user }}
-          </a>
-          <div class="dropdown-content" id="dropdownMenu">
-            <a href="{% url 'profile' username=user.username %}">Perfil</a>
-            <a href="{% url 'edit_profile' username=user.username %}">Editar Perfil</a>
-            <a href="{% url 'games_stats' %}">Añadir Estadísticas</a>
-            <a href="{% url 'user_logout' %}">Cerrar sesión</a>
+          {% if user.is_authenticated %}
+          <div class="dropdown-profile">
+            <a href="#" aria-haspopup="true" aria-expanded="false" class="user-icon" id="userIcon">
+              <i class="fa-solid fa-user"></i>
+              {{ user }}
+            </a>
+            <div class="dropdown-content" id="dropdownMenu">
+              <a href="{% url 'redirect_profile' %}">Perfil</a>
+              {% if gamer %}
+              <a href="{% url 'edit_profile_user' username=user.username %}">Editar Perfil</a>
+              <a href="{% url 'games_stats' %}">Añadir Estadísticas</a>
+              {% else %}
+              <a href="{% url 'edit_profile_sponsor' username=user.username %}">Editar Perfil</a>
+              <a href="{% url 'sponsor_products' %}">Añadir Producto</a>
+              {% endif %}
+              <a href="{% url 'user_logout' %}">Cerrar sesión</a>
+            </div>
           </div>
+          {% else %}
+          <a href="{% url 'login' %}" class="login-btn">Iniciar Sesión</a>
+          <a href="{% url 'register' %}" class="register-btn">Regístrate</a>
+          {% endif %}
         </div>
-        {% else %}
-        <a href="{% url 'login' %}" class="login-btn">Iniciar Sesión</a>
-        <a href="{% url 'register' %}" class="register-btn">Regístrate</a>
-        {% endif %}
       </div>
     </div>
   </header>
+
+  <!-- Content -->
   <main>
-    <!-- Todo Content Here-->
+    {% block content %}
+
+    {% endblock %}
   </main>
-  <footer>
-    <div class="footer-container">
-      <div class="footer-links">
-        <a href="#">Acerca de</a>
-        <a href="#">Contacto</a>
-        <a href="#">Privacidad</a>
-        <a href="#">Términos</a>
-        <a href="#">Ayuda</a>
-      </div>
-      <div class="footer-social">
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-youtube"></i></a>
-      </div>
+
+  <!-- Footer -->
+  <footer class="footer-container">
+    <p>© 2024 Viltrum. Todos los derechos reservados.</p>
+    <div class="footer-links">
+      <a href="#">Acerca de</a>
+      <a href="#">Contacto</a>
+      <a href="#">Privacidad</a>
+      <a href="#">Términos</a>
+      <a href="#">Ayuda</a>
     </div>
   </footer>
-
-  <!-- Slick Carousel JS -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-  <script type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function () {
-      $(".game-cover-carousel").slick({
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 2000,
-        dots: true,
-        arrows: true,
-        responsive: [
-          {
-            breakpoint: 1024,
-            settings: {
-              slidesToShow: 3,
-              slidesToScroll: 1,
-            },
-          },
-          {
-            breakpoint: 768,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 1,
-            },
-          },
-          {
-            breakpoint: 480,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-            },
-          },
-        ],
-      });
-    });
-  </script>
-  <!-- Script Dropdown menu-->
   <script src="{% static 'js/dropMenu.js' %}"></script>
+  {% block extra_js %}
+  {% endblock %}
 </body>
+
+</html>

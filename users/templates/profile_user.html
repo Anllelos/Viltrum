@@ -1,66 +1,16 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends 'template.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Viltrum">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil de {{ profile_user.username }}</title>
-    {% load static %}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/myProfile.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
+{% load static %}
 
-<body>
-    <header>
-        <div class="header-container">
-            <div class="logo-container">
-                <img src="{% static 'images/ninjaviltrum.png' %}" alt="Logo" class="logo">
-            </div>
-            <nav class="nav-links">
-                <a href="{% url 'home' %}">Inicio</a>
-                <a href="#">Explorar</a>
-                <a href="#">Suscripciones</a>
-                <a href="#">Tienda</a>
-                <a href="#">Torneos</a>
-                <a href="#">Clasificaciones</a>
-                <a href="#">Equipos</a>
-            </nav>
-            <div class="search-bar">
-                <input type="text" placeholder="Buscar">
-                <button type="submit"><i class="fas fa-search"></i></button>
-            </div>
-            <div class="auth-buttons">
-                {% if user.is_authenticated %}
-                <div class="dropdown-profile">
-                  <a
-                    href="#"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                    class="user-icon"
-                    id="userIcon"
-                  >
-                    <i class="fa-solid fa-user"></i>
-                    {{ user }}
-                  </a>
-                  <div class="dropdown-content" id="dropdownMenu">
-                    <a href="{% url 'redirect_profile' %}">Perfil</a>
-                    <a href="{% url 'games_stats' %}">Añadir Estadísticas</a>
-                    <a href="{% url 'user_logout' %}">Cerrar sesión</a>
-                  </div>
-                </div>
-                {% else %}
-                <a href="{% url 'login' %}" class="login-btn">Iniciar Sesión</a>
-                <a href="{% url 'register' %}" class="register-btn">Regístrate</a>
-                {% endif %}
-            </div>
-        </div>
-    </header>
+{% block title %}
+Viltrum | Perfil {{User}}
+{% endblock %}
 
-    <main>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/myProfile.css' %}">
+{% endblock %}
+
+{% block content %}
         <div class="profile-container">
             <div class="profile-header">
                 <div class="profile-banner">
@@ -109,43 +59,4 @@
                 <a href="#"><i class="fa-brands fa-twitch"></i> Lorem</a>
             </div>
         </div>
-    </main>
-
-    <footer>
-        <div class="footer-container">
-            <div class="footer-links">
-                <a href="#">Acerca de</a>
-                <a href="#">Contacto</a>
-                <a href="#">Privacidad</a>
-                <a href="#">Términos</a>
-                <a href="#">Ayuda</a>
-            </div>
-            <div class="footer-social">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var userIcon = document.getElementById('userIcon');
-            var dropdownMenu = document.getElementById('dropdownMenu');
-
-            userIcon.addEventListener('click', function (event) {
-                event.preventDefault();
-                dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
-            });
-
-            document.addEventListener('click', function (event) {
-                if (!userIcon.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                    dropdownMenu.style.display = 'none';
-                }
-            });
-        });
-    </script>
-</body>
-
-</html>
+{% endblock %}
