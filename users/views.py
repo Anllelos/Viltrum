@@ -207,30 +207,6 @@ def home(request):
 
     return render(request, 'home.html', data_context)
 
-@login_required
-def join_tournament(request, tournament_id):
-    tournament = get_object_or_404(Tournament, id=tournament_id)
-    notification = Notification.objects.create(
-        sender=request.user,
-        recipient=tournament.created_by,
-        tournament=tournament,
-        message=f"{request.user.username} wants to join the tournament {tournament.name}",
-    )
-    return redirect('tournaments')
-
-@login_required
-def manage_notifications(request):
-    notifications = Notification.objects.filter(recipient=request.user, is_read=False)
-    return render(request, 'notifications.html', {'notifications': notifications})
-
-@login_required
-def handle_notification(request, notification_id, action):
-    notification = get_object_or_404(Notification, id=notification_id)
-    if action == 'accept':
-        notification.tournament.participants.add(notification.sender)
-    notification.is_read = True
-    notification.save()
-    return redirect('notifications')
 
 @login_required
 def subir_stream(request):
@@ -242,28 +218,6 @@ def subir_stream(request):
     else:
         form = StreamForm()
     return render(request, 'subir_stream.html', {'form': form})
-
-@login_required
-def subir_torneo(request):
-    if request.method == 'POST':
-        form = TorneoForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    else:
-        form = TorneoForm()
-    return render(request, 'subir_torneo.html', {'form': form})
-
-@login_required
-def subir_clasificacion(request):
-    if request.method == 'POST':
-        form = ClasificacionForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    else:
-        form = ClasificacionForm()
-    return render(request, 'subir_clasificacion.html', {'form': form})
 
 @login_required
 def subir_juego(request):
@@ -328,27 +282,3 @@ def sponsor_products(request):
     
     # Redirect users who are not in the 'Sponsor' group
     return redirect('home')
-
-
-def list_tournaments(request):
-    tournaments = Tournament.objects.all()
-
-    # Update the status of all tournaments before rendering the page
-    for tournament in tournaments:
-        if tournament.registration_deadline:
-            remaining_time = tournament.registration_deadline - now()
-            if remaining_time > timedelta(0):
-                tournament.time_left_to_register = tournament.registration_deadline
-            else:
-                tournament.time_left_to_register = None  # Or any other message indicating registration is closed
-        else:
-            tournament.time_left_to_register = None  # No deadline
-    
-    return render(request, 'tournaments.html', {'tournaments': tournaments})
-
-def create_tournament(request):
-    form = TournamentForm()
-    data_context = {'form':form}
-    if request.method == "POST":
-        form = TournamentForm(request.POST)
-    return render(request, 'create_tournament.html', data_context)

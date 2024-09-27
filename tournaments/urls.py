@@ -23,6 +23,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 #Reset password config
 from django.contrib.auth import views as auth_views
+from . import views
 
 urlpatterns = [
     path('tournaments/', views.list_tournaments, name='tournaments'),

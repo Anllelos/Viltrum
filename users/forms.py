@@ -3,11 +3,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from . import models
 from django.utils.translation import gettext_lazy as _
-from .models import GameImage
 from django_countries.fields import CountryField
 from django.contrib.auth.models import Group
 from django import forms
-from .models import Tournament
 
 # Formulario para crear usuario jugador "Gamer"
 class CreateUserForm(UserCreationForm):
@@ -70,13 +68,6 @@ class StreamForm(forms.ModelForm):
         model = models.Stream
         fields = ['titulo', 'descripcion', 'enlace', 'imagen']
 
-
-# Form to create Clasification
-class ClasificacionForm(forms.ModelForm):
-    class Meta:
-        model = models.Clasificacion
-        fields = ['nombre', 'descripcion', 'imagen']
-
 # Form to create Games
 class JuegoForm(forms.ModelForm):
     class Meta:
@@ -95,11 +86,6 @@ class SponsorProductsForm(forms.ModelForm):
         model = models.SponsorProducts
         fields = ['product_name', 'product_description', 'product_image']
 
-# Form to upload images for a game
-class GameImageForm(forms.ModelForm):
-    class Meta:
-        model = GameImage
-        fields = ['image']
         
 # Formulario para editar información del usuario
 class EditUserForm(forms.ModelForm):
@@ -126,10 +112,3 @@ class BannerPicForm(forms.ModelForm):
         fields = ['profile_banner']
 
 
-class TournamentForm(forms.ModelForm):
-    class Meta:
-        model = Tournament
-        fields = ['name', 'game', 'start_date', 'end_date', 'max_members', 'banner']  # Include relevant fields only
-        widgets = {
-            'game': forms.Select(choices=Tournament.GAME_CHOICES)  # Dropdown for games
-        }
