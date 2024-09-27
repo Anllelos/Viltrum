@@ -29,6 +29,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),  # Rutas para autenticación
     path('', include('users.urls')),  # Incluye todas las rutas de `users.urls` sin prefijo adicional
     path('', include('tournaments.urls')), # Incluye todas las rutas de `tournaments.urls` sin prefijo adicional
+    path('', include('clasifications.urls')), # Incluye todas las rutas de `clasifications.urls` sin prefijo adicional
     # Rutas para el restablecimiento de contraseña
     path('password_reset/', auth_views.PasswordResetView.as_view(
         template_name='registration/password_reset_form.html',

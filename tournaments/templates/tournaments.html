@@ -20,7 +20,7 @@ Viltrum | Torneos
             <div>
                 <strong>{{ tournament.name }} - {{ tournament.game }}</strong><br>
                 <span class="tournament-status">Estado: {{ tournament.status }}</span><br>
-                <span class="time-remaining">Tiempo restante para inscribirse: {{tournament.time_left_to_register|timesince }} </span>
+                <span class="time-remaining">Tiempo restante para inscribirse:  </span>
             </div>
             <a href="{% url 'join_tournament' tournament.id %}">Inscribirse</a>
         </li>

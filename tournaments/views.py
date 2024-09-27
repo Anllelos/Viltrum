@@ -1,14 +1,9 @@
-import os
-import glob
-from django.conf import settings
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.models import User
 from .forms import *
 from .models import *
+from django.conf import settings
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from django.core.files.base import ContentFile
-import base64
 from django.http import Http404
 from django.utils import timezone
 from datetime import timedelta

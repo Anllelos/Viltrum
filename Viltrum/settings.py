@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     #App de torneos
     'tournaments.apps.TournamentsConfig',
+    #App de clasificaciones
+    'clasifications.apps.ClasificationsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
