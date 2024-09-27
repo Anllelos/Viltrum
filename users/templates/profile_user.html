@@ -32,22 +32,22 @@ Viltrum | Perfil {{User}}
                 {% if game_exist %}
                     <p>Aún no has registrado ningún juego.</p>
                 {% else %}
-                {% for game in games %}
-                <div class="profile-game">
-                    {% with image_url='images/'|add:game.game|add:'.png' %}
-                    <img src="{% static image_url %}" alt="{{ game.get_game_display }}">
-                    {% endwith %}
-                    <div class="profile-game-info">
-                        <h4>{{ game.user_game }}</h4>
-                        <p>
-                            Juego: {{ game.get_game_display }} <br>
-                            Rango: {{ game.rank }} <br>
-                            Winrate: {{ game.winrate|floatformat:2 }}% <br>
-                            Tiempo total jugado: {{ game.total_played }}h
-                        </p>
+                    {% for game in games %}
+                    <div class="profile-game">
+                        {% with image_url='images/'|add:game.game|add:'.png' %}
+                        <img src="{% static image_url %}" alt="{{ game.get_game_display }}">
+                        {% endwith %}
+                        <div class="profile-game-info">
+                            <h4>{{ game.user_game }}</h4>
+                            <p>
+                                Juego: {{ game.get_game_display }} <br>
+                                Rango: {{ game.rank }} <br>
+                                Winrate: {{ game.winrate|floatformat:2 }}% <br>
+                                Tiempo total jugado: {{ game.total_played }}h
+                            </p>
+                        </div>
                     </div>
-                </div>
-                {% endfor %}
+                    {% endfor %}
                 {% endif %}
             </div>
 

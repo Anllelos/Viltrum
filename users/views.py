@@ -45,7 +45,7 @@ def profile_user(request, username):
                 game.winrate = (game.wins / total_games) * 100 if total_games > 0 else 0
             data_context['games'] = game_stats_table
         else:
-            data_context['game_exist'] = False  # Set to False when no game exists
+            data_context['game_exist'] = True
 
         return render(request, 'profile_user.html', data_context)
     else:
@@ -206,44 +206,6 @@ def home(request):
     carrusel_images = [os.path.basename(os.path.normpath(image)) for image in carrusel_images if image.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
 
     return render(request, 'home.html', data_context)
-
-# Corrected create_tournament function
-@login_required
-def create_tournament(request):
-    if request.method == "POST":
-        form = TournamentForm(request.POST, request.FILES)
-        if form.is_valid():
-            tournament = form.save(commit=False)
-            tournament.registration_deadline = timezone.now() + timedelta(hours=72)  # Set deadline
-            tournament.save()
-            return redirect('tournaments')
-        else:
-            print(form.errors)
-    else:
-        form = TournamentForm()
-
-    return render(request, 'create_tournament.html', {'form': form})
-
-
-# Corrected list_tournaments function
-def list_tournaments(request):
-    tournaments = Tournament.objects.all()
-
-    # Update the status of all tournaments before rendering the page
-    for tournament in tournaments:
-        if tournament.registration_deadline:
-            remaining_time = tournament.registration_deadline - now()
-            if remaining_time > timedelta(0):
-                days = remaining_time.days
-                hours, remainder = divmod(remaining_time.seconds, 3600)
-                minutes, _ = divmod(remainder, 60)
-                tournament.time_left_to_register = f"{days} días, {hours} horas, {minutes} minutos"
-            else:
-                tournament.time_left_to_register = "Registro cerrado"
-        else:
-            tournament.time_left_to_register = "No hay fecha límite"
-
-    return render(request, 'tournaments.html', {'tournaments': tournaments})
 
 @login_required
 def join_tournament(request, tournament_id):

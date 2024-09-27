@@ -11,7 +11,7 @@ Viltrum | Torneos
 {% endblock %}
 
 {% block content %}
-    <div class="tournament-list">
+<div class="tournament-list">
     <h2>Torneos Disponibles</h2>
 
     <ul>
@@ -20,7 +20,7 @@ Viltrum | Torneos
             <div>
                 <strong>{{ tournament.name }} - {{ tournament.game }}</strong><br>
                 <span class="tournament-status">Estado: {{ tournament.status }}</span><br>
-                <span class="time-remaining">Tiempo restante para inscribirse: {{ tournament.time_left_to_register|timesince }} </span>
+                <span class="time-remaining">Tiempo restante para inscribirse: {{tournament.time_left_to_register|timesince }} </span>
             </div>
             <a href="{% url 'join_tournament' tournament.id %}">Inscribirse</a>
         </li>
@@ -30,5 +30,5 @@ Viltrum | Torneos
     </ul>
 
     <a class="new-tournament-link" href="{% url 'crear_torneo' %}">Crear Nuevo Torneo</a>
-    </div>
+</div>
 {% endblock %}
