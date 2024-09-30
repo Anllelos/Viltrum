@@ -26,7 +26,8 @@ from django.contrib.auth import views as auth_views
 from . import views
 
 urlpatterns = [
-    path('clasifications/', views.clasifications, name='clasifications')
+    path('sponsors/', views.sponsors, name='sponsors')
+    #path('clasifications/', views.clasifications, name='clasifications')
     #path('tournaments/', views.list_tournaments, name='tournaments'),
     #path('tournaments/create/', views.create_tournament, name='crear_torneo'),  
     #path('tournaments/join/<int:tournament_id>/', views.join_tournament, name='join_tournament'),  

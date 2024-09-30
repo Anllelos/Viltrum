@@ -1,0 +1,28 @@
+{% extends 'template.html' %}
+
+{% load static %}
+
+{% block title %}
+Viltrum | Patrocinadores
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'clasifications/css/clasifications.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div>
+    {% if sponsor_data %}
+        {% for sponsor in sponsor_data %}
+            <div>
+                <a href="{% url 'profile_sponsor' username=sponsor.sponsor.username %}">{{sponsor.sponsor.username}}</a>
+                <p>País: {{sponsor.profile.country}}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <span>Aún no hay Patrocinadores registrados :(</span>
+    {% endif %}
+</div>
+
+{% endblock %}

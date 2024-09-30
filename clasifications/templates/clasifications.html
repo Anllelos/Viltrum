@@ -1,0 +1,35 @@
+{% extends 'template.html' %}
+
+{% load static %}
+
+{% block title %}
+Viltrum | Clasificaciones
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'clasifications/css/clasifications.css' %}">
+{% endblock %}
+
+{% block content %}
+<div>
+{% for game, stats in game_stats.items %}
+<div class="{{game}}">
+    <h2>{{ game }}</h2>
+
+    {% for item in stats %}
+        <div>
+            <a href="{% url 'profile' username=item.user.username %}">{{ item.user.username }}</a>
+            <p></p>
+            <p> 
+                Username: {{ item.profile.user_game }} <br>
+                Rango: {{ item.profile.rank }} <br>
+                Victorias: {{ item.profile.wins }} | Derrotas: {{ item.profile.losses }} <br>
+                Horas jugadas: {{ item.profile.total_played }}
+            </p>
+        </div>
+    {% endfor %}
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}

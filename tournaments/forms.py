@@ -21,8 +21,3 @@ class TournamentForm(forms.ModelForm):
         widgets = {
             'game': forms.Select(choices=Tournament.GAME_CHOICES)  # Dropdown for games
         }
-# Form to create Clasification
-class ClasificacionForm(forms.ModelForm):
-    class Meta:
-        model = models.Clasificacion
-        fields = ['nombre', 'descripcion', 'imagen']
