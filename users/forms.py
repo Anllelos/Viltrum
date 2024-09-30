@@ -19,8 +19,18 @@ class CreateUserForm(UserCreationForm):
             user.save()
             player_group, created = Group.objects.get_or_create(name='Gamer')
             user.groups.add(player_group)
-        
         return user
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError("Ya hay un usuario registrado con ese nombre")
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("Ya hay un usuario registrado con ese correo")
+        return email
     
 # Formulario para crear usuario sponsor "sponsor"
 class CreateSponsorForm(UserCreationForm):
@@ -36,6 +46,17 @@ class CreateSponsorForm(UserCreationForm):
             user.groups.add(sponsor_group)
         
         return user
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError("Ya hay un patrocinador registrado con ese nombre")
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("Ya hay un patrocinador registrado con ese correo")
+        return email
 
 #ExtendedData User
 class UserExtendedDataForm(forms.ModelForm):

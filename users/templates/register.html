@@ -23,6 +23,9 @@
 
             <!-- Formulario de Jugadores -->
             <div id="user-form" class="form-section active">
+                {% if user_form.errors or user_extended_form.errors %}
+                <span>Hubo un error al cargar los datos</span>
+                {% endif %}
                 <h2>Registro Jugadores</h2>
                 <form method="POST">
                     {% csrf_token %}
@@ -30,28 +33,34 @@
                     <div class="login-data">
                         <div class="input-group name-data">
                             <div class="input-wrapper">
-                                <input type="text" name="first_name" maxlength="150" class="login-input" placeholder="Nombre">
+                                <input type="text" name="first_name" maxlength="150" class="login-input" placeholder="Nombre" required autocomplete="given-name">
                                 <label for="first_name">Nombre</label>
                             </div>
                             <div class="input-wrapper">
-                                <input type="text" name="last_name" maxlength="150" class="login-input" placeholder="Apellido">
+                                <input type="text" name="last_name" maxlength="150" class="login-input" placeholder="Apellido" required autocomplete="family-name">
                                 <label for="last_name">Apellido</label>
                             </div>
                         </div>
                         <div class="input-group">
-                            <input type="text" name="username" maxlength="150" class="login-input" placeholder="Nombre de usuario">
+                            <input type="text" name="username" maxlength="150" class="login-input" placeholder="Nombre de usuario" required>
                             <label for="username">Usuario</label>
+                            {% if user_form.username.errors %}
+                                <span class="error-message">{{ user_form.username.errors.0 }}</span>
+                            {% endif %}
                         </div>
                         <div class="input-group">
-                            <input type="email" name="email" maxlength="254" class="login-input" placeholder="Correo">
+                            <input type="email" name="email" maxlength="254" class="login-input" placeholder="Correo" required>
                             <label for="email">Correo</label>
+                            {% if user_form.email.errors %}
+                                <span class="error-message">{{ user_form.email.errors.0 }}</span>
+                            {% endif %}
                         </div>
                         <div class="input-group">
-                            <input type="password" name="password1" autocomplete="new-password" class="login-input" placeholder="Contraseña">
+                            <input type="password" name="password1" autocomplete="new-password" class="login-input" placeholder="Contraseña" required>
                             <label for="password1">Contraseña</label>
                         </div>
                         <div class="input-group">
-                            <input type="password" name="password2" autocomplete="new-password" class="login-input" placeholder="Repetir Contraseña">
+                            <input type="password" name="password2" autocomplete="new-password" class="login-input" placeholder="Repetir Contraseña" required>
                             <label for="password2">Confirmar Contraseña</label>
                         </div>
                         <div class="input-group">
@@ -59,6 +68,9 @@
                         </div>
                         <div class="input-group">
                             {{ user_extended_form.birthdate }}
+                            {% if user_extended_form.birthdate.errors %}
+                                <span class="error-message">{{ user_extended_form.birthdate.errors.0 }}</span>
+                            {% endif %}
                         </div>
                     </div>
 
@@ -79,6 +91,9 @@
 
             <!-- Formulario de Patrocinadores -->
             <div id="sponsor-form" class="form-section">
+                {% if sponsor_form.errors %}
+                <span>Hubo un error al cargar los datos</span>
+                {% endif %}
                 <h2>Registro Patrocinadores</h2>
                 <form method="POST">
                     {% csrf_token %}
@@ -87,10 +102,16 @@
                         <div class="input-group">
                             <input type="text" name="username" maxlength="150" class="login-input" placeholder="Nombre de usuario">
                             <label for="username">Usuario</label>
+                            {% if sponsor_form.username.errors %}
+                                <span class="error-message">{{ sponsor_form.username.errors.0 }}</span>
+                            {% endif %}
                         </div>
                         <div class="input-group">
                             <input type="email" name="email" maxlength="254" class="login-input" placeholder="Correo">
                             <label for="email">Correo</label>
+                            {% if sponsor_form.email.errors %}
+                                <span class="error-message">{{ sponsor_form.email.errors.0 }}</span>
+                            {% endif %}
                         </div>
                         <div class="input-group">
                             <input type="password" name="password1" autocomplete="new-password" class="login-input" placeholder="Contraseña">

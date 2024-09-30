@@ -10,6 +10,7 @@ from django.contrib.auth import logout
 from django.core.files.base import ContentFile
 import base64
 from django.http import Http404
+from datetime import date
 
 # Verificación de roles dentro de la página
 def profile_redirect(request):
@@ -135,14 +136,9 @@ def edit_profile_sponsor(request, username):
     data_context = {'upp_form': upp_form, 'profile': profile_to_validate}
     return render(request, 'edit_profile.html', data_context)
 
-def create_user(request):
-    data_context = {
-        'user_form': CreateUserForm(),
-        'sponsor_form': CreateSponsorForm(),
-        'user_extended_form': UserExtendedDataForm(),
-        'sponsor_extended_form': SponsorExtendedDataForm()
-    }
 
+#-------------------------------------------------------------- Crear usuario --------------------------------------------------------------#
+def create_user(request):
     if request.method == 'POST':
         form_type = request.POST.get('submit_form')
         if form_type == 'user_form':
@@ -150,24 +146,62 @@ def create_user(request):
             user_extended_form = UserExtendedDataForm(request.POST)
 
             if user_form.is_valid() and user_extended_form.is_valid():
-                user = user_form.save()
-                extended_data = user_extended_form.save(commit=False)
-                extended_data.user = user
-                extended_data.save()
-                return redirect('login')
+                username = user_form.cleaned_data.get('username')
+                birthdate = user_extended_form.cleaned_data.get('birthdate')
+                today = date.today()
+                age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
+
+                if len(username) < 3:
+                    user_form.add_error('username', "El usuario debe contener al menos 3 caracteres")
+                if age < 18:
+                    user_extended_form.add_error('birthdate', "Debes tener por lo menos 18 años para registrarte")
+
+                if not (user_form.errors or user_extended_form.errors):
+                    user = user_form.save()
+                    extended_data = user_extended_form.save(commit=False)
+                    extended_data.user = user
+                    extended_data.save()
+                    return redirect('login')
+
+            data_context = {
+                'user_form': user_form,
+                'user_extended_form': user_extended_form,
+                'sponsor_form': CreateSponsorForm(),
+                'sponsor_extended_form': SponsorExtendedDataForm()
+            }
 
         elif form_type == 'sponsor_form':
             sponsor_form = CreateSponsorForm(request.POST)
             sponsor_extended_form = SponsorExtendedDataForm(request.POST)
 
             if sponsor_form.is_valid() and sponsor_extended_form.is_valid():
-                sponsor = sponsor_form.save()
-                extended_data = sponsor_extended_form.save(commit=False)
-                extended_data.user = sponsor
-                extended_data.save()
-                return redirect('login')
+                username = user_form.cleaned_data.get('username')
+                if len(username) < 3:
+                    sponsor_form.add_error('username', "El usuario debe contener al menos 3 caracteres")
+                if not (user_form.errors or user_extended_form.errors):
+                    sponsor = sponsor_form.save()
+                    extended_data = sponsor_extended_form.save(commit=False)
+                    extended_data.user = sponsor
+                    extended_data.save()
+                    return redirect('login')
+
+            data_context = {
+                'user_form': CreateUserForm(),
+                'user_extended_form': UserExtendedDataForm(),
+                'sponsor_form': sponsor_form,
+                'sponsor_extended_form': sponsor_extended_form
+            }
+
+    else:
+        data_context = {
+            'user_form': CreateUserForm(),
+            'user_extended_form': UserExtendedDataForm(),
+            'sponsor_form': CreateSponsorForm(),
+            'sponsor_extended_form': SponsorExtendedDataForm()
+        }
 
     return render(request, 'register.html', data_context)
+
 
 def home(request):
     active_user = request.user
