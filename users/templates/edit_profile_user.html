@@ -21,7 +21,7 @@ Viltrum | Patrocinador {{profile_sponsor.username}}
                     <li><a href="#" data-section="images">Imágenes</a></li>
                 </ul>
             </div>
-    
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    
             <div class="form-container">
                 <div id="personal-info" class="form-section active">
                     <h2>Información Personal</h2>
@@ -54,7 +54,7 @@ Viltrum | Patrocinador {{profile_sponsor.username}}
                         </div>
                     </form>
                 </div>
-    
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 <div id="additional-info" class="form-section">
                     <h2>Información Adicional</h2>
                     <form method="POST">
@@ -62,7 +62,7 @@ Viltrum | Patrocinador {{profile_sponsor.username}}
                         <input type="hidden" name="submit_form" value="extra_data">
                         <div class="profile-data">
                             <div class="input-group">
-                                <textarea name="user_description" id="user_description" placeholder="Descripción del usuario" required class="profile-input">{{ profile.user_description }}</textarea>
+                                <textarea name="user_description" id="user_description" placeholder="{{ profile.user_description }}" required class="profile-input"></textarea>
                                 <label for="user_description">Descripción del Usuario</label>
                             </div>
                             <div class="input-group">
@@ -82,7 +82,7 @@ Viltrum | Patrocinador {{profile_sponsor.username}}
                         </div>
                     </form>
                 </div>
-    
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 <div id="security" class="form-section">
                     <h2>Seguridad</h2>
                     <form method="POST">
@@ -106,7 +106,7 @@ Viltrum | Patrocinador {{profile_sponsor.username}}
                         </div>
                     </form>
                 </div>
-    
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 <div id="images" class="form-section">
                     <h2>Imágenes de Perfil y Banner</h2>
                     <div class="photo-section">
@@ -125,7 +125,7 @@ Viltrum | Patrocinador {{profile_sponsor.username}}
                             <img id="imagePreview" style="max-width: 100%;">
                         </div>
                     </div>
-    
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    
                     <div class="photo-section">
                         <h3>Banner de Perfil</h3>
                         <img src="{% if profile.profile_banner %}{{ profile.profile_banner.url }}{% endif %}" alt="Banner de perfil" id="banner-pic">

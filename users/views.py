@@ -63,6 +63,8 @@ def profile_sponsor(request, username):
 
     raise Http404("No existe ese patrocinador")
 
+
+#-------------------------------------------------------------- Editar usuario --------------------------------------------------------------#
 @login_required
 def edit_profile_user(request, username):
     active_user = request.user
@@ -111,6 +113,8 @@ def edit_profile_user(request, username):
 
     return render(request, 'edit_profile_user.html', data_context)
 
+
+#-------------------------------------------------------------- Editar sponsor --------------------------------------------------------------#
 @login_required
 def edit_profile_sponsor(request, username):
     user_to_validate = get_object_or_404(User, username=username)
