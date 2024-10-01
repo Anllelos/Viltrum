@@ -56,7 +56,7 @@ def profile_sponsor(request, username):
 
         data_context = {
             'profile_sponsor': user_to_validate,
-            'extended_data': extended_data_table,
+            'extended_data': extended_data_table,   
             'products': products_table
         }
         return render(request, 'profile_sponsor.html', data_context)
@@ -115,6 +115,10 @@ def edit_profile_user(request, username):
 def edit_profile_sponsor(request, username):
     user_to_validate = get_object_or_404(User, username=username)
     profile_to_validate = get_object_or_404(ExtendedData, user=user_to_validate)
+    active_user = request.user
+
+    if not active_user.groups.filter(name='Sponsor').exists():
+        return redirect('home')
 
     if request.user.username != username:
         return redirect('edit_profile', username=request.user.username)
