@@ -1,5 +1,4 @@
 {% extends 'template.html' %}
-
 {% load static %}
 
 {% block title %}
@@ -11,26 +10,80 @@ Viltrum | Clasificaciones
 {% endblock %}
 
 {% block content %}
-<div>
-{% for game, stats in game_stats.items %}
-<div class="{{game}}">
-    <h2>{{ game }}</h2>
+<div class="page-wrapper">
 
-    {% for item in stats %}
-        <div>
-            <a href="{% url 'profile' username=item.user.username %}">{{ item.user.username }}</a>
-            <p></p>
-            <p> 
-                Rango Viltrum: {{item.viltrum_rank}} <br>
-                Username: {{ item.profile.user_game }} <br>
-                Rango: {{ item.profile.rank }} <br>
-                Victorias: {{ item.profile.wins }} | Derrotas: {{ item.profile.losses }} <br>
-                Horas jugadas: {{ item.profile.total_played }}
-            </p>
+    <!-- Filter Panel -->
+    <form method="GET" class="filter-panel">
+        <h3>Filtrar Resultados</h3>
+
+        <!-- Filter by Game -->
+        <div class="filter-section">
+            <h4>Videojuego</h4>
+            <ul>
+                {% for game in game_stats %}
+                <li>
+                    <label>
+                        <input type="checkbox" name="game" value="{{ game }}" {% if game in selected_game %}checked{% endif %}> {{ game }}
+                    </label>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>        
+
+        <!-- Filter by Viltrum Rank -->
+        <div class="filter-section">
+            <h4>Rango Viltrum</h4>
+            <label><input type="radio" name="viltrum_rank" value="E" {% if selected_rank == 'E' %}checked{% endif %}> Elite</label><br>
+            <label><input type="radio" name="viltrum_rank" value="S" {% if selected_rank == 'S' %}checked{% endif %}> Sakura</label><br>
+            <label><input type="radio" name="viltrum_rank" value="S+" {% if selected_rank == 'S+' %}checked{% endif %}> Sakura +</label><br>
+            <label><input type="radio" name="viltrum_rank" value="V" {% if selected_rank == 'V' %}checked{% endif %}> Viltrum</label><br>
+            <label><input type="radio" name="viltrum_rank" value="V+" {% if selected_rank == 'V+' %}checked{% endif %}> Viltrum +</label>
         </div>
-    {% endfor %}
-</div>
-{% endfor %}
-</div>
 
+        <!-- Filter by Wins and Losses -->
+        <div class="filter-section">
+            <h4>Victorias y Derrotas</h4>
+            <label>Victorias <input type="number" name="wins_filter" min="0" value="{{ wins_filter }}"></label><br>
+            <label>Derrotas <input type="number" name="losses_filter" min="0" value="{{ losses_filter }}"></label>
+        </div>
+
+        <!-- Filter by Hours Played -->
+        <div class="filter-section">
+            <h4>Horas Jugadas</h4>
+            <label>Horas <input type="number" name="hours_filter" min="0" value="{{ hours_filter }}"></label>
+        </div>
+
+        <!-- Apply Filters Button -->
+        <button class="filter-button" type="submit">Aplicar Filtros</button>
+    </form>
+
+    <!-- Clasifications Content -->
+    <div class="content-section">
+        {% for game, stats in game_stats.items %}
+        <div class="game-section" data-game="{{ game }}">
+            <h2 class="game-title">{{ game }}</h2>
+
+            <div class="player-list">
+                {% for item in stats %}
+                <div class="player-card">
+                    <div class="player-info">
+                        <a class="player-username" href="{% url 'profile' username=item.user.username %}">
+                            {{ item.user.username }}
+                        </a>
+                        <p class="player-details">
+                            <strong>Rango Viltrum:</strong> {{ item.viltrum_rank }}<br>
+                            <strong>Game Username:</strong> {{ item.profile.user_game }}<br>
+                            <strong>Rank:</strong> {{ item.profile.rank }}<br>
+                            <strong>Victorias:</strong> {{ item.profile.wins }} | <strong>Derrotas:</strong> {{ item.profile.losses }}<br>
+                            <strong>Horas Jugadas:</strong> {{ item.profile.total_played }}
+                        </p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
 {% endblock %}
