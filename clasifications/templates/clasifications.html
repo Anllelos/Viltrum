@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Viltrum | Clasificaciones
+Clasificaciones
 {% endblock %}
 
 {% block extra_css %}
@@ -23,34 +23,40 @@ Viltrum | Clasificaciones
                 {% for game in game_stats %}
                 <li>
                     <label>
-                        <input type="checkbox" name="game" value="{{ game }}" {% if game in selected_game %}checked{% endif %}> {{ game }}
+                        <input type="checkbox" name="game" value="{{ game }}" {% if game in selected_game %}checked{% endif %} id="game_{{ forloop.counter }}"> {{ game }}
                     </label>
                 </li>
                 {% endfor %}
             </ul>
-        </div>        
+        </div>
 
         <!-- Filter by Viltrum Rank -->
         <div class="filter-section">
             <h4>Rango Viltrum</h4>
-            <label><input type="radio" name="viltrum_rank" value="E" {% if selected_rank == 'E' %}checked{% endif %}> Elite</label><br>
-            <label><input type="radio" name="viltrum_rank" value="S" {% if selected_rank == 'S' %}checked{% endif %}> Sakura</label><br>
-            <label><input type="radio" name="viltrum_rank" value="S+" {% if selected_rank == 'S+' %}checked{% endif %}> Sakura +</label><br>
-            <label><input type="radio" name="viltrum_rank" value="V" {% if selected_rank == 'V' %}checked{% endif %}> Viltrum</label><br>
-            <label><input type="radio" name="viltrum_rank" value="V+" {% if selected_rank == 'V+' %}checked{% endif %}> Viltrum +</label>
+            <label><input type="radio" name="viltrum_rank" value="E" {% if selected_rank == 'E' %}checked{% endif %} id="rank_E"> Elite</label><br>
+            <label><input type="radio" name="viltrum_rank" value="S" {% if selected_rank == 'S' %}checked{% endif %} id="rank_S"> Sakura</label><br>
+            <label><input type="radio" name="viltrum_rank" value="S+" {% if selected_rank == 'S+' %}checked{% endif %} id="rank_Splus"> Sakura +</label><br>
+            <label><input type="radio" name="viltrum_rank" value="V" {% if selected_rank == 'V' %}checked{% endif %} id="rank_V"> Viltrum</label><br>
+            <label><input type="radio" name="viltrum_rank" value="V+" {% if selected_rank == 'V+' %}checked{% endif %} id="rank_Vplus"> Viltrum +</label>
         </div>
 
         <!-- Filter by Wins and Losses -->
         <div class="filter-section">
             <h4>Victorias y Derrotas</h4>
-            <label>Victorias <input type="number" name="wins_filter" min="0" value="{{ wins_filter }}"></label><br>
-            <label>Derrotas <input type="number" name="losses_filter" min="0" value="{{ losses_filter }}"></label>
+            <label for="wins_filter">Victorias 
+                <input type="number" name="wins_filter" min="0" value="{{ wins_filter|default_if_none:0 }}" id="wins_filter">
+            </label><br>
+            <label for="losses_filter">Derrotas 
+                <input type="number" name="losses_filter" min="0" value="{{ losses_filter|default_if_none:0 }}" id="losses_filter">
+            </label>
         </div>
 
         <!-- Filter by Hours Played -->
         <div class="filter-section">
             <h4>Horas Jugadas</h4>
-            <label>Horas <input type="number" name="hours_filter" min="0" value="{{ hours_filter }}"></label>
+            <label for="hours_filter">Horas 
+                <input type="number" name="hours_filter" min="0" value="{{ hours_filter|default_if_none:0 }}" id="hours_filter">
+            </label>
         </div>
 
         <!-- Apply Filters Button -->
@@ -84,6 +90,5 @@ Viltrum | Clasificaciones
         </div>
         {% endfor %}
     </div>
-
 </div>
 {% endblock %}

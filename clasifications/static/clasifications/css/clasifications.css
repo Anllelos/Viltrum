@@ -11,7 +11,7 @@ body {
     margin: 40px auto;
     max-width: 1200px;
     padding: 20px;
-    gap: 20px; /* Add space between the filter and content */
+    gap: 20px; /* Space between the filter panel and content section */
 }
 
 /* Filter Panel Styling */
@@ -44,10 +44,19 @@ body {
     margin-bottom: 10px;
 }
 
+/* Update color for inputs, labels, and selects */
+.filter-panel label, 
+.filter-panel input[type="checkbox"], 
+.filter-panel input[type="radio"], 
+.filter-panel input[type="number"] {
+    color: #000; /* Set label and input text color to black */
+}
+
 .filter-checkbox, .filter-radio {
     margin-right: 10px;
 }
 
+/* Style for the button */
 .filter-button {
     background-color: #4A90E2;
     color: white;
@@ -63,43 +72,38 @@ body {
 }
 
 .filter-button:hover {
-    background-color: #357ABD;
+    background-color: #2C73D2;
 }
 
-/* Content Section */
+/* Clasifications Content */
 .content-section {
-    flex: 1;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    width: 75%;
 }
 
-.game-section {
-    margin-bottom: 40px;
-}
-
+/* Game Section Title */
 .game-title {
     font-size: 24px;
     font-weight: 600;
+    margin-bottom: 20px;
     color: #333;
+    text-transform: uppercase;
     border-bottom: 2px solid #eee;
     padding-bottom: 10px;
-    margin-bottom: 20px;
 }
 
 /* Player List */
 .player-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; /* Space between player cards */
+    gap: 20px;
 }
 
+/* Player Card */
 .player-card {
     background-color: #fff;
     border-radius: 8px;
     padding: 20px;
-    width: calc(50% - 20px); /* Two cards per row */
+    width: calc(33.333% - 20px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -109,6 +113,7 @@ body {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
+/* Player Info */
 .player-info {
     text-align: left;
 }
@@ -138,14 +143,14 @@ body {
 /* Responsiveness */
 @media (max-width: 768px) {
     .player-card {
-        width: 100%;  /* Stack player cards on small screens */
+        width: 100%;
     }
 
     .filter-panel, .content-section {
-        width: 100%;  /* Make filter panel and content full-width on small screens */
+        width: 100%;
     }
 
     .page-wrapper {
-        flex-direction: column;  /* Stack filter and content vertically on small screens */
+        flex-direction: column;
     }
 }
