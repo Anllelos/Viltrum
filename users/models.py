@@ -4,9 +4,17 @@ from django_countries.fields import CountryField
 
 # Modelo para información extra de usuarios (Jugadores Y Patrocinadores)
 class ExtendedData(models.Model):
+    TYPE_CHOICES = [
+        ("E", "Elite"),
+        ("S", "Sakura"),
+        ("S+", "Sakura +"),
+        ("V", "Viltrum"),
+        ("V+", "Viltrum +")
+    ]
     profile_img = models.ImageField(null=True, blank=True, upload_to="images/profileimg")  # Imagen de perfil
     profile_banner = models.ImageField(null=True, blank=True, upload_to="images/profilebanner")  # Banner de perfil
-    user_description = models.TextField(null=True, blank=True)  # Descripción del usuario
+    user_description = models.TextField(null=True, blank=True)  # Descripción del usuario}
+    viltrum_rank = models.CharField(max_length=3, choices=TYPE_CHOICES, default="E")
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)  # Relación uno a uno con el usuario
     
     # Campos obligatorios en la creación

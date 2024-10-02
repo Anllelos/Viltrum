@@ -21,6 +21,7 @@ Viltrum | Clasificaciones
             <a href="{% url 'profile' username=item.user.username %}">{{ item.user.username }}</a>
             <p></p>
             <p> 
+                Rango Viltrum: {{item.viltrum_rank}} <br>
                 Username: {{ item.profile.user_game }} <br>
                 Rango: {{ item.profile.rank }} <br>
                 Victorias: {{ item.profile.wins }} | Derrotas: {{ item.profile.losses }} <br>
