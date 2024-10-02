@@ -198,10 +198,10 @@ def create_user(request):
             sponsor_extended_form = SponsorExtendedDataForm(request.POST)
 
             if sponsor_form.is_valid() and sponsor_extended_form.is_valid():
-                username = user_form.cleaned_data.get('username')
+                username = sponsor_form.cleaned_data.get('username')
                 if len(username) < 3:
                     sponsor_form.add_error('username', "El usuario debe contener al menos 3 caracteres")
-                if not (user_form.errors or user_extended_form.errors):
+                if not (sponsor_form.errors or sponsor_extended_form.errors):
                     sponsor = sponsor_form.save()
                     extended_data = sponsor_extended_form.save(commit=False)
                     extended_data.user = sponsor
