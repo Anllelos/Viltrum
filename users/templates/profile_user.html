@@ -18,7 +18,7 @@ Viltrum | Perfil {{User}}
                 </div>
                 <div class="profile-header-user">
                     <div class="profile-image">
-                        <img src="{% if profile.profile_img %}{{ profile.profile_img.url }}{% else %}https://ui-avatars.com/api/?name={{user}}{% endif %}" alt="Foto de perfil" id="profile-pic">
+                        <img src="{% if profile.profile_img %}{{ profile.profile_img.url }}{% else %}https://ui-avatars.com/api/?name={{ profile_user.username }}{% endif %}" alt="Foto de perfil" id="profile-pic">
                         <h2 class="username">{{ profile_user.username }}</h2>
                     </div>
                     <!-- <a class="send-message">Enviar mensaje  <i class="fa-solid fa-message"></i></a> -->
@@ -28,6 +28,7 @@ Viltrum | Perfil {{User}}
                     <p>{{ profile.user_description|default:"El usuario no ha agregado información aún." }}</p>
                 </div>
             </div>
+            <h3>Mis juegos: {{n_games}}</h3>
             <div class="profile-body">
                 {% if game_exist %}
                     <p>Aún no has registrado ningún juego.</p>
@@ -40,6 +41,17 @@ Viltrum | Perfil {{User}}
                         <div class="profile-game-info">
                             <h4>{{ game.user_game }}</h4>
                             <p>
+                                {% if user.id == profile_user.id %}
+                                    <a href="{% url 'edit_game_stat' game.id %}"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                                    
+                                    <!-- Formulario de eliminación -->
+                                    <form id="deleteForm" method="post" action="{% url 'delete_game_stats' game.id %}" style="display: inline;">
+                                        {% csrf_token %}
+                                        <a href="javascript:void(0);" onclick="confirmDeletion('{{ game.id }}')">
+                                            <i class="fa-solid fa-ban"></i> Borrar
+                                        </a>
+                                    </form> <br>
+                                {% endif %}
                                 Juego: {{ game.get_game_display }} <br>
                                 Rango: {{ game.rank }} <br>
                                 Winrate: {{ game.winrate|floatformat:2 }}% <br>
@@ -59,4 +71,14 @@ Viltrum | Perfil {{User}}
                 <a href="#"><i class="fa-brands fa-twitch"></i> Lorem</a>
             </div>
         </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function confirmDeletion() {
+        if (confirm("¿Estás seguro de que deseas eliminar estas estadísticas de juego?")) {
+            document.getElementById("deleteForm").submit();
+        }
+    }
+</script>
 {% endblock %}

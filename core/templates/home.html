@@ -1,0 +1,124 @@
+{% extends 'template.html' %}
+
+{% load static %}
+
+{% block title %}
+Viltrum | Inicio
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'core/css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="overlay">
+        <h1>Bienvenido a Viltrum</h1>
+        <p>Únete a torneos, compite en equipos y escala en las clasificaciones.</p>
+    </div>
+    <img src="https://media1.tenor.com/m/nFCWEjg4XDoAAAAd/zenless-zone-zero-zzz.gif" alt="Background GIF"
+        class="background-gif">
+</section>
+
+<!-- Carrusel de Patrocinadores -->
+<section class="brand-carousel-section">
+    <div class="brand-carousel">
+        <div class="brand-item">
+            <img src="{% static 'images/INICIO/TELCEL.png' %}" alt="Telcel">
+        </div>
+        <div class="brand-item">
+            <img src="{% static 'images/INICIO/HISENSE.png' %}" alt="Hisense">
+        </div>
+        <div class="brand-item">
+            <img src="{% static 'images/INICIO/AMAZONADS.png' %}" alt="Amazon Ads">
+        </div>
+        <div class="brand-item">
+            <img src="{% static 'images/INICIO/LENOVO.png' %}" alt="Lenovo">
+        </div>
+        <div class="brand-item">
+            <img src="{% static 'images/INICIO/VISA.png' %}" alt="Intel">
+        </div>
+    </div>
+</section>
+
+<!-- Sección de Festival -->
+<section class="festival-section">
+    <div class="festival-content">
+        <h2>Viltrum - Plataforma de eSports</h2>
+        <p>
+            Viltrum es la plataforma definitiva para los apasionados de los eSports. Ofrecemos un espacio dinámico
+            donde los jugadores de todos los niveles pueden participar en torneos emocionantes, formar equipos y
+            competir por la gloria en las clasificaciones. Con una comunidad en constante crecimiento, Viltrum se
+            convierte en el hogar de los mejores talentos y aficionados de todo el mundo.
+        </p>
+        <p>
+            Nuestra plataforma te brinda la oportunidad de mostrar tus habilidades, conectar con otros jugadores y
+            escalar hasta la cima en un entorno competitivo pero inclusivo. ¿Eres un espectador? También puedes
+            disfrutar viendo las partidas en vivo y apoyar a tus equipos y jugadores favoritos. ¡Aquí, cada partida
+            cuenta!
+        </p>
+        <p>
+            Únete a nosotros y vive la emoción de los eSports en un entorno diseñado para que todos puedan brillar.
+            ¡Viltrum es donde el futuro de los deportes electrónicos se juega hoy!
+        </p>
+        <a href="{% url 'register' %}">Registrarse ahora</a>
+    </div>
+    <div class="festival-image">
+        <img src="{% static 'images/INICIO/chicojugando.jpg' %}" alt="Viltrum Image">
+    </div>
+</section>
+
+
+<!-- Sección de Actividades -->
+<section class="activities-section">
+    <h2>¿Qué hacer en Viltrum?</h2>
+    <div class="activities-container">
+        <!-- Cuadro 1: Azul -->
+        <div class="activity-card blue">
+            <img src="{% static 'images/INICIO/AZUL.jpg' %}" alt="Cuadro Azul">
+            <div class="text-overlay">
+                <h3>Compite en Torneos</h3>
+                <p>Únete a nuestros torneos regulares y muestra tus habilidades frente a los mejores jugadores.</p>
+            </div>
+        </div>
+        <!-- Cuadro 2: Rojo -->
+        <div class="activity-card red">
+            <img src="{% static 'images/INICIO/ROJO.jpg' %}" alt="Cuadro Rojo">
+            <div class="text-overlay">
+                <h3>Crea Equipos</h3>
+                <p>Forma equipos con otros jugadores y escala juntos hasta la cima de las clasificaciones.</p>
+            </div>
+        </div>
+        <!-- Cuadro 3: Amarillo -->
+        <div class="activity-card yellow">
+            <img src="{% static 'images/INICIO/AMARILLO.jpg' %}" alt="Cuadro Amarillo">
+            <div class="text-overlay">
+                <h3>Espectadores</h3>
+                <p>Disfruta viendo partidas en vivo y apoya a tus jugadores favoritos en cada torneo.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="home-section-intro dark center">
+        <p class="home-section-intro--title">
+            COMUNIDAD VILTRUM
+        </p>
+        <p class="home-section-intro--description">
+            Desde Viltrum incentivamos la participación de todos los jugadores independientemente de su nivel de
+            habilidad. ¡Compite en la categoría que mejor se adapte a tu modo de divertirse!
+        </p>
+    </div>
+
+    <div class="social-ctas">
+        <a href="#" class="social-cta twitch-cta" target="_blank">
+            <img src="{% static 'images/INICIO/twitch.png' %}" alt="Discord">
+        </a>
+
+        <a href="#" class="social-cta discord-cta" target="_blank">
+            <img src="{% static 'images/INICIO/discord.png' %}" alt="Discord">
+        </a>
+    </div>
+
+    </div>
+</section>
+{% endblock %}

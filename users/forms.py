@@ -71,18 +71,6 @@ class SponsorExtendedDataForm(forms.ModelForm):
         model = models.ExtendedData
         fields = ['country']
 
-# Formulario para crear usuario
-class AuthenticationFormUser(AuthenticationForm):
-    def get_invalid_login_error(self):
-        return self.error_class([_("Invalid login")])
-
-    def confirm_login_allowed(self, user):
-        if not user.is_active:
-            raise forms.ValidationError(
-                _("This account is inactive."),
-                code='inactive',
-            )
-
 # Form to create stream
 class StreamForm(forms.ModelForm):
     class Meta:
@@ -131,5 +119,10 @@ class BannerPicForm(forms.ModelForm):
     class Meta:
         model = models.ExtendedData
         fields = ['profile_banner']
+
+class EditGameStat(forms.ModelForm):
+    class Meta:
+        model = models.PlayerStats
+        fields = ['user_game', 'rank', 'wins', 'losses', 'total_played'] 
 
 

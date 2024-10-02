@@ -43,6 +43,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    #App principal
+    'core.apps.CoreConfig',
     #App de usuarios
     'users.apps.UsersConfig',
     #App de torneos
@@ -92,6 +94,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                #Manejador de roles a nivel global
+                'core.context_processors.user_role',
             ],
         },
     },

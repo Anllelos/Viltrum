@@ -1,0 +1,94 @@
+{% load static %}
+<!-- Template de Header & Footer -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Viltrum | Plataforma de eSports{% endblock %}</title>
+  <!-- Fuente desde Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+  <!-- Enlace al archivo CSS -->
+  <link type="text/css" rel="stylesheet" href="{% static 'core/css/template.css' %}">
+  <!-- Iconos desde Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  {% block extra_css %}
+  {% endblock %}
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <div class="logo-container">
+        <img src="{% static 'images/ninjaviltrum.png' %}" alt="Logo" class="logo">
+      </div>
+      <!-- Barra de navegacion -->
+      <nav class="nav-links">
+        <a href="{% url 'home' %}">Inicio</a>
+        <a href="#">Explorar</a>
+        <a href="#">Suscripciones</a>
+        <a href="{% url 'sponsors' %}">Patrocinadores</a>
+        <a href="{% url 'tournaments' %}">Torneos</a>
+        <a href="{% url 'clasifications' %}">Clasificaciones</a>
+        <a href="#">Equipos</a>
+      </nav>
+      <!-- Barra de busqueda -->
+      <div class="search-bar">
+        <input type="text" placeholder="Buscar">
+        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </div>
+      <!-- Barra de perfil -->
+      <div class="auth-buttons">
+        <div class="dropdown-profile">
+          {% if user.is_authenticated %}
+          <div class="dropdown-profile">
+            <a href="#" aria-haspopup="true" aria-expanded="false" class="user-icon" id="userIcon">
+              <i class="fa-solid fa-user"></i>
+              {{ user }}
+            </a>
+            <div class="dropdown-content" id="dropdownMenu">
+              <a href="{% url 'redirect_profile' %}">Perfil</a>
+              <a href="{% url 'redirect_profile_edit' %}">Editar Perfil</a>
+              {% if role == 'gamer' %}
+                <a href="{% url 'games_stats' %}">Añadir Estadísticas</a>
+              {% else %}
+                <a href="{% url 'sponsor_products' %}">Añadir Producto</a>
+              {% endif %}
+              <a href="{% url 'user_logout' %}">Cerrar sesión</a>
+            </div>
+          </div>
+          {% else %}
+          <a href="{% url 'login' %}" class="login-btn">Iniciar Sesión</a>
+          <a href="{% url 'register' %}" class="register-btn">Regístrate</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main>
+    {% block content %}
+
+    {% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer-container">
+    <p>© 2024 Viltrum. Todos los derechos reservados.</p>
+    <div class="footer-links">
+      <a href="#">Acerca de</a>
+      <a href="#">Contacto</a>
+      <a href="#">Privacidad</a>
+      <a href="#">Términos</a>
+      <a href="#">Ayuda</a>
+    </div>
+  </footer>
+  <script src="{% static 'js/dropMenu.js' %}"></script>
+  {% block extra_js %}
+  {% endblock %}
+</body>
+
+</html>

@@ -27,6 +27,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('admin/', admin.site.urls),  # Ruta para el panel de administración
     path('', include('django.contrib.auth.urls')),  # Rutas para autenticación
+    path('', include('core.urls')),  # Incluye todas las rutas de `core.urls` sin prefijo adicional
     path('', include('users.urls')),  # Incluye todas las rutas de `users.urls` sin prefijo adicional
     path('', include('tournaments.urls')), # Incluye todas las rutas de `tournaments.urls` sin prefijo adicional
     path('', include('clasifications.urls')), # Incluye todas las rutas de `clasifications.urls` sin prefijo adicional

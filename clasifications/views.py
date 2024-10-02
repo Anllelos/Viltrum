@@ -11,7 +11,7 @@ def clasifications(request):
     game_stats = {}
 
     for user in users:
-        profiles = PlayerStats.objects.filter(user=user) 
+        profiles = PlayerStats.objects.filter(user=user, is_active=True) 
         
         # Iterar sobre los perfiles para agrupar por juego
         for profile in profiles:

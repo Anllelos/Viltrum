@@ -34,6 +34,7 @@ class PlayerStats(models.Model):
     wins = models.IntegerField(default=0)  # Número de victorias
     losses = models.IntegerField(default=0)  # Número de derrotas
     total_played = models.IntegerField(default=0)  # Total de juegos jugados
+    is_active = models.BooleanField(default=True)  #Bandera en caso de ser eliminado
 
     class Meta:
         unique_together = ('user', 'game')  # Asegura que el usuario no pueda repetir el juego con el mismo tipo

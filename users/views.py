@@ -12,12 +12,12 @@ import base64
 from django.http import Http404
 from datetime import date
 
+
+#-------------------------------------------------------------- Ver perfil --------------------------------------------------------------#
 # Verificación de roles dentro de la página
+@login_required
 def profile_redirect(request):
     user = request.user
-
-    if not user.is_authenticated:
-        return redirect('login')
 
     # Verifica los roles del usuario y redirige apropiadamente
     if user.groups.filter(name='Sponsor').exists():
@@ -31,22 +31,23 @@ def profile_user(request, username):
     user_to_validate = get_object_or_404(User, username=username)
     if user_to_validate.groups.filter(name='Gamer').exists():
         extended_data_table = get_object_or_404(ExtendedData, user=user_to_validate)
-        game_stats_table = PlayerStats.objects.filter(user=user_to_validate)
+        game_stats_table = PlayerStats.objects.filter(user=user_to_validate, is_active=True)
+    
+        data_context = {'profile': extended_data_table, 'profile_user': user_to_validate}
+        n_games = 0
+        if game_stats_table.exists():
+            for game in game_stats_table:
+                total_games = game.wins + game.losses
+                game.winrate = (game.wins / total_games) * 100 if total_games > 0 else 0
+                n_games += 1
+            data_context['games'] = game_stats_table
+            data_context['n_games'] = n_games
+        else:
+            data_context['game_exist'] = True
 
-        # Calcular winrate solo si existen estadísticas de juego
-        for game in game_stats_table:
-            total_games = game.wins + game.losses
-            game.winrate = (game.wins / total_games) * 100 if total_games > 0 else 0
-
-        data_context = {
-            'profile': extended_data_table,
-            'profile_user': user_to_validate,
-            'games': game_stats_table,
-            'game_exist': game_stats_table.exists()
-        }
         return render(request, 'profile_user.html', data_context)
-
-    raise Http404("No existe ese usuario")
+    else:
+        raise Http404("No existe ese usuario")
 
 def profile_sponsor(request, username):
     user_to_validate = get_object_or_404(User, username=username)
@@ -65,6 +66,20 @@ def profile_sponsor(request, username):
 
 
 #-------------------------------------------------------------- Editar usuario --------------------------------------------------------------#
+@login_required
+def profile_redirect_edit(request):
+    user = request.user
+
+    # Verifica los roles del usuario y redirige apropiadamente
+    if user.groups.filter(name='Sponsor').exists():
+        return redirect('edit_profile_sponsor', username=user.username)
+    elif user.groups.filter(name='Gamer').exists():
+        return redirect('edit_profile_user', username=user.username)
+
+    return redirect('home')
+
+
+
 @login_required
 def edit_profile_user(request, username):
     active_user = request.user
@@ -210,21 +225,12 @@ def create_user(request):
 
     return render(request, 'register.html', data_context)
 
+#-------------------------------------------------------------- Cerrar sesión --------------------------------------------------------------#
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect('home')  
 
-def home(request):
-    active_user = request.user
-    data_context = {'gamer': active_user.groups.filter(name='Gamer').exists()}
-    videojuegos = Videojuego.objects.all()
-
-    # Optimización para cargar imágenes de carrusel
-    carrusel_dir = os.path.join(settings.BASE_DIR, 'static/images/CarruselHome')
-    carrusel_images = [
-        os.path.basename(image)
-        for image in glob.glob(os.path.join(carrusel_dir, '*'))
-        if image.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))
-    ]
-
-    return render(request, 'home.html', data_context)
 
 @login_required
 def subir_stream(request):
@@ -244,28 +250,99 @@ def handle_upload(request, form_class, template_name):
         form = form_class()
     return render(request, template_name, {'form': form})
 
-@login_required
-def user_logout(request):
-    logout(request)
-    return redirect('home')  # Reemplaza 'home' con el nombre de URL apropiado
-
+#-------------------------------------------------------------- Subir información (estadisticas/productos) --------------------------------------------------------------#
+#-------------------------------------------------------------- Estadísticas --------------------------------------------------------------#
 @login_required
 def games_stats(request):
     active_user = request.user
 
     if active_user.groups.filter(name='Gamer').exists():
         player_stats_form = PlayerStatsForm()
+        data_context = {'player_stats_form': player_stats_form}
+
         if request.method == "POST":
             player_stats_form = PlayerStatsForm(request.POST)
+            
             if player_stats_form.is_valid():
-                player_stats = player_stats_form.save(commit=False)
-                player_stats.user = active_user
-                player_stats.save()
+                game_value = player_stats_form.cleaned_data.get('game')
+                user_game = player_stats_form.cleaned_data.get('user_game')
+                rank = player_stats_form.cleaned_data.get('rank')
+                wins = player_stats_form.cleaned_data.get('wins')
+                losses = player_stats_form.cleaned_data.get('losses')
+                total_played = player_stats_form.cleaned_data.get('total_played')
 
-        return render(request, 'game_stats.html', {'player_stats_form': player_stats_form})
+                # Buscar el juego inactivo
+                game = PlayerStats.objects.filter(game=game_value, user=active_user, is_active=False).first()
+
+                if game:
+                    # Actualizar las estadísticas del juego
+                    game.user_game = user_game
+                    game.rank = rank
+                    game.wins = wins
+                    game.losses = losses
+                    game.total_played = total_played
+                    game.is_active = True
+                    game.save()
+                    data_context['message'] = "Estadísticas registradas"
+                else:
+                    # Verificar si ya se registró el juego
+                    existing_game = PlayerStats.objects.filter(game=game_value, user=active_user, is_active=True).exists()
+                    
+                    if existing_game:
+                        data_context['message'] = "Ya registraste este juego"
+                    else:
+                        # Crear nuevo registro
+                        player_stats = player_stats_form.save(commit=False)
+                        player_stats.user = active_user
+                        player_stats.save()
+                        data_context['message'] = "Estadísticas registradas"
+
+        return render(request, 'game_stats.html', data_context)
 
     return redirect('home')
 
+# Editar estadísticas de juego
+@login_required
+def update_game_stats(request, game_id):
+    active_user = request.user
+    
+    # Obtiene el juego o devuelve un error 404 si no existe
+    game = get_object_or_404(PlayerStats, pk=game_id)
+    
+    # Verifica si el usuario es parte del grupo 'Gamer' y si tiene acceso al juego
+    if active_user.groups.filter(name='Gamer').exists() and PlayerStats.objects.filter(user=active_user, pk=game.id).exists():
+        if request.method == "POST":
+            edit_game_stat = EditGameStat(request.POST, instance=game)
+            if edit_game_stat.is_valid():
+                edit_game_stat.save()
+                return redirect('profile', username=active_user.username)  # Asegúrate de pasar el username
+
+        # Si no es POST, muestra el formulario para editar
+        edit_game_stat = EditGameStat(instance=game)  # Crear instancia del formulario para GET
+        data_context = {'edit_game_stat': edit_game_stat, 'game': game}
+        return render(request, 'edit_game_stat.html', data_context)
+    
+    # Redirige a 'home' si el usuario no tiene acceso
+    return redirect('home')
+
+# Borrar estadísticas de juego
+@login_required
+def delete_game_stats(request, game_id):
+    active_user = request.user
+
+    # Verifica si el usuario es parte del grupo 'Gamer' y si tiene acceso al juego
+    game = get_object_or_404(PlayerStats, pk=game_id, user=active_user)
+    
+    if active_user.groups.filter(name='Gamer').exists():
+        game.is_active = False
+        game.save()
+        return redirect('profile', username=active_user.username)
+    
+    # Redirige a 'home' si el usuario no tiene acceso
+    return redirect('home')
+
+
+#-------------------------------------------------------------- Productos --------------------------------------------------------------#
 @login_required
 def sponsor_products(request):
     active_user = request.user

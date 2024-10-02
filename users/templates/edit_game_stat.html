@@ -1,0 +1,42 @@
+{% extends 'template.html' %}
+
+{% load static %}
+{% load extras %}
+
+{% block title %}
+Viltrum | Editar Estadística {{game.game}}
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/myProfileSponsor.css' %}">
+<style>
+    input, select, button{
+        color: black;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div style="background-color: #333;">
+    <input id="id_game" type="hidden" value="{{game.game}}">
+    <h2>Editar información de {{game.game}}</h2>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <span>Nombre de usuario</span>
+        <input type="text" name="user_game" value="{{game.user_game}}">
+        <span>Rango</span>
+        <select name="rank" id="rank"></select>
+        <span>Victorias</span>
+        <input type="number" name="wins" value="{{game.wins}}">
+        <span>Derrotas</span>
+        <input type="number" name="losses" value="{{game.losses}}">
+        <span>Tiempo total jugado</span>
+        <input type="number" name="total_played" value="{{game.total_played}}">
+        <button type="submit">Guardar estadísticas</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/ranksData.js' %}"></script>
+{% endblock %}
