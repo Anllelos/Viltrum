@@ -15,5 +15,7 @@ urlpatterns = [
     path('profile/games_stats/', views.games_stats, name='games_stats'),  
     path('profile/products/', views.sponsor_products, name='sponsor_products'),  
     path('profile/games_stats/edit/<int:game_id>', views.update_game_stats, name='edit_game_stat'),
-    path('profile/game_stats/delete/<int:game_id>', views.delete_game_stats, name='delete_game_stats')
+    path('profile/game_stats/delete/<int:game_id>', views.delete_game_stats, name='delete_game_stats'),
+    path('profile/product/edit/<int:product_id>', views.update_product, name='edit_product'),
+    path('profile/product/delete/<int:product_id>', views.delete_product, name='delete_product'),
 ]

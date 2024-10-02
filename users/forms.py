@@ -125,4 +125,10 @@ class EditGameStat(forms.ModelForm):
         model = models.PlayerStats
         fields = ['user_game', 'rank', 'wins', 'losses', 'total_played'] 
 
+class EditProduct(forms.ModelForm):
+    class Meta:
+        model = models.SponsorProducts
+        fields = ['product_name', 'product_description', 'product_image'] 
+
+
 

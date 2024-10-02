@@ -45,6 +45,7 @@ class SponsorProducts(models.Model):
     product_name = models.CharField(max_length=254, null=True)
     product_description = models.CharField(max_length=512, null=True)
     product_image = models.ImageField(null=True, blank=True, upload_to="images/sponsorProducts")
+    is_active = models.BooleanField(default=True)
 
 # Modelo para videojuegos
 class Videojuego(models.Model):

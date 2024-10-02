@@ -53,7 +53,7 @@ def profile_sponsor(request, username):
     user_to_validate = get_object_or_404(User, username=username)
     if user_to_validate.groups.filter(name='Sponsor').exists():
         extended_data_table = get_object_or_404(ExtendedData, user=user_to_validate)
-        products_table = SponsorProducts.objects.filter(user=user_to_validate)
+        products_table = SponsorProducts.objects.filter(user=user_to_validate, is_active=True)
 
         data_context = {
             'profile_sponsor': user_to_validate,
@@ -359,4 +359,43 @@ def sponsor_products(request):
 
         return render(request, 'sponsor_products.html', {'product_form': product_form})
 
+    return redirect('home')
+
+@login_required
+def update_product(request, product_id):
+    active_user = request.user
+    
+    # Obtiene el juego o devuelve un error 404 si no existe
+    product = get_object_or_404(SponsorProducts, pk=product_id)
+    
+    # Verifica si el usuario es parte del grupo 'Gamer' y si tiene acceso al juego
+    if active_user.groups.filter(name='Sponsor').exists() and SponsorProducts.objects.filter(user=active_user, pk=product.id).exists():
+        if request.method == "POST":
+            edit_product = EditProduct(request.POST, request.FILES, instance=product)
+            if edit_product.is_valid():
+                edit_product.save()
+                return redirect('profile_sponsor', username=active_user.username)  # Asegúrate de pasar el username
+
+        # Si no es POST, muestra el formulario para editar
+        edit_product = EditProduct(instance=product)  # Crear instancia del formulario para GET
+        data_context = {'edit_product': edit_product, 'product': product}
+        return render(request, 'edit_product.html', data_context)
+    
+    # Redirige a 'home' si el usuario no tiene acceso
+    return redirect('home')
+
+# Borrar estadísticas de juego
+@login_required
+def delete_product(request, product_id):
+    active_user = request.user
+
+    # Verifica si el usuario es parte del grupo 'Gamer' y si tiene acceso al juego
+    product = get_object_or_404(SponsorProducts, pk=product_id, user=active_user)
+    
+    if active_user.groups.filter(name='Sponsor').exists():
+        product.is_active = False
+        product.save()
+        return redirect('profile_sponsor', username=active_user.username)
+    
+    # Redirige a 'home' si el usuario no tiene acceso
     return redirect('home')
