@@ -1,0 +1,33 @@
+{% extends 'template.html' %}
+
+{% load static %}
+
+{% block title %}
+Viltrum | Torneos
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/tournaments.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="tournament">
+    <form action="" method="POST">
+    {% csrf_token %}
+    Nombre del torneo
+    {{form.name}} <br>
+    Juego
+    {{form.game}} <br>
+    Fecha de inicio
+    <input type="date" name="start_date" required> <br>
+    {% if form.start_date.errors %} <span>{{form.start_date.errors.0}}</span> <br> {% endif %}
+    Fecha de fin
+    <input type="date" name="end_date" required> <br>
+    {% if form.end_date.errors %} <span>{{form.end_date.errors.0}}</span> <br> {% endif %}
+    Número de Miembros
+    {{form.max_members}}
+    {% if form.max_members.errors %} <span>{{form.max_members.errors.0}}</span> {% endif %}
+    <button type="submit">Guardar</button>
+    </form>
+</div>
+{% endblock %}

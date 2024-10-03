@@ -20,12 +20,17 @@ Viltrum | Torneos
     </ul>
     {% endif %}
     <h2>Nombre: {{ tournament.name }}</h2>
-    {% if not tournament.status %} <span>Cerrado</span> {% else %} <span>Abierto</span> {% endif %}
+    {% if tournament.status %} <span>Abierto</span> {% else %} <span>Cerrado</span> {% endif %}
     <h2>Juego: {{ tournament.game }}</h2>
     <span>Máximo de jugadores: {{ n_members }}/{{ tournament.max_members }}</span> <br>
 
     {% if user.id == tournament.owner.id %}
         <span>Creado por: Tú ({{ tournament.owner }})</span>
+        {% if tournament.status %}
+            <a href="{% url 'edit_tournament' tournament.id %}">Editar</a>
+        {% else %}
+            <span>El torneo ya termino, ya no puedes editarlo</span>
+        {% endif %}
         <h2>Solicitudes para unirse al torneo</h2>
         {% for inscription in tournament_inscriptions %}
             <span>{{ inscription.user }}</span>

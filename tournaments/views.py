@@ -10,7 +10,7 @@ from datetime import timedelta
 from django.utils.timezone import now  # Correct import for 'now'
 # Create your views here.
 
-# Crear torneo
+#------------------------------------------------------------------------ Crear torneo ------------------------------------------------------------------------#
 @login_required
 def create_tournament(request):
     active_user = request.user
@@ -38,7 +38,7 @@ def create_tournament(request):
     return redirect("tournaments")
 
 
-# Corrected list_tournaments function
+#------------------------------------------------------------------------ Mostrar torneos ------------------------------------------------------------------------#
 def list_tournaments(request):
     tournaments = Tournament.objects.all()
     
@@ -52,6 +52,9 @@ def list_tournaments(request):
             hours, remainder = divmod(remaining_time.seconds, 3600)
             minutes, _ = divmod(remainder, 60)
             inscription_time = f"Días: {days}, Horas: {hours}, Minutos: {minutes}"
+            if not tournament.status:
+                tournament.status = True
+                tournament.save()
         else:
             inscription_time = "Registro cerrado"
             tournament.status = False
@@ -64,6 +67,8 @@ def list_tournaments(request):
 
     return render(request, 'tournaments.html', {'tournaments_list': tournaments_list})
 
+#------------------------------------------------------------------------ Ver detalles de torneo ------------------------------------------------------------------------#
+
 def view_tournament(request, tournament_id):
     active_user = request.user
     tournament = get_object_or_404(Tournament, pk=tournament_id)
@@ -72,7 +77,6 @@ def view_tournament(request, tournament_id):
     user_inscription = TournamentInscription.objects.filter(tournament=tournament, user=active_user).first()
     n_members = tournament_members.count()
     is_full = tournament.max_members == n_members
-    print(user_inscription)
     is_not_registered = user_inscription is None or user_inscription.status == "R"
 
     data_context = {
@@ -85,6 +89,8 @@ def view_tournament(request, tournament_id):
     }
 
     return render(request, 'tournament.html', data_context)
+
+#------------------------------------------------------------------------ Manejo de inscripciones de torneo ------------------------------------------------------------------------#
 
 @login_required
 def tournament_inscription(request, tournament_id):
@@ -139,6 +145,48 @@ def remove_member(request, inscription_id, tournament_id):
         inscription.save()
 
         return redirect('view_tournament', tournament_id=tournament_id)
+
+
+#------------------------------------------------------------------------ Editar torneo ------------------------------------------------------------------------#
+@login_required
+def edit_tournament(request, tournament_id):
+    active_user = request.user
+    tournament = get_object_or_404(Tournament, pk=tournament_id)
+    members = TournamentInscription.objects.filter(tournament=tournament, status="A")
+
+    # Inicializar el formulario con la instancia del torneo
+    if request.method == "POST":
+        form = TournamentEditForm(request.POST, instance=tournament)
+    else:
+        form = TournamentEditForm(instance=tournament)
+        
+    data_context = {'form': form}
+
+    if tournament.owner == active_user:
+        if request.method == "POST":
+            if form.is_valid():
+                max_members = form.cleaned_data.get('max_members')
+                start_date = form.cleaned_data.get('start_date')
+                end_date = form.cleaned_data.get('end_date')
+                active_members = members.count()
+                today = timezone.now() - timedelta(hours=24)
+                print(today)
+
+                if max_members < active_members:
+                    form.add_error('max_members', f"No puedes colocar un número menor de miembros a los que tienes actualmente activos: {active_members}")
+                elif start_date < today:
+                    form.add_error('start_date', "La fecha de inicio no puede ser anterior al día de hoy")
+                elif end_date < start_date:
+                    form.add_error('end_date', "La fecha de fin no puede ser anterior a la de inicio")
+                else:
+                    tournament_form = form.save(commit=False)
+                    tournament_form.registration_deadline = timezone.now() + timedelta(hours=72)  # Set deadline
+                    tournament_form.save()
+                    return redirect('view_tournament', tournament_id=tournament_id)
+            data_context = {'form': form, 'tournament':tournament}
+    
+        return render(request, 'tournament_edit.html', data_context)
+    return redirect('tournaments')
 
 
 

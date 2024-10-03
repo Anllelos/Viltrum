@@ -13,3 +13,8 @@ class TournamentInscriptionForm(forms.ModelForm):
     class Meta:
         model = TournamentInscription
         fields = ['user', 'tournament']
+
+class TournamentEditForm(forms.ModelForm):
+    class Meta:
+        model = Tournament
+        fields = ['name', 'game', 'start_date', 'end_date', 'max_members'] 
