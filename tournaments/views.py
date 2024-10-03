@@ -8,6 +8,7 @@ from django.http import Http404
 from django.utils import timezone
 from datetime import timedelta
 from django.utils.timezone import now  # Correct import for 'now'
+from users.models import PlayerStats
 # Create your views here.
 
 #------------------------------------------------------------------------ Crear torneo ------------------------------------------------------------------------#
@@ -43,7 +44,7 @@ def list_tournaments(request):
     tournaments = Tournament.objects.all()
     
     tournaments_list = []
-    # Update the status of all tournaments before rendering the page
+
     for tournament in tournaments:
         remaining_time = tournament.registration_deadline - timezone.now()
         
@@ -75,14 +76,23 @@ def view_tournament(request, tournament_id):
     tournament_inscriptions = TournamentInscription.objects.filter(tournament=tournament, status="P")
     tournament_members = TournamentInscription.objects.filter(tournament=tournament, status="A")
     user_inscription = TournamentInscription.objects.filter(tournament=tournament, user=active_user).first()
+    
     n_members = tournament_members.count()
     is_full = tournament.max_members == n_members
     is_not_registered = user_inscription is None or user_inscription.status == "R"
 
+    member_info = [
+    {
+        'member': member,
+        'member_stats': PlayerStats.objects.filter(user=member.user, game=tournament.game, is_active=True).first() or False
+    }
+        for member in tournament_members
+    ]
+
     data_context = {
         'tournament': tournament,
         'tournament_inscriptions': tournament_inscriptions,
-        'tournament_members': tournament_members,
+        'member_info': member_info,
         'n_members':n_members,
         'is_not_registered':is_not_registered,
         'is_full':is_full

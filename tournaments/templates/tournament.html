@@ -8,6 +8,15 @@ Viltrum | Torneos
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/tournaments.css' %}">
+<style>
+
+.tournament-member{
+    background-color: rgba(0, 0, 0, 0.279);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+</style>
 {% endblock %}
 
 {% block content %}
@@ -45,13 +54,20 @@ Viltrum | Torneos
     {% endif %}
 
     <h2>Miembros:</h2>
-    {% for member in tournament_members %}
-        <div>
-            <a href="{% url 'profile' username=member.user %}"><span>{{ member.user }}</span></a>
+    {% for item in member_info %}
+        <div class="tournament-member">
+            <a href="{% url 'profile' username=item.member.user %}"><span>{{ item.member.user }}</span></a>
+            <p>
+                {% if item.member_stats %}
+                    {{item.member_stats.user_game}} <br>
+                    {{item.member_stats.rank}} <br> </p>
+                {% else %}
+                    <span>El jugador no tiene estadísticas para este juego</span>
+                {% endif %}
             {% if tournament.owner.id == user.id %}
-                <form id="deleteForm-{{ member.id }}" action="{% url 'remove_member' inscription_id=member.id tournament_id=tournament.id %}" method="post" style="display:inline;">
+                <form id="deleteForm-{{ item.member.id }}" action="{% url 'remove_member' inscription_id=item.member.id tournament_id=tournament.id %}" method="post" style="display:inline;">
                     {% csrf_token %}
-                    <a href="#" onclick="confirmDeletion({{ member.id }}); return false;">
+                    <a href="#" onclick="confirmDeletion({{ item.member.id }}); return false;">
                         <i class="fa-solid fa-ban"></i> Eliminar
                     </a>
                 </form>
