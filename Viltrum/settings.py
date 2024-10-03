@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'tournaments.apps.TournamentsConfig',
     #App de clasificaciones
     'clasifications.apps.ClasificationsConfig',
+    #App de explore
+    'explore.apps.ExploreConfig',
     #App de patrocinadores
     'sponsors.apps.SponsorsConfig',
     'django.contrib.admin',

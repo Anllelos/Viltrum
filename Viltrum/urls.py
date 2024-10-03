@@ -32,6 +32,7 @@ urlpatterns = [
     path('', include('tournaments.urls')), # Incluye todas las rutas de `tournaments.urls` sin prefijo adicional
     path('', include('clasifications.urls')), # Incluye todas las rutas de `clasifications.urls` sin prefijo adicional
     path('', include('sponsors.urls')), # Incluye todas las rutas de `sponsors.urls` sin prefijo adicional
+    path('', include('explore.urls')), # Incluye todas las rutas de `explore.urls` sin prefijo adicional
     # Rutas para el restablecimiento de contraseña
     path('password_reset/', auth_views.PasswordResetView.as_view(
         template_name='registration/password_reset_form.html',
