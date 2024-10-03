@@ -9,80 +9,139 @@ from django.utils import timezone
 from datetime import timedelta
 from django.utils.timezone import now  # Correct import for 'now'
 # Create your views here.
-# Corrected create_tournament function
+
+# Crear torneo
 @login_required
 def create_tournament(request):
     active_user = request.user
-    data_context = {'gamer':False}
     if active_user.groups.filter(name='Gamer').exists():
-        data_context = {'gamer':True}
-    if request.method == "POST":
-        form = TournamentForm(request.POST, request.FILES)
-        if form.is_valid():
-            tournament = form.save(commit=False)
-            tournament.registration_deadline = timezone.now() + timedelta(hours=72)  # Set deadline
-            tournament.save()
-            return redirect('tournaments')
+        if request.method == "POST":
+            form = TournamentForm(request.POST)
+            if form.is_valid():
+                start_date = form.cleaned_data.get('start_date')
+                end_date = form.cleaned_data.get('end_date')
+                today = timezone.now() - timedelta(hours=24)
+                if start_date < today:
+                    form.add_error('start_date', "La fecha de inicio no puede ser anterior al día de hoy")
+                elif end_date < start_date:
+                    form.add_error('end_date', "La fecha de fin no puede ser anterior a la de inicio")
+                else:
+                    tournament = form.save(commit=False)
+                    tournament.owner = active_user
+                    tournament.registration_deadline = timezone.now() + timedelta(hours=72)  # Set deadline
+                    tournament.save()
+                    return redirect('tournaments')
         else:
-            print(form.errors)
-    else:
-        form = TournamentForm()
-
-    return render(request, 'create_tournament.html', {'form': form})
+            form = TournamentForm()
+        data_context = {'form':form}
+        return render(request, 'create_tournament.html', data_context)
+    return redirect("tournaments")
 
 
 # Corrected list_tournaments function
 def list_tournaments(request):
     tournaments = Tournament.objects.all()
-
+    
+    tournaments_list = []
     # Update the status of all tournaments before rendering the page
     for tournament in tournaments:
-        if tournament.registration_deadline:
-            remaining_time = tournament.registration_deadline - now()
-            if remaining_time > timedelta(0):
-                days = remaining_time.days
-                hours, remainder = divmod(remaining_time.seconds, 3600)
-                minutes, _ = divmod(remainder, 60)
-                tournament.time_left_to_register = f"{days} días, {hours} horas, {minutes} minutos"
-            else:
-                tournament.time_left_to_register = "Registro cerrado"
+        remaining_time = tournament.registration_deadline - timezone.now()
+        
+        if remaining_time > timedelta(0):
+            days = remaining_time.days
+            hours, remainder = divmod(remaining_time.seconds, 3600)
+            minutes, _ = divmod(remainder, 60)
+            inscription_time = f"Días: {days}, Horas: {hours}, Minutos: {minutes}"
         else:
-            tournament.time_left_to_register = "No hay fecha límite"
+            inscription_time = "Registro cerrado"
+            tournament.status = False
+            tournament.save()
+        
+        tournaments_list.append({
+            'tournament': tournament,
+            'inscription_time': inscription_time,
+        })
 
-    return render(request, 'tournaments.html', {'tournaments': tournaments})
+    return render(request, 'tournaments.html', {'tournaments_list': tournaments_list})
+
+def view_tournament(request, tournament_id):
+    active_user = request.user
+    tournament = get_object_or_404(Tournament, pk=tournament_id)
+    tournament_inscriptions = TournamentInscription.objects.filter(tournament=tournament, status="P")
+    tournament_members = TournamentInscription.objects.filter(tournament=tournament, status="A")
+    user_inscription = TournamentInscription.objects.filter(tournament=tournament, user=active_user).first()
+    n_members = tournament_members.count()
+    is_full = tournament.max_members == n_members
+    print(user_inscription)
+    is_not_registered = user_inscription is None or user_inscription.status == "R"
+
+    data_context = {
+        'tournament': tournament,
+        'tournament_inscriptions': tournament_inscriptions,
+        'tournament_members': tournament_members,
+        'n_members':n_members,
+        'is_not_registered':is_not_registered,
+        'is_full':is_full
+    }
+
+    return render(request, 'tournament.html', data_context)
 
 @login_required
-def join_tournament(request, tournament_id):
-    tournament = get_object_or_404(Tournament, id=tournament_id)
-    notification = Notification.objects.create(
-        sender=request.user,
-        recipient=tournament.created_by,
-        tournament=tournament,
-        message=f"{request.user.username} wants to join the tournament {tournament.name}",
-    )
-    return redirect('tournaments')
+def tournament_inscription(request, tournament_id):
+    active_user = request.user
+    tournament = get_object_or_404(Tournament, pk=tournament_id)
+    
+    existing_inscription = TournamentInscription.objects.filter(user=active_user, tournament=tournament).first()
+    
+    if existing_inscription:
+        if existing_inscription.status == "R":
+            existing_inscription.status = "P"  
+            existing_inscription.save()
+            return redirect('view_tournament', tournament_id=tournament_id)
+        else:
+            return redirect('tournaments') 
+
+    if tournament.owner == active_user:
+        return redirect('tournaments')
+
+    if not tournament.status:
+        return redirect('tournaments')
+
+    inscription = TournamentInscription(user=active_user, tournament=tournament)
+    inscription.save()
+    
+
+    return redirect('view_tournament', tournament_id=tournament_id)
 
 @login_required
-def manage_notifications(request):
-    notifications = Notification.objects.filter(recipient=request.user, is_read=False)
-    return render(request, 'notifications.html', {'notifications': notifications})
+def accept_inscription(request, inscription_id, tournament_id, value):
+    active_user = request.user
+    tournament = get_object_or_404(Tournament, pk=tournament_id)
+    inscription = get_object_or_404(TournamentInscription, pk=inscription_id)
+    
+    if tournament.owner == active_user:
+        if value == 1:
+            inscription.status = "A"
+            inscription.save()
+        else:
+            inscription.status = "R"
+            inscription.save()
+    
+        return redirect('view_tournament', tournament_id=tournament_id)
 
-@login_required
-def handle_notification(request, notification_id, action):
-    notification = get_object_or_404(Notification, id=notification_id)
-    if action == 'accept':
-        notification.tournament.participants.add(notification.sender)
-    notification.is_read = True
-    notification.save()
-    return redirect('notifications')
+def remove_member(request, inscription_id, tournament_id):
+    active_user = request.user
+    tournament = get_object_or_404(Tournament, pk=tournament_id)
+    inscription = get_object_or_404(TournamentInscription, pk=inscription_id)
 
-@login_required
-def subir_clasificacion(request):
-    if request.method == 'POST':
-        form = ClasificacionForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    else:
-        form = ClasificacionForm()
-    return render(request, 'subir_clasificacion.html', {'form': form})
+    if tournament.owner == active_user:
+        inscription.status = "R"
+        inscription.save()
+
+        return redirect('view_tournament', tournament_id=tournament_id)
+
+
+
+
+
+

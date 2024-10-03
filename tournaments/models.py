@@ -6,19 +6,26 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Tournament(models.Model):
     GAME_CHOICES = [
-        ('game1', 'Game 1'),
-        ('game2', 'Game 2'),
-        ('game3', 'Game 3'),
+        ("LoL", "League of Legends"),
+        ("D2", "Dota 2"),
+        ("CSGO", "Counter-Strike: Global Offensive"),
+        ("VAL", "Valorant"),
+        ("OW", "Overwatch"),
+        ("PUBG", "PlayerUnknown's Battlegrounds"),
+        ("FORT", "Fortnite"),
+        ("Apex", "Apex Legends"),
+        ("R6", "Rainbow Six Siege"),
+        ("RL", "Rocket League")
     ]
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)  # Relación con el usuario
     name = models.CharField(max_length=255)
     game = models.CharField(max_length=255, choices=GAME_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     registration_deadline = models.DateTimeField(default=timezone.now() + timedelta(hours=72))  # Default to 72 hours after creation
-    start_date = models.DateField(null=True, blank=True)  # Start date of the tournament
-    end_date = models.DateField(null=True, blank=True)  # End date of the tournament
-    status = models.CharField(max_length=20, default="open")  # Default status is "open"
-    max_members = models.IntegerField(default=20)  # Define max members
-    banner = models.ImageField(upload_to='tournament_banners/', null=True, blank=True)  # Optional tournament banner
+    start_date = models.DateTimeField(null=True, blank=True)  # Start date of the tournament
+    end_date = models.DateTimeField(null=True, blank=True)  # End date of the tournament
+    status = models.BooleanField(max_length=20, default=True)  # Default status is "True"
+    max_members = models.IntegerField(default=10)  # Define max members
     members = models.ManyToManyField(User, related_name='tournaments', blank=True)
 
     def is_full(self):
@@ -50,6 +57,28 @@ class Tournament(models.Model):
 
     def __str__(self):
         return self.name
+
+#Modelo de inscripción a torneo
+
+class TournamentInscription(models.Model):
+    TYPE_CHOICES = [
+        ("A", "Approved"),
+        ("P", "Pending"),
+        ("R", "Rejected")
+    ]
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+    inscription_date = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=1, choices=TYPE_CHOICES, db_index=True, default="P")
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'tournament'], name='unique_user_tournament')
+        ]
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.tournament.name} ({self.get_status_display()})"
+
     
 # Modelo de notificaciones
 class Notification(models.Model):
@@ -63,30 +92,5 @@ class Notification(models.Model):
     def __str__(self):
         return f"Notification from {self.sender} to {self.recipient}"
     
-# Modelo para clasificaciones
-class Clasificacion(models.Model):
-    nombre = models.CharField(max_length=100)  # Nombre de la clasificación
-    descripcion = models.TextField()  # Descripción de la clasificación
-    imagen = models.ImageField(upload_to='clasificaciones/')  # Imagen de la clasificación
 
-    def __str__(self):
-        return self.nombre  # Devuelve el nombre de la clasificación
 
-# Definimos el modelo para cada juego
-class Game(models.Model):
-    name = models.CharField(max_length=100)  # Nombre del juego
-    description = models.TextField()  # Descripción del juego
-    cover_image = models.ImageField(upload_to='games/covers/', null=True, blank=True)  # Imagen de portada
-
-    def __str__(self):
-        return self.name  # Devuelve el nombre del juego
-
-# Modelo para almacenar imágenes subidas por los usuarios asociadas a un juego
-class GameImage(models.Model):
-    game = models.ForeignKey(Game, related_name='images', on_delete=models.CASCADE)  # Relación con el juego
-    image = models.ImageField(upload_to='games/images/')  # Imagen subida por el usuario
-    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)  # Usuario que sube la imagen
-    upload_date = models.DateTimeField(auto_now_add=True)  # Fecha de subida automática
-
-    def __str__(self):
-        return f"Image of {self.game.name} by {self.uploaded_by.username}"  # Muestra el juego y quién subió la imagen
