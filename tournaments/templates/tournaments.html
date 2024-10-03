@@ -15,14 +15,15 @@ Viltrum | Torneos
     <h2>Torneos Disponibles</h2>
 
     <ul>
-        {% for tournament in tournaments %}
+        {% for tournament in tournaments_list %}
         <li>
             <div>
-                <strong>{{ tournament.name }} - {{ tournament.game }}</strong><br>
-                <span class="tournament-status">Estado: {{ tournament.status }}</span><br>
-                <span class="time-remaining">Tiempo restante para inscribirse:  </span>
+                <strong>{{ tournament.tournament.name }} - {{ tournament.tournament.game }}</strong><br>
+                <span class="Owner">Creado por {{ tournament.tournament.owner.username }}</span> <br>
+                <span class="tournament-status">Estado: {% if tournament.tournament.status %} Abierto {% else %} Cerrado {% endif %}</span><br>
+                <span class="time-remaining">Tiempo restante para inscribirse:  {{tournament.inscription_time}}</span>
             </div>
-            <a href="{% url 'join_tournament' tournament.id %}">Inscribirse</a>
+            <a href="{% url 'view_tournament' tournament.tournament.id %}">Más información</a>
         </li>
         {% empty %}
         <li>No hay torneos disponibles en este momento.</li>

@@ -14,43 +14,29 @@ Viltrum | Inicio
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-
-    <!-- Error display block -->
-    {% if form.errors %}
-    <div class="error-messages">
-        <ul>
-            {% for field in form %}
-            {% for error in field.errors %}
-            <li>{{ field.label }}: {{ error }}</li>
-            {% endfor %}
-            {% endfor %}
-            {% for error in form.non_field_errors %}
-            <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-    {% endif %}
-
     <!-- Render fields manually for better control -->
     <div class="tournament-form">
         <h2>Crear Torneo</h2>
         <label for="name">Nombre del Torneo</label>
-        {{ form.name }}
+        <input type="text" name="name" maxlength="255" required="" id="id_name">
 
         <label for="game">Juego</label>
         {{ form.game }}
 
         <label for="start_date">Fecha de Inicio</label>
         <input type="date" name="start_date">
+        {% if form.start_date.errors %}
+            <span>{{form.start_date.errors.0}}</span>
+        {% endif %}
 
         <label for="end_date">Fecha de Fin</label>
         <input type="date" name="end_date">
+        {% if form.end_date.errors %}
+            <span>{{form.end_date.errors.0}}</span>
+        {% endif %}
 
-        <label for="max_members">Máximo de Miembros</label>
-        {{ form.max_members }}
-
-        <label for="banner">Banner del Torneo</label>
-        {{ form.banner }}
+        <label for="max_members">Número de Miembros</label>
+        <input type="number" name="max_members" value="10" required="" id="id_max_members" max="10" min="1">
 
         <button class="btn-create" type="submit">Crear Torneo</button>
 </form>
