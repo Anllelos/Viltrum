@@ -8,7 +8,7 @@ from django.core.files.base import ContentFile
 import base64
 from django.http import Http404
 from datetime import date
-
+from tournaments.models import Tournament
 
 #-------------------------------------------------------------- Ver perfil --------------------------------------------------------------#
 # Verificación de roles dentro de la página
@@ -29,8 +29,9 @@ def profile_user(request, username):
     if user_to_validate.groups.filter(name='Gamer').exists():
         extended_data_table = get_object_or_404(ExtendedData, user=user_to_validate)
         game_stats_table = PlayerStats.objects.filter(user=user_to_validate, is_active=True)
-    
-        data_context = {'profile': extended_data_table, 'profile_user': user_to_validate}
+        tournaments_created = Tournament.objects.filter(owner=user_to_validate)
+
+        data_context = {'profile': extended_data_table, 'profile_user': user_to_validate, 'tournaments_created':tournaments_created}
         n_games = 0
         if game_stats_table.exists():
             for game in game_stats_table:

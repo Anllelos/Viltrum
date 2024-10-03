@@ -61,6 +61,15 @@ Viltrum | Perfil {{User}}
                     </div>
                     {% endfor %}
                 {% endif %}
+                <div class="my_tournaments">
+                    {% for tournament in tournaments_created %}
+                    <div class="tournament">
+                        <a href="{% url 'view_tournament' tournament.id %}">{{tournament.name}}</a>
+                    </div>
+                    {% empty %}
+                        <span>Este jugador no ha creado ningún torneo</span>
+                    {% endfor %}
+                </div>
             </div>
 
             <div class="profile-footer">
