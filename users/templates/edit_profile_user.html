@@ -9,6 +9,12 @@ Viltrum | Patrocinador {{profile_sponsor.username}}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/myProfileSponsor.css' %}">
+<style>
+input, button, select, textarea{
+    color: black;
+}
+
+</style>
 {% endblock %}
 
 {% block content %}
@@ -62,7 +68,7 @@ Viltrum | Patrocinador {{profile_sponsor.username}}
                         <input type="hidden" name="submit_form" value="extra_data">
                         <div class="profile-data">
                             <div class="input-group">
-                                <textarea name="user_description" id="user_description" placeholder="{{ profile.user_description }}" required class="profile-input"></textarea>
+                                <textarea name="user_description" id="user_description" placeholder="{{ profile.user_description }}" required class="profile-input">{{ profile.user_description }}</textarea>
                                 <label for="user_description">Descripción del Usuario</label>
                             </div>
                             <div class="input-group">
@@ -111,15 +117,12 @@ Viltrum | Patrocinador {{profile_sponsor.username}}
                     <h2>Imágenes de Perfil y Banner</h2>
                     <div class="photo-section">
                         <h3>Imagen de Perfil</h3>
-                        <img src="{% if profile.profile_img %}{{ profile.profile_img.url }}{% else %}https://ui-avatars.com/api/?name={{user}}{% endif %}" alt="Foto de perfil" id="profile-pic">
+                        <img src="{% if extended_data.profile_img %}{{ extended_data.profile_img.url }}{% else %}https://ui-avatars.com/api/?name={{user}}{% endif %}" alt="Foto de perfil" id="profile-pic">
                         <form method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <input type="file" id="imageInput" accept="image/*" onchange="loadFile(event)">
-                            <input type="hidden" id="croppedImage" name="cropped_image">
-                            <button type="button" id="cropButton">Recortar Imagen</button>
-                            <button type="submit" class="change-photo-btn" name="submit_form" value="profile_image">
-                                Guardar Imagen
-                            </button>
+                            <input type="hidden" name="submit_form" value="profile_image">
+                            <input type="file" name="profile_img" id="imageInput" accept="image/*">
+                            <button type="submit">Guardar Imagen</button>
                         </form>
                         <div>
                             <img id="imagePreview" style="max-width: 100%;">
@@ -128,16 +131,12 @@ Viltrum | Patrocinador {{profile_sponsor.username}}
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    
                     <div class="photo-section">
                         <h3>Banner de Perfil</h3>
-                        <img src="{% if profile.profile_banner %}{{ profile.profile_banner.url }}{% endif %}" alt="Banner de perfil" id="banner-pic">
+                        <img src="{% if extended_data.profile_banner %}{{ extended_data.profile_banner.url }}{% endif %}" alt="Banner de perfil" id="banner-pic">
                         <form method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <input type="hidden">
-                            <input type="file" id="bannerInput" accept="image/*" onchange="loadBannerFile(event)">
-                            <input type="hidden" id="croppedBannerImage" name="cropped_banner_image">
-                            <button type="button" id="cropBannerButton">Recortar Banner</button>
-                            <button type="submit" class="change-photo-btn" name="submit_form" value="banner_image">
-                                Guardar Banner
-                            </button>
+                            <input type="hidden" name="submit_form" value="profile_banner">
+                            <input type="file" name="profile_banner" id="profile_banner" accept="image/*">
+                            <button type="submit">Guardar Imagen</button>
                         </form>
                         <div>
                             <img id="bannerPreview" style="max-width: 100%;">
@@ -148,66 +147,7 @@ Viltrum | Patrocinador {{profile_sponsor.username}}
         </div>
    {% endblock %}
    {% block extra_js %}
-    <script src="https://unpkg.com/cropperjs"></script>
     <script>
-        let cropper;
-    
-        function loadFile(event) {
-            const imagePreview = document.getElementById('imagePreview');
-            const file = event.target.files[0];
-            const reader = new FileReader();
-            reader.onload = function () {
-                imagePreview.src = reader.result;
-                if (cropper) {
-                    cropper.destroy();
-                }
-                const img = document.createElement('img');
-                img.src = reader.result;
-                document.body.appendChild(img);
-                cropper = new Cropper(img, {
-                    aspectRatio: 1,
-                    viewMode: 1,
-                    crop(event) {
-                        // Aquí puedes obtener los datos del recorte
-                    },
-                });
-            };
-            reader.readAsDataURL(file);
-        }
-    
-        function loadBannerFile(event) {
-            const bannerPreview = document.getElementById('bannerPreview');
-            const file = event.target.files[0];
-            const reader = new FileReader();
-            reader.onload = function () {
-                bannerPreview.src = reader.result;
-                if (cropper) {
-                    cropper.destroy();
-                }
-                const img = document.createElement('img');
-                img.src = reader.result;
-                document.body.appendChild(img);
-                cropper = new Cropper(img, {
-                    aspectRatio: 16 / 9,
-                    viewMode: 1,
-                    crop(event) {
-                        // Aquí puedes obtener los datos del recorte
-                    },
-                });
-            };
-            reader.readAsDataURL(file);
-        }
-    
-        document.getElementById('cropButton').addEventListener('click', function () {
-            const canvas = cropper.getCroppedCanvas();
-            document.getElementById('croppedImage').value = canvas.toDataURL();
-        });
-    
-        document.getElementById('cropBannerButton').addEventListener('click', function () {
-            const canvas = cropper.getCroppedCanvas();
-            document.getElementById('croppedBannerImage').value = canvas.toDataURL();
-        });
-    
         // Cambiar secciones
         document.querySelectorAll('.sidebar ul li a').forEach(link => {
             link.addEventListener('click', function (e) {

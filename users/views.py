@@ -91,6 +91,7 @@ def edit_profile_user(request, username):
     extended_data = get_object_or_404(ExtendedData, user=active_user)
 
     data_context = {
+        'extended_data':extended_data,
         'edit_user': EditUserForm(instance=active_user),
         'edit_extended_data_user': EditExtendedDataUserForm(instance=extended_data),
         'edit_profile_pic': ProfilePicForm(instance=extended_data),
@@ -99,6 +100,7 @@ def edit_profile_user(request, username):
 
     if request.method == 'POST':
         form_type = request.POST.get('submit_form')
+        print(form_type)
 
         if form_type == "personal_data":
             form = EditUserForm(request.POST, instance=active_user)

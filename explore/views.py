@@ -22,4 +22,4 @@ def explore_home(request):
         'selected_category': category,
         'sort_by': sort_by,
     }
-    return render(request, 'explore/explore_home.html', context)
+    return render(request, 'explore.html', context)
