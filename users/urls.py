@@ -18,4 +18,6 @@ urlpatterns = [
     path('profile/game_stats/delete/<int:game_id>', views.delete_game_stats, name='delete_game_stats'),
     path('profile/product/edit/<int:product_id>', views.update_product, name='edit_product'),
     path('profile/product/delete/<int:product_id>', views.delete_product, name='delete_product'),
+    path('send_message/<int:recipient_id>/', views.send_message, name='send_message'),
+    path('inbox/', views.inbox, name='inbox'),
 ]

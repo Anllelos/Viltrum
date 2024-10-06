@@ -1,0 +1,9 @@
+{% extends 'template.html' %}
+{% block content %}
+    <h2>Send a message to {{ recipient.username }}</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send Message</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'template.html' %}
+{% block content %}
+    <h2>Your Inbox</h2>
+    <ul>
+        {% for message in messages %}
+            <li>
+                From: {{ message.sender.username }}<br>
+                Message: {{ message.content }}<br>
+                <small>Sent: {{ message.timestamp }}</small>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

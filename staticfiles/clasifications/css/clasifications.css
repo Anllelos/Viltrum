@@ -1,0 +1,156 @@
+/* General Layout */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+.page-wrapper {
+    display: flex;
+    margin: 40px auto;
+    max-width: 1200px;
+    padding: 20px;
+    gap: 20px; /* Space between the filter panel and content section */
+}
+
+/* Filter Panel Styling */
+.filter-panel {
+    width: 25%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.filter-panel h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #4A90E2;
+}
+
+.filter-section h4 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #666;
+}
+
+.filter-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.filter-section ul li {
+    margin-bottom: 10px;
+}
+
+/* Update color for inputs, labels, and selects */
+.filter-panel label, 
+.filter-panel input[type="checkbox"], 
+.filter-panel input[type="radio"], 
+.filter-panel input[type="number"] {
+    color: #000; /* Set label and input text color to black */
+}
+
+.filter-checkbox, .filter-radio {
+    margin-right: 10px;
+}
+
+/* Style for the button */
+.filter-button {
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.filter-button:hover {
+    background-color: #2C73D2;
+}
+
+/* Clasifications Content */
+.content-section {
+    width: 75%;
+}
+
+/* Game Section Title */
+.game-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+    text-transform: uppercase;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+/* Player List */
+.player-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Player Card */
+.player-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    width: calc(33.333% - 20px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.player-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Player Info */
+.player-info {
+    text-align: left;
+}
+
+.player-username {
+    font-size: 18px;
+    font-weight: 600;
+    color: #4A90E2;
+    text-decoration: none;
+}
+
+.player-username:hover {
+    text-decoration: underline;
+}
+
+.player-details {
+    font-size: 14px;
+    color: #666;
+    margin-top: 10px;
+}
+
+.player-details strong {
+    font-weight: 600;
+    color: #333;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .player-card {
+        width: 100%;
+    }
+
+    .filter-panel, .content-section {
+        width: 100%;
+    }
+
+    .page-wrapper {
+        flex-direction: column;
+    }
+}

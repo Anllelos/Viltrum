@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 from django.contrib.auth.models import Group
 from django import forms
+from .models import Message
 
 # Formulario para crear usuario jugador "Gamer"
 class CreateUserForm(UserCreationForm):
@@ -132,3 +133,10 @@ class EditProduct(forms.ModelForm):
 
 
 
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={'placeholder': 'Write your message here...'}),
+        }

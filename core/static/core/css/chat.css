@@ -1,0 +1,68 @@
+/* Chat Box Styles */
+.chat-box {
+    position: fixed;
+    bottom: 0;
+    right: 20px;
+    width: 300px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: none;
+    flex-direction: column;
+    border-radius: 10px;
+  }
+  
+  .chat-header {
+    background-color: #0056d2;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .chat-body {
+    height: 300px;
+    overflow-y: auto;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .chat-footer {
+    padding: 10px;
+    border-radius: 0 0 10px 10px;
+  }
+  
+  .chat-footer input {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .chat-footer button {
+    width: 18%;
+    padding: 10px;
+    background-color: #0056d2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .open-chat-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #0056d2;
+    color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  
