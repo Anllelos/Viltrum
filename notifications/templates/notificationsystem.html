@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificaciones de Usuarios</title>
+</head>
+<body>
+    <h1>Notificaciones</h1>
+
+
+    <ul id="notification-list">
+        {% for notification in notifications %}
+            <li>
+                <p>{{ notification.message }} - {{ notification.created_at }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+    <!-- Contenedor para mostrar las notificaciones -->
+    <div id="notifications" style="border: 1px solid #ddd; padding: 10px; max-width: 400px;">
+        <h3>Lista de Notificaciones:</h3>
+        <ul id="notificationList"></ul>
+    </div>
+
+    <!-- Formulario para enviar una notificación (solo para prueba) -->
+    <form id="notificationForm">
+        <label for="message">Mensaje:</label>
+        <input type="text" id="message" name="message" required>
+        <label for="receiver">Receptor ID:</label>
+        <input type="text" id="receiver" name="receiver" required>
+        <button type="submit">Enviar Notificación</button>
+    </form>
+
+    <script>
+        // Obtener el ID del usuario autenticado desde un script del backend (puedes usar una plantilla para obtenerlo dinámicamente)
+        const userId = "{{ user.id }}";  // Asegúrate de pasar el id del usuario autenticado desde Django
+
+        // Crear la URL del WebSocket
+        const socketUrl = `ws://${window.location.host}/ws/notify/${userId}/`;
+
+        // Crear la conexión del WebSocket
+        const notificationSocket = new WebSocket(socketUrl);
+
+        // Cuando la conexión esté abierta
+        notificationSocket.onopen = function(e) {
+            console.log("Conectado al WebSocket de notificaciones");
+        };
+
+        // Cuando llegue un mensaje del WebSocket
+        notificationSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            const message = data.message;
+
+            // Añadir la notificación a la lista
+            const notificationList = document.getElementById('notificationList');
+            const newNotification = document.createElement('li');
+            newNotification.textContent = message;
+            notificationList.appendChild(newNotification);
+        };
+
+        // Cuando se cierre la conexión
+        notificationSocket.onclose = function(e) {
+            console.log("Desconectado del WebSocket");
+        };
+
+        // En caso de error en el WebSocket
+        notificationSocket.onerror = function(e) {
+            console.error("Error en el WebSocket", e);
+        };
+
+        // Manejar el envío de notificaciones (este ejemplo es para testeo)
+        const notificationForm = document.getElementById('notificationForm');
+        notificationForm.onsubmit = function(e) {
+            e.preventDefault();
+
+            const messageInput = document.getElementById('message');
+            const receiverInput = document.getElementById('receiver');
+
+            const message = messageInput.value;
+            const receiver = receiverInput.value;
+
+            // Enviar el mensaje al WebSocket
+            notificationSocket.send(JSON.stringify({
+                "message": message,
+                "receiver": receiver
+            }));
+
+            // Limpiar los campos de entrada
+            messageInput.value = '';
+            receiverInput.value = '';
+        };
+    </script>
+</body>
+</html>

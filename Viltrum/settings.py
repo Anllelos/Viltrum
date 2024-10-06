@@ -43,6 +43,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     #App principal
     'core.apps.CoreConfig',
     #App de usuarios
@@ -55,6 +56,8 @@ INSTALLED_APPS = [
     'explore.apps.ExploreConfig',
     #App de patrocinadores
     'sponsors.apps.SponsorsConfig',
+    #App de notificaciones
+    'notifications.apps.NotificationsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -103,7 +106,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Viltrum.wsgi.application'
+#WSGI_APPLICATION = 'Viltrum.wsgi.application'
+ASGI_APPLICATION = "Viltrum.asgi.application"
 
 
 # Database
@@ -173,3 +177,10 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'sviltrum@gmail.com'
 EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
 DEFAULT_FROM_EMAIL = 'no-reply@viltrum.com'
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
