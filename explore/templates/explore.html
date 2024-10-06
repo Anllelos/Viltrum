@@ -2,30 +2,31 @@
 {% load static %}
 
 {% block title %}Explore Games{% endblock %}
-
-<!-- Link to the CSS file for the explore page -->
 <link rel="stylesheet" href="{% static 'explore/explore.css' %}">
 
 {% block content %}
 <div class="explore-wrapper">
-
     <!-- Filters and Sort -->
-    <div class="explore-filters">
-        <form method="GET">
-            <label for="category">Category:</label>
-            <select name="category" id="category">
-                <option value="">All Categories</option>
-                <option value="Action" {% if selected_category == "Action" %}selected{% endif %}>Action</option>
-                <option value="Adventure" {% if selected_category == "Adventure" %}selected{% endif %}>Adventure</option>
-                <option value="Shooter" {% if selected_category == "Shooter" %}selected{% endif %}>Shooter</option>
-                <option value="Sports" {% if selected_category == "Sports" %}selected{% endif %}>Sports</option>
-            </select>
+    <div class="filter-sort-section">
+        <form method="GET" class="filter-form">
+            <div class="filter-group">
+                <label for="category">Category:</label>
+                <select name="category" id="category" title="Select a category">
+                    <option value="">All Categories</option>
+                    <option value="Action" {% if selected_category == "Action" %}selected{% endif %}>Action</option>
+                    <option value="Adventure" {% if selected_category == "Adventure" %}selected{% endif %}>Adventure</option>
+                    <option value="Shooter" {% if selected_category == "Shooter" %}selected{% endif %}>Shooter</option>
+                    <option value="Sports" {% if selected_category == "Sports" %}selected{% endif %}>Sports</option>
+                </select>
+            </div>
 
-            <label for="sort_by">Sort By:</label>
-            <select name="sort_by" id="sort_by">
-                <option value="popularity" {% if sort_by == "popularity" %}selected{% endif %}>Popularity</option>
-                <option value="release_date" {% if sort_by == "release_date" %}selected{% endif %}>Release Date</option>
-            </select>
+            <div class="filter-group">
+                <label for="sort_by">Sort By:</label>
+                <select name="sort_by" id="sort_by" title="Sort by popularity or release date">
+                    <option value="popularity" {% if sort_by == "popularity" %}selected{% endif %}>Popularity</option>
+                    <option value="release_date" {% if sort_by == "release_date" %}selected{% endif %}>Release Date</option>
+                </select>
+            </div>
 
             <button type="submit" class="filter-button">Apply</button>
         </form>
