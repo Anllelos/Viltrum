@@ -399,3 +399,23 @@ def delete_product(request, product_id):
     
     # Redirige a 'home' si el usuario no tiene acceso
     return redirect('home')
+
+@login_required
+def send_message(request, recipient_id):
+    recipient = User.objects.get(id=recipient_id)
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = request.user
+            message.recipient = recipient
+            message.save()
+            return redirect('profile', user_id=recipient_id)
+    else:
+        form = MessageForm()
+    return render(request, 'send_message.html', {'form': form, 'recipient': recipient})
+
+@login_required
+def inbox(request):
+    messages = Message.objects.filter(recipient=request.user)
+    return render(request, 'inbox.html', {'messages': messages})

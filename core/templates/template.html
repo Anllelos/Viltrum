@@ -1,94 +1,140 @@
 {% load static %}
-<!-- Template de Header & Footer -->
+<!-- Template for Header & Footer -->
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}Viltrum | Plataforma de eSports{% endblock %}</title>
-  <!-- Fuente desde Google Fonts -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
-  <!-- Enlace al archivo CSS -->
-  <link type="text/css" rel="stylesheet" href="{% static 'core/css/template.css' %}">
-  <!-- Iconos desde Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  {% block extra_css %}
-  {% endblock %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Viltrum | Plataforma de eSports{% endblock %}</title>
+    <!-- Fonts from Google -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+    <!-- CSS File -->
+    <link type="text/css" rel="stylesheet" href="{% static 'core/css/template.css' %}">
+    <!-- Icons from Font Awesome -->
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
+    {% block extra_css %}{% endblock %}
 </head>
 
 <body>
-  <!-- Header -->
-  <header>
-    <div class="header-container">
-      <div class="logo-container">
-        <img src="{% static 'images/ninjaviltrum.png' %}" alt="Logo" class="logo">
-      </div>
-      <!-- Barra de navegacion -->
-      <nav class="nav-links">
-        <a href="{% url 'home' %}">Inicio</a>
-        <a href="{% url 'explore' %}">Explorar</a>
-        <a href="#">Suscripciones</a>
-        <a href="{% url 'sponsors' %}">Patrocinadores</a>
-        <a href="{% url 'tournaments' %}">Torneos</a>
-        <a href="{% url 'clasifications' %}">Clasificaciones</a>
-        <a href="#">Equipos</a>
-      </nav>
-      <!-- Barra de busqueda -->
-      <div class="search-bar">
-        <input type="text" placeholder="Buscar">
-        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-      </div>
-      <!-- Barra de perfil -->
-      <div class="auth-buttons">
-        <div class="dropdown-profile">
-          {% if user.is_authenticated %}
-          <div class="dropdown-profile">
-            <a href="#" aria-haspopup="true" aria-expanded="false" class="user-icon" id="userIcon">
-              <i class="fa-solid fa-user"></i>
-              {{ user }}
-            </a>
-            <div class="dropdown-content" id="dropdownMenu">
-              <a href="{% url 'redirect_profile' %}">Perfil</a>
-              <a href="{% url 'redirect_profile_edit' %}">Editar Perfil</a>
-              {% if role == 'gamer' %}
-                <a href="{% url 'games_stats' %}">Añadir Estadísticas</a>
-              {% else %}
-                <a href="{% url 'sponsor_products' %}">Añadir Producto</a>
-              {% endif %}
-              <a href="{% url 'user_logout' %}">Cerrar sesión</a>
+    <!-- Header -->
+    <header class="header-container">
+        <div class="header-left">
+            <!-- Logo -->
+            <div class="logo-container">
+                <img src="{% static 'images/ninjaviltrum.png' %}" alt="Logo" class="logo">
             </div>
-          </div>
-          {% else %}
-          <a href="{% url 'login' %}" class="login-btn">Iniciar Sesión</a>
-          <a href="{% url 'register' %}" class="register-btn">Regístrate</a>
-          {% endif %}
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar" class="rounded-search">
+                <button type="submit" class="search-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
         </div>
-      </div>
-    </div>
-  </header>
 
-  <!-- Content -->
-  <main>
-    {% block content %}
+        <!-- Center Section for Icons -->
+        <!-- Center Section for Icons -->
+        <nav class="nav-icons">
+            <a href="{% url 'home' %}" title="Inicio"
+                class="nav-icon {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                <i class="bi bi-house-door"></i>
+            </a>
+            <a href="{% url 'explore' %}" title="Explorar"
+                class="nav-icon {% if request.resolver_match.url_name == 'explore' %}active{% endif %}">
+                <i class="bi bi-compass"></i>
+            </a>
+            <a href="{% url 'tournaments' %}" title="Torneos"
+                class="nav-icon {% if request.resolver_match.url_name == 'tournaments' %}active{% endif %}">
+                <i class="bi bi-trophy"></i>
+            </a>
+            <a href="{% url 'clasifications' %}" title="Clasificaciones"
+                class="nav-icon {% if request.resolver_match.url_name == 'clasifications' %}active{% endif %}">
+                <i class="bi bi-graph-up-arrow"></i>
+            </a>
+        </nav>
 
-    {% endblock %}
-  </main>
 
-  <!-- Footer -->
-  <footer class="footer-container">
-    <p>© 2024 Viltrum. Todos los derechos reservados.</p>
-    <div class="footer-links">
-      <a href="#">Acerca de</a>
-      <a href="#">Contacto</a>
-      <a href="#">Privacidad</a>
-      <a href="#">Términos</a>
-      <a href="#">Ayuda</a>
-    </div>
-  </footer>
-  <script src="{% static 'js/dropMenu.js' %}"></script>
-  {% block extra_js %}
-  {% endblock %}
+        <!-- Right Section for Profile and Messages -->
+        <div class="header-right">
+            {% if user.is_authenticated %}
+            <a href="#" title="Messages" class="nav-icon" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                <i class="bi bi-chat-dots"></i>
+            </a>
+
+            <div class="dropdown-profile">
+                <a href="#" title="Notify" class="nav-icon" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                    id="notifyIcon">
+                    <i class="bi bi-bell"></i>
+                </a>
+                <div class="dropdown-content" id="dropdownMenuNotify">
+                    <ul id="notificationList"></ul>
+                    {% for notification in notifications %}
+                        <li>{{ notification.message }}</li>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="dropdown-profile">
+                <a href="#" aria-haspopup="true" aria-expanded="false" class="user-icon" id="userIcon">
+                    <img src="{% if profile.profile_img %}{{ profile.profile_img.url }}{% else %}https://ui-avatars.com/api/?name={{ profile_user.username }}{% endif %}"
+                        alt="Profile Picture" class="profile-icon">
+                </a>
+                <div class="dropdown-content" id="dropdownMenu">
+                    <a href="{% url 'redirect_profile' %}">Perfil</a>
+                    <a href="{% url 'redirect_profile_edit' %}">Editar Perfil</a>
+                    {% if role == 'gamer' %}
+                    <a href="{% url 'games_stats' %}">Añadir Estadísticas</a>
+                    {% else %}
+                    <a href="{% url 'sponsor_products' %}">Añadir Producto</a>
+                    {% endif %}
+                    <a href="{% url 'user_logout' %}">Cerrar sesión</a>
+                </div>
+            </div>
+            {% else %}
+            <a href="{% url 'login' %}" class="login-btn">Iniciar Sesión</a>
+            <a href="{% url 'register' %}" class="register-btn">Regístrate</a>
+            {% endif %}
+
+        </div>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-container">
+        <p>© 2024 Viltrum. Todos los derechos reservados.</p>
+        <div class="footer-links">
+            <a href="#">Acerca de</a>
+            <a href="#">Contacto</a>
+            <a href="#">Privacidad</a>
+            <a href="#">Términos</a>
+            <a href="#">Ayuda</a>
+        </div>
+    </footer>
+
+    <!-- JS for Tooltip and Dropdown -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            })
+        });
+    </script>
+
+    <script src="{% static 'core/js/dropMenu.js' %}"></script>
+    {% if user.is_authenticated %}
+    <script>const userId = "{{ user.id }}"; </script>
+    <script src="{% static 'core/js/notifyWebSocket.js' %}"></script>
+    {% endif %}
+    {% block extra_js %}{% endblock %}
 </body>
 
 </html>
