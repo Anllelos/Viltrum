@@ -19,7 +19,7 @@ notificationSocket.onmessage = function (e) {
 
     // Añadir la notificación a la lista
     const notificationList = document.getElementById('notificationList');
-    const newNotification = document.createElement('li');
+    const newNotification = document.createElement('a');
     newNotification.textContent = message;
     notificationList.appendChild(newNotification);
 };

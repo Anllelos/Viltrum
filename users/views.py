@@ -9,6 +9,8 @@ import base64
 from django.http import Http404
 from datetime import date
 from tournaments.models import Tournament
+from django.http import JsonResponse
+from notifications.models import NotificationSystem
 
 #-------------------------------------------------------------- Ver perfil --------------------------------------------------------------#
 # Verificación de roles dentro de la página
@@ -30,8 +32,12 @@ def profile_user(request, username):
         extended_data_table = get_object_or_404(ExtendedData, user=user_to_validate)
         game_stats_table = PlayerStats.objects.filter(user=user_to_validate, is_active=True)
         tournaments_created = Tournament.objects.filter(owner=user_to_validate)
-
+        notification_sended = NotificationSystem.objects.filter(receiver=user_to_validate, sender=request.user).first()
         data_context = {'profile': extended_data_table, 'profile_user': user_to_validate, 'tournaments_created':tournaments_created}
+        if notification_sended:
+            data_context['notify_sended'] = True
+
+        
         n_games = 0
         if game_stats_table.exists():
             for game in game_stats_table:
@@ -419,3 +425,4 @@ def send_message(request, recipient_id):
 def inbox(request):
     messages = Message.objects.filter(recipient=request.user)
     return render(request, 'inbox.html', {'messages': messages})
+

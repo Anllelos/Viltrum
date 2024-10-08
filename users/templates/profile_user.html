@@ -24,9 +24,15 @@ Viltrum | Perfil {{User}}
             <h2 class="username">{{ profile_user.username }}</h2>
         </div>
         {% if role == 'sponsor'%}
-        <button class="match-button" id="notificationForm" onclick="sendInvitationNotify()">
-            <i class="fa fa-check-circle"></i> Match
-        </button>
+            {% if notify_sended %}
+            <button class="match-button" id="notificationForm" disabled>
+                <i class="fa fa-check-circle"></i> Notificación enviada
+            </button>
+            {% else %}
+            <button class="match-button" id="notificationForm" onclick="sendInvitationNotify(this)">
+                <i class="fa fa-check-circle"></i> Match
+            </button>
+            {% endif %}
         {% endif %}
     </div>
     <div class="profile-header-info">
@@ -100,8 +106,8 @@ Viltrum | Perfil {{User}}
 {% if user.is_authenticated and role == 'sponsor'%}
 <script>
     const receiver = "{{profile.id}}";
-    function sendInvitationNotify() {
-
+    function sendInvitationNotify(button) {
+        button.disabled = true;
         const message = "¡Un patrocinador quiere colaborar contigo!, {{user}}";
 
         // Enviar el mensaje al WebSocket

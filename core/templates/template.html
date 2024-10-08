@@ -70,16 +70,18 @@
                     <i class="bi bi-bell"></i>
                 </a>
                 <div class="dropdown-content" id="dropdownMenuNotify">
-                    <ul id="notificationList"></ul>
+                    <div id="notificationList"></div>
                     {% for notification in notifications %}
-                        <li>{{ notification.message }}</li>
+                        <a>{{ notification.message }}</a>
+                        {% empty %}
+                        <a>No hay nuevas notificaciones</a>
                     {% endfor %}
                 </div>
             </div>
 
             <div class="dropdown-profile">
                 <a href="#" aria-haspopup="true" aria-expanded="false" class="user-icon" id="userIcon">
-                    <img src="{% if profile.profile_img %}{{ profile.profile_img.url }}{% else %}https://ui-avatars.com/api/?name={{ profile_user.username }}{% endif %}"
+                    <img src="{% if profile.profile_img %}{{ profile.profile_img.url }}{% else %}https://ui-avatars.com/api/?name={{ user }}{% endif %}"
                         alt="Profile Picture" class="profile-icon">
                 </a>
                 <div class="dropdown-content" id="dropdownMenu">
