@@ -20,4 +20,5 @@ urlpatterns = [
     path('profile/product/delete/<int:product_id>', views.delete_product, name='delete_product'),
     path('send_message/<int:recipient_id>/', views.send_message, name='send_message'),
     path('inbox/', views.inbox, name='inbox'),
+    path('upload-image/', views.upload_image, name='upload_image'),
 ]

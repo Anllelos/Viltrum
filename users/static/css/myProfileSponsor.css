@@ -1,135 +1,128 @@
-/* Aplicar la fuente a toda la página */
-
-/*-- Estilos de la página --*/
-
-.profile-container{
-    margin: auto;
-    background-color: #333;
-    padding: 15px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+/* General styles */
+body {
+    font-family: 'Arial', sans-serif;
 }
 
-/*-- Profile Header --*/
-.profile-banner {
-    position: relative;
+/* Container */
+.profile-container {
+    display: flex;
     width: 100%;
-    height: 200px;
-    background-color: rgb(150, 150, 150);   
-    overflow: hidden;
-}
-
-.profile-banner img {
-    object-fit: cover;
-    width: 100%;
-}
-
-.profile-header-user {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: -75px;
-}
-
-.profile-image {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: 30px;
-    z-index: 1;
-}
-
-.profile-image img {
-    width: 130px;
-    height: 130px;
-    object-fit: cover;
-}
-
-.username {
-    margin: var(--margin-spacing);
-}
-
-.send-message {
-    margin-right: 30px;
-    text-decoration: none;
-    color: var(--text-color);
-    background-color: var(--main-color);
-    padding: 10px;
-    border-radius: 5px;
-    z-index: 1;
-}
-
-.profile-header-info {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    text-align: right;
-    margin-top: -50px;
-}
-
-.profile-header-info h3, 
-.profile-header-info p {
-    margin: var(--margin-spacing);
-}
-
-/*-- Profile Body --*/
-.profile-body{
-    background-color: #444;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    flex-wrap: wrap;
-    padding: 15px;
-    gap: 10px;  
-}
-
-.profile-products{
-    display: flex;
-    flex-direction: column;
-    background-color: #555;
-    overflow: hidden;
-    border-radius: 5px;
-}
-
-.profile-products img{
-    position: relative;
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    background-color: rgb(214, 214, 214);
-    border: none;
-    border-bottom: #000000 2 px solid;
-}
-
-.profile-products-info{
-    margin-left: 10px;
-}
-
-.profile-header-info a{
-    text-decoration: none;
-    color: white;
-}
-
-
-/* Estilos para el Footer */
-.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
-    background-color: #18181b;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.footer-links a,
-.footer-social a {
-    color: white;
+/* Sidebar */
+.sidebar {
+    flex: 0 0 250px;
+    padding-right: 20px;
+    border-right: 1px solid #ddd;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    background: #f0f0f0;
+    border-radius: 4px;
     text-decoration: none;
-    margin: 0 10px;
+    transition: background 0.3s;
 }
 
-.footer-social a {
-    font-size: 20px;
+.sidebar ul li a.active, .sidebar ul li a:hover {
+    background: #007bff;
+    color: white;
+}
+
+/* Form container */
+.form-container {
+    flex: 1;
+    padding-left: 20px;
+}
+
+.form-section {
+    display: none;
+}
+
+.form-section.active {
+    display: block;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.profile-data .input-group {
+    margin-bottom: 15px;
+}
+
+.profile-data .input-group input, 
+.profile-data .input-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+    transition: border-color 0.3s;
+}
+
+.profile-data .input-group input:focus, 
+.profile-data .input-group textarea:focus {
+    border-color: #007bff;
+}
+
+.profile-data .input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* Buttons */
+.button-group {
+    text-align: right;
+}
+
+.save-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.save-button i {
+    margin-left: 5px;
+}
+
+.save-button:hover {
+    background: #0056b3;
+}
+
+/* Images */
+.photo-section {
+    margin-bottom: 20px;
+}
+
+.photo-section img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
 }

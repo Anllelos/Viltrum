@@ -33,11 +33,20 @@ def profile_user(request, username):
         game_stats_table = PlayerStats.objects.filter(user=user_to_validate, is_active=True)
         tournaments_created = Tournament.objects.filter(owner=user_to_validate)
         notification_sended = NotificationSystem.objects.filter(receiver=user_to_validate, sender=request.user).first()
-        data_context = {'profile': extended_data_table, 'profile_user': user_to_validate, 'tournaments_created':tournaments_created}
+
+        # Query gallery images associated with the user
+        gallery_images = UserGalleryImage.objects.filter(user=user_to_validate)
+
+        data_context = {
+            'profile': extended_data_table,
+            'profile_user': user_to_validate,
+            'tournaments_created': tournaments_created,
+            'gallery_images': gallery_images,  # Pass gallery images to the template
+        }
+
         if notification_sended:
             data_context['notify_sended'] = True
 
-        
         n_games = 0
         if game_stats_table.exists():
             for game in game_stats_table:
@@ -52,6 +61,7 @@ def profile_user(request, username):
         return render(request, 'profile_user.html', data_context)
     else:
         raise Http404("No existe ese usuario")
+
 
 def profile_sponsor(request, username):
     user_to_validate = get_object_or_404(User, username=username)
@@ -425,4 +435,38 @@ def send_message(request, recipient_id):
 def inbox(request):
     messages = Message.objects.filter(recipient=request.user)
     return render(request, 'inbox.html', {'messages': messages})
+
+@login_required
+def profile_view(request):
+    profile_user = request.user  # or however you're fetching the profile owner
+    images = UserGalleryImage.objects.filter(user=profile_user)
+    
+    if request.method == 'POST':
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.save(commit=False)
+            image.user = request.user
+            image.save()
+            return redirect('profile')  # Redirect to refresh the page and display new images
+    else:
+        form = ImageUploadForm()
+
+    return render(request, 'profile_user.html', {
+        'profile_user': profile_user,
+        'form': form,
+        'images': images,
+    })
+
+@login_required
+def upload_image(request):
+    if request.method == 'POST':
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            user_image = form.save(commit=False)
+            user_image.user = request.user
+            user_image.save()
+            return redirect('profile', username=request.user.username)  # Update this line
+    else:
+        form = ImageUploadForm()
+    return render(request, 'users/upload_image.html', {'form': form})
 

@@ -7,6 +7,8 @@ from django_countries.fields import CountryField
 from django.contrib.auth.models import Group
 from django import forms
 from .models import Message
+from .models import UserGalleryImage
+
 
 # Formulario para crear usuario jugador "Gamer"
 class CreateUserForm(UserCreationForm):
@@ -140,3 +142,8 @@ class MessageForm(forms.ModelForm):
         widgets = {
             'content': forms.Textarea(attrs={'placeholder': 'Write your message here...'}),
         }
+
+class ImageUploadForm(forms.ModelForm):
+    class Meta:
+        model = UserGalleryImage
+        fields = ['image']

@@ -86,4 +86,10 @@ class Message(models.Model):
     def __str__(self):
         return f"Message from {self.sender} to {self.recipient}"
 
+class UserGalleryImage(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='gallery_images/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f"{self.user.username}'s image"
