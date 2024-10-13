@@ -33,6 +33,7 @@ urlpatterns = [
     path('', include('clasifications.urls')), # Incluye todas las rutas de `clasifications.urls` sin prefijo adicional
     path('', include('sponsors.urls')), # Incluye todas las rutas de `sponsors.urls` sin prefijo adicional
     path('', include('notifications.urls')), # Incluye todas las rutas de `sponsors.urls` sin prefijo adicional
+    path('', include('chat.urls')), # Incluye todas las rutas de `sponsors.urls` sin prefijo adicional
     path('explore/', include('explore.urls')), # Incluye todas las rutas de `explore.urls` sin prefijo adicional
     # Rutas para el restablecimiento de contraseña
     path('password_reset/', auth_views.PasswordResetView.as_view(

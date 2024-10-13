@@ -122,14 +122,6 @@
     </footer>
 
     <!-- JS for Tooltip and Dropdown -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl)
-            })
-        });
-    </script>
 
     <script src="{% static 'core/js/dropMenu.js' %}"></script>
     {% if user.is_authenticated %}

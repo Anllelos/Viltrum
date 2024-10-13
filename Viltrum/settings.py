@@ -58,6 +58,8 @@ INSTALLED_APPS = [
     'sponsors.apps.SponsorsConfig',
     #App de notificaciones
     'notifications.apps.NotificationsConfig',
+    #App de chat
+    'chat.apps.ChatConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

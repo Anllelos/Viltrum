@@ -20,7 +20,10 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Viltrum.settings')
 django_asgi_app = get_asgi_application()
 
 
-from notifications.routing import websocket_urlpatterns
+from notifications.routing import websocket_urlpatterns as notifications_urlpatterns
+from chat.routing import websocket_urlpatterns as chat_urlpatterns  
+
+websocket_urlpatterns = notifications_urlpatterns + chat_urlpatterns
 
 application = ProtocolTypeRouter({
     "http": django_asgi_app,

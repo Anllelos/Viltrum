@@ -1,0 +1,81 @@
+{% extends 'template.html' %}
+
+{% load static %}
+
+{% block title %}
+Viltrum | Chat
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'chat/css/chat.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="chat-container" id="chat-messages">
+    <h2>Chat con {{ other_user.username }}</h2>
+
+    <!-- Los mensajes se agregarán aquí -->
+    {% for message in chat_messages %}
+    <div class="message">
+        <strong>{{ message.author.username }}:</strong> {{ message.body }}
+    </div>
+    {% empty %}
+    <p>No hay mensajes aún.</p>
+    {% endfor %}
+</div>
+
+<!-- Formulario para enviar mensajes -->
+<div class="chat-input">
+    <form id="chat-messages_form">
+        {% csrf_token %}
+        <input type="text" id="message-input" name="body" placeholder="Escribe un mensaje..." required>
+        <button type="submit">Enviar</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const chatSocket = new WebSocket(`ws://${window.location.host}/ws/chatroom/{{ chatroom_name }}`);
+    chatSocket.onopen = function (e) {
+        console.log("Conectado al WebSocket de Chat");
+    };
+
+    chatSocket.onmessage = function (event) {
+        const data = JSON.parse(event.data);
+
+        if (data.error) {
+            console.error(data.error); // Manejo de errores
+            return;
+        }
+
+        const chatMessages = document.getElementById('chat-messages');
+        const newMessage = document.createElement('div');
+        newMessage.className = "message";
+
+        const authorStrong = document.createElement('strong');
+        authorStrong.textContent = data.author + ': '; 
+        newMessage.appendChild(authorStrong);
+        newMessage.appendChild(document.createTextNode(data.message)); 
+        chatMessages.appendChild(newMessage);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    };
+
+    chatSocket.onclose = function (event) {
+        console.error('Chat socket closed unexpectedly, chat');
+    };
+
+    document.getElementById('chat-messages_form').addEventListener('submit', function (event) {
+        event.preventDefault(); // Evita el comportamiento por defecto del formulario
+        const messageInput = document.getElementById('message-input');
+
+        // Verifica si el campo de entrada no está vacío
+        if (messageInput.value.trim() !== "") {
+            chatSocket.send(JSON.stringify({
+                'body': messageInput.value.trim() // Envío del mensaje
+            }));
+            messageInput.value = ""; // Limpiar el campo de entrada
+        }
+    });
+</script>
+{% endblock %}
