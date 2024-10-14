@@ -7,27 +7,11 @@ Viltrum | Torneos
 {% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/tournaments.css' %}">
-<style>
-
-.tournament-member{
-    background-color: rgba(0, 0, 0, 0.279);
-    border-radius: 5px;
-    padding: 10px;
-}
-
-</style>
+<link rel="stylesheet" href="{% static 'css/tournament.css' %}">
 {% endblock %}
 
 {% block content %}
 <div class="tournament">
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
     <h2>Nombre: {{ tournament.name }}</h2>
     {% if tournament.status %} <span>Abierto</span> {% else %} <span>Cerrado</span> {% endif %}
     <h2>Juego: {{ tournament.game }}</h2>
@@ -36,7 +20,7 @@ Viltrum | Torneos
     {% if user.id == tournament.owner.id %}
         <span>Creado por: Tú ({{ tournament.owner }})</span>
         {% if tournament.status %}
-            <a href="{% url 'edit_tournament' tournament.id %}">Editar</a>
+            <a href="{% url 'edit_tournament' tournament.id %}">Editar <i class="fa-regular fa-pen-to-square"></i></a>
         {% else %}
             <span>El torneo ya termino, ya no puedes editarlo</span>
         {% endif %}
@@ -53,6 +37,7 @@ Viltrum | Torneos
         <span>Creado por: {{ tournament.owner }}</span>
     {% endif %}
 
+    <div class="tournament-members">
     <h2>Miembros:</h2>
     {% for item in member_info %}
         <div class="tournament-member">
@@ -76,6 +61,7 @@ Viltrum | Torneos
     {% empty %}
         <span>Aún no se han registrado jugadores a este torneo</span>
     {% endfor %}
+    </div>
 
     {% if not is_full %}
         {% if tournament.status and user.is_authenticated and user.id != tournament.owner.id and is_not_registered %}
