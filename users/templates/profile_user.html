@@ -8,81 +8,79 @@ Viltrum | Perfil {{User}}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/myProfile.css' %}">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
 {% endblock %}
 
 {% block content %}
 <div class="profile-container">
-    <div class="profile-header relative">
+    <!-- Encabezado del perfil -->
+    <div class="profile-header">
         <div class="profile-banner">
-            <img src="{% if profile.profile_banner %}{{ profile.profile_banner.url }}{% else %}http://via.placeholder.com/770x200{% endif %}" alt="Banner" class="w-full h-48 object-cover rounded-lg">
+            <img src="{% if profile.profile_banner %}{{ profile.profile_banner.url }}{% else %}https://via.placeholder.com/770x200{% endif %}" alt="Banner">
         </div>
         
-        <!-- Profile Picture -->
-        <div class="profile-image absolute -bottom-16 left-1/2 transform -translate-x-1/2 rounded-full border-4 border-white">
-            <img src="{% if profile.profile_img %}{{ profile.profile_img.url }}{% else %}https://ui-avatars.com/api/?name={{ profile_user.username }}{% endif %}" alt="Foto de perfil" class="w-32 h-32 rounded-full object-cover">
+        <!-- Imagen de perfil -->
+        <div class="profile-image">
+            <img src="{% if profile.profile_img %}{{ profile.profile_img.url }}{% else %}https://ui-avatars.com/api/?name={{ profile_user.username }}{% endif %}" alt="Foto de perfil">
         </div>
 
-        <!-- Adjusted Icon to the right of the profile picture -->
-        <div class="absolute -bottom-16 left-1/2 transform translate-x-[85px]">
-            <i class="bi bi-check-circle-fill text-4xl text-blue-500"></i>
-        </div>
     </div>
 
-    <!-- Icons Below Banner -->
-    <div class="flex justify-center space-x-4 mt-4">
-        <i class="bi bi-house-door-fill text-3xl"></i>
-        <i class="bi bi-envelope-fill text-3xl"></i>
-        <i class="bi bi-trophy-fill text-3xl"></i>
-        <i class="bi bi-graph-up-arrow text-3xl"></i>
+    <!-- Íconos debajo del banner -->
+    {% if profile.user != user %}
+    <div class="text-end mt-5 profile-icons">
+        <a href="{% url 'start_chat' profile.user %}"><i class="bi bi-envelope-fill me-3 fs-4"></i></a>
+        <a href=""><i class="bi bi-check-circle-fill fs-4"></i></a>
     </div>
+    {% endif %}
 
-    <div class="text-center mt-4"> <!-- Reduced margin from mt-10 to mt-4 -->
-        <h2 class="username text-3xl font-bold">{{ profile_user.username }}</h2>
-        <p class="mt-2 text-gray-600">{{ profile.user_description|default:"El usuario no ha agregado información aún." }}</p>
-    </div>
-
+    <!-- Información del usuario -->
     <div class="text-center mt-4">
-        <button type="button" class="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" onclick="document.getElementById('image-upload-modal').style.display='block'">
-            Subir Fotos
-        </button>
+        <h2 class="username">{{ profile_user.username }}</h2>
+        <p class="text-gray-600">{{ profile.user_description|default:"El usuario no ha agregado información aún." }}</p>
     </div>
 
-    <!-- Gallery Section with Upload Button -->
-    <div class="mt-10 mx-auto max-w-5xl">
-        <h3 class="text-center text-2xl font-semibold mb-6">Galería</h3>
+    <!-- Sección de juegos -->
+    <div class="gallery-container">
 
-        <!-- Hidden Upload Form -->
-        <div id="image-upload-modal" style="display:none;">
-            <form id="imageUploadForm" method="post" enctype="multipart/form-data" action="{% url 'upload_image' %}">
-                {% csrf_token %}
-                <input type="file" name="image" accept="image/*" required class="block mx-auto">
-                <button type="submit" class="bg-blue-500 text-white rounded-lg px-4 py-2 mt-2">Subir</button>
-                <button type="button" class="bg-gray-500 text-white rounded-lg px-4 py-2 mt-2" onclick="document.getElementById('image-upload-modal').style.display='none'">Cancelar</button>
-            </form>
-        </div>
-
-        <!-- Display Existing Gallery Images -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {% for image in gallery_images %}
-            <div class="grid gap-4">
-                <img class="h-auto max-w-full rounded-lg" src="{{ image.image.url }}" alt="User Image">
-            </div>
+        <!-- Mostrar imágenes de la galería -->
+        <div class="grid grid-cols-2 md:grid-cols-4 g-4">
+            {% for game in games %}
+            <div class="game-card">
+                {% if profile.user == user %}
+                <div class="icon-container">
+                    <a href="#" class="edit-icon" title="Editar">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <a href="#" class="delete-icon" title="Eliminar">
+                        <i class="bi bi-x"></i>
+                    </a>
+                </div>
+                {% endif %}
+                <h3 class="game-title">{{ game.game }}</h3>
+                <div class="game-info">
+                    <span><strong>Usuario:</strong> {{ game.user_game }}</span>
+                    <span><strong>Rango:</strong> {{ game.rank }}</span>
+                    <span><strong>Winrate:</strong> {{ game.winrate }}%</span>
+                    <span><strong>Total Jugado:</strong> {{ game.total_played }}</span>
+                </div>
+            </div>                 
             {% empty %}
-            <p class="text-center col-span-4">Aún no has subido ninguna imagen.</p>
+            <p class="text-center col-span-4">Aún no has subido ningún juego.</p>
             {% endfor %}
         </div>
     </div>
 
-    <div class="profile-footer text-center mt-12">
-        <a href="#"><i class="fab fa-facebook-f"></i> Lorem</a>
-        <a href="#"><i class="fab fa-twitter"></i> @Lorem</a>
-        <a href="#"><i class="fab fa-instagram"></i> Lorem</a>
-        <a href="#"><i class="fab fa-youtube"></i> Lorem</a>
-        <a href="#"><i class="fa-brands fa-twitch"></i> Lorem</a>
+    <!-- Enlaces a redes sociales -->
+    <div class="profile-footer text-center mt-5">
+        <a href="#"><i class="bi bi-facebook"></i> Facebook</a>
+        <a href="#"><i class="bi bi-twitter"></i> Twitter</a>
+        <a href="#"><i class="bi bi-instagram"></i> Instagram</a>
+        <a href="#"><i class="bi bi-youtube"></i> YouTube</a>
+        <a href="#"><i class="bi bi-twitch"></i> Twitch</a>
     </div>
 </div>
+
 {% endblock %}
 
 {% block extra_js %}

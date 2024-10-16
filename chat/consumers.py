@@ -30,6 +30,7 @@ class ChatroomConsumer(AsyncWebsocketConsumer):
         try:
             text_data_json = json.loads(text_data)
             body = text_data_json['body']
+            language = text_data_json['language']
 
             # Crear mensaje de manera asíncrona
             message = await sync_to_async(GroupMessage.objects.create)(
@@ -42,7 +43,8 @@ class ChatroomConsumer(AsyncWebsocketConsumer):
                 self.chatroom_name,
                 {
                     'type': 'message_handler',
-                    'message_id': message.id
+                    'message_id': message.id,
+                    'language':language
                 }
             )
 
@@ -55,9 +57,10 @@ class ChatroomConsumer(AsyncWebsocketConsumer):
             message_id = event['message_id']
 
             # Obtener el mensaje y los datos relacionados de manera asíncrona
+            language = event['language']
             message = await sync_to_async(GroupMessage.objects.get)(pk=message_id)
             author_username = await sync_to_async(lambda: message.author.username)()
-            message = await sync_to_async(tl.llm_basic)(message.body)
+            message = await sync_to_async(tl.llm_basic)(language, message.body)
 
             data_context = {
                 'message': message,

@@ -28,9 +28,9 @@ def model_config():
 
     return model
 
-def llm_basic(phrase):
+def llm_basic(language, phrase):
     model = model_config()
-    response = model.generate_content(f"Traduce el siguiente texto al japonés, solo responde con la traducción: {phrase}")
+    response = model.generate_content(f"Traduce el siguiente texto al {language}, solo responde con la traducción: {phrase}")
     return response.text
 
 
