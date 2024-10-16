@@ -1,5 +1,4 @@
-/* Aplicar la fuente a toda la página */
-
+/* Apply font to the entire page */
 * {
     font-family: 'IBM Plex Sans', sans-serif;
     color: white;
@@ -19,52 +18,115 @@ main {
     padding: 0;
 }
 
-/* Estilos para el Header */
+/* Header Styles */
 .header-container {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     padding: 10px 20px;
     background-color: #18181b;
+    position: relative;
+    z-index: 10;
+}
+
+/* Left section: Logo and Search Bar */
+.header-left, .header-right {
+    display: flex;
+    align-items: center;
 }
 
 .logo-container .logo {
-    max-width: 120px;
+    max-width: 100px;
+    margin-right: 20px;
 }
 
-.nav-links a {
-    color: white;
-    margin: 0 15px;
-    text-decoration: none;
-    font-weight: 500;
-}
-
+/* Rounded Search Bar */
 .search-bar {
-    display: flex;
-    align-items: center;
+    position: relative;
 }
 
 .search-bar input {
-    padding: 8px;
-    border-radius: 5px 0px 0px 5px;
+    padding: 10px 15px;
+    border-radius: 50px;
     border: none;
     outline: none;
-}
-
-.search-bar button {
-    background-color: #2d2d2d;
-    border: none;
-    padding: 8px;
-    cursor: pointer;
+    width: 250px;
+    background-color: #333;
     color: white;
-    border-radius: 0px 5px 5px 0px;
+    padding-right: 45px;
 }
 
-.auth-buttons {
+.search-bar input::placeholder {
+    color: #bbb;
+}
+
+.search-bar .search-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* Center Section: Navigation Icons */
+.nav-icons {
     display: flex;
+    justify-content: center;
     align-items: center;
+    flex: 1;
 }
 
+.nav-icon {
+    margin: 0 20px;
+    color: white;
+    font-size: 28px;  /* Larger icons */
+    position: relative;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.nav-icon:hover {
+    color: #9147ff;
+}
+
+.nav-icon i {
+    vertical-align: middle;
+}
+
+/* Right Section: Profile and Messages */
+.profile-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 20px;
+}
+
+.header-right .nav-icon {
+    margin-left: 20px;
+}
+
+.nav-icon.active {
+    color: #1877f2;  /* Facebook blue */
+    position: relative;
+}
+
+.nav-icon.active::after {
+    content: "";
+    position: absolute;
+    bottom: -8px; /* Position the underline */
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: #1877f2;
+    border-radius: 2px;
+    width: 100%;
+}
+/* Auth Buttons */
 .auth-buttons .login-btn,
 .auth-buttons .register-btn {
     color: white;
@@ -82,37 +144,41 @@ main {
     text-decoration: none;
 }
 
+/* Dropdown Profile */
 .dropdown-profile {
     position: relative;
     display: inline-block;
 }
 
 .dropdown-content {
-    display: none;
+    display: none; /* Por defecto oculto */
     position: absolute;
     background-color: #333;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 3;
-    min-width: 160px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
-    margin-top: 5px;
+    min-width: 160px;
     right: 0;
+    z-index: 10; /* Asegúrate de que esté en frente */
     overflow: hidden;
 }
 
 .dropdown-content a {
-    color: white;
     padding: 12px 16px;
+    color: #fff;
     text-decoration: none;
     display: block;
+    transition: background-color 0.3s;
 }
 
 .dropdown-content a:hover {
-    background-color: #444;
+    background-color: #444; /* Color de fondo al pasar el mouse */
 }
 
+.dropdown-profile:hover .dropdown-content {
+    display: block;
+}
 
-/* Estilos para el Footer */
+/* Footer Styles */
 .footer-container {
     padding: 20px;
     background-color: #18181b;

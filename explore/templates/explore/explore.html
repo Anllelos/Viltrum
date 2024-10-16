@@ -1,11 +1,29 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explorar</title>
-</head>
-<body>
-    <h1>Página de Explorar Juegos</h1>
-</body>
-</html>
+{% extends 'template.html' %}
+
+{% load static %}  <!-- Añade esta línea para cargar los archivos estáticos -->
+
+{% block title %}
+    Explorar Juegos
+{% endblock %}
+
+<link rel="stylesheet" href="{% static 'explore/style.css' %}">
+
+{% block content %}
+<div class="container">
+    <h1>Explorar Juegos</h1>
+    <div class="grid">
+        {% for game in games %}
+            <div class="game-card">
+                <img src="{{ game.image.url }}" alt="{{ game.name }}">
+                <h2>{{ game.name }}</h2>
+                <p>{{ game.category }}</p>
+                <p>{{ game.description|truncatewords:15 }}</p>
+                {% if game.is_live %}
+                    <span class="live-badge">EN VIVO</span>
+                {% endif %}
+                <button class="explore-button">Ver Más</button>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
