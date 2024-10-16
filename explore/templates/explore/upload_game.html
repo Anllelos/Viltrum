@@ -1,0 +1,14 @@
+{% extends 'template.html' %}
+
+{% block title %}
+    Subir Juego
+{% endblock %}
+
+{% block content %}
+    <h1>Subir Juego</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Subir</button>
+    </form>
+{% endblock %}

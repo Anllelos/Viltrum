@@ -1,29 +1,33 @@
 {% extends 'template.html' %}
 
-{% load static %}  <!-- Añade esta línea para cargar los archivos estáticos -->
+{% load static %}
 
 {% block title %}
     Explorar Juegos
 {% endblock %}
 
-<link rel="stylesheet" href="{% static 'explore/style.css' %}">
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'explore/style.css' %}">
+{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Explorar Juegos</h1>
-    <div class="grid">
-        {% for game in games %}
-            <div class="game-card">
-                <img src="{{ game.image.url }}" alt="{{ game.name }}">
-                <h2>{{ game.name }}</h2>
-                <p>{{ game.category }}</p>
-                <p>{{ game.description|truncatewords:15 }}</p>
-                {% if game.is_live %}
-                    <span class="live-badge">EN VIVO</span>
-                {% endif %}
-                <button class="explore-button">Ver Más</button>
-            </div>
-        {% endfor %}
+    <div class="container">
+        <h1>Explorar Juegos</h1>
+        <a href="{% url 'upload_game' %}" class="explore-button">Subir Nuevo Juego</a>
+        <div class="grid">
+            {% for game in games %}
+                <div class="game-card">
+                    <img src="{{ game.image.url }}" alt="{{ game.name }}">
+                    <h2><a href="{% url 'game_detail' game.id %}">{{ game.name }}</a></h2>
+                    <p>{{ game.category }}</p>
+                    <p>{{ game.description|truncatewords:15 }}</p>
+                    {% if game.is_live %}
+                        <span class="live-badge">EN VIVO</span>
+                    {% endif %}
+                    <button class="explore-button"><a href="{% url 'game_detail' game.id %}">Ver Más</a></button>
+                </div>
+            {% endfor %}
+        </div>
     </div>
-</div>
 {% endblock %}
+
