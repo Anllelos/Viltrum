@@ -11,23 +11,106 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h1>Explorar Juegos</h1>
-        <a href="{% url 'upload_game' %}" class="explore-button">Subir Nuevo Juego</a>
-        <div class="grid">
-            {% for game in games %}
-                <div class="game-card">
-                    <img src="{{ game.image.url }}" alt="{{ game.name }}">
-                    <h2><a href="{% url 'game_detail' game.id %}">{{ game.name }}</a></h2>
-                    <p>{{ game.category }}</p>
-                    <p>{{ game.description|truncatewords:15 }}</p>
-                    {% if game.is_live %}
-                        <span class="live-badge">EN VIVO</span>
-                    {% endif %}
-                    <button class="explore-button"><a href="{% url 'game_detail' game.id %}">Ver Más</a></button>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-{% endblock %}
+<div class="container">
 
+    <!-- Categoría con los nuevos botones -->
+    <div class="category-tabs">
+        <button class="category-button">
+            <strong>Juegos</strong>
+            <div id="container-stars">
+                <div id="stars"></div>
+            </div>
+            <div id="glow">
+                <div class="circle"></div>
+                <div class="circle"></div>
+            </div>
+        </button>
+
+        <button class="category-button">
+            <strong>IRL</strong>
+            <div id="container-stars">
+                <div id="stars"></div>
+            </div>
+            <div id="glow">
+                <div class="circle"></div>
+                <div class="circle"></div>
+            </div>
+        </button>
+
+        <button class="category-button">
+            <strong>Música y DJ</strong>
+            <div id="container-stars">
+                <div id="stars"></div>
+            </div>
+            <div id="glow">
+                <div class="circle"></div>
+                <div class="circle"></div>
+            </div>
+        </button>
+
+        <button class="category-button">
+            <strong>Creative</strong>
+            <div id="container-stars">
+                <div id="stars"></div>
+            </div>
+            <div id="glow">
+                <div class="circle"></div>
+                <div class="circle"></div>
+            </div>
+        </button>
+
+        <button class="category-button">
+            <strong>Esports</strong>
+            <div id="container-stars">
+                <div id="stars"></div>
+            </div>
+            <div id="glow">
+                <div class="circle"></div>
+                <div class="circle"></div>
+            </div>
+        </button>
+    </div>
+
+    <div class="content-separator">
+        <span>Categorías</span>
+        <span>Canales en vivo</span>
+    </div>
+
+    <div class="category-search">
+        <input type="text" placeholder="Buscar etiquetas de categoría">
+    </div>
+
+    <div class="upload-game">
+        <button class="button">
+          Subir Nuevo Juego
+          <div class="hoverEffect">
+            <div></div>
+          </div>
+        </button>
+    </div>
+
+    <h1>Explorar Juegos</h1>
+
+    <div class="grid">
+        {% for game in games %}
+        <div class="card">
+            <div class="image-container">
+                <img src="{{ game.image.url }}" alt="{{ game.name }}">
+            </div>
+            <p class="heading">{{ game.name }}</p>
+            <p>{{ game.category }}</p>
+            <p>{{ game.description|truncatewords:15 }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="sort-options">
+        <label for="sort-by">Ordenar por</label>
+        <select id="sort-by">
+            <option>Recomendaciones para ti</option>
+            <option>Más populares</option>
+            <option>Nuevos</option>
+        </select>
+    </div>
+</div>
+{% endblock %}
