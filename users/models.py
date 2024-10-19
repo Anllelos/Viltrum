@@ -16,6 +16,7 @@ class ExtendedData(models.Model):
     user_description = models.TextField(null=True, blank=True)  # Descripción del usuario}
     viltrum_rank = models.CharField(max_length=3, choices=TYPE_CHOICES, default="E")
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)  # Relación uno a uno con el usuario
+    user_verification = models.BooleanField(default=False)
     
     # Campos obligatorios en la creación
     country = CountryField(blank_label='Selecciona tu país', null=True, blank=True)
