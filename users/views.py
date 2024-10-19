@@ -470,3 +470,10 @@ def upload_image(request):
         form = ImageUploadForm()
     return render(request, 'users/upload_image.html', {'form': form})
 
+def verification(request, username):
+    active_user = request.user
+    verification_profile = User.objects.get(username=username)
+    if verification_profile == request.user:
+        return render(request, "verification.html")
+    else:
+        return redirect('home')
