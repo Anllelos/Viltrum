@@ -22,10 +22,23 @@
     <!-- Header -->
     <header class="header-container">
         <div class="header-left">
-            <!-- Logo -->
-            <div class="logo-container">
-                <img src="{% static 'images/ninjaviltrum.png' %}" alt="Logo" class="logo">
+            <!-- Logo Reemplazado con la animación SVG -->
+            <div class="logo-container" id="triangle">
+                <svg id="Layer_1" data-name="Layer 1" version="1.1" viewBox="0 0 2000 2000">
+                    <polygon class="cls-1"
+                        points="928 781 1021 951 784.5 1371.97 1618 1371.97 1530.32 1544 509 1539 928 781">
+                    </polygon>
+                    <polygon class="cls-3"
+                        points="1618 1371.97 784.5 1371.97 874.93 1211 1346 1211 923.1 456 1110.06 456 1618 1371.97">
+                    </polygon>
+                    <g id="Layer_2" data-name="Layer 2">
+                        <polygon class="cls-2"
+                            points="418 1372.74 509 1539 928 781 1162.32 1211 1346 1211 923.1 456 418 1372.74">
+                        </polygon>
+                    </g>
+                </svg>
             </div>
+
             <!-- Search Bar -->
             <div class="search-bar">
                 <input type="text" placeholder="Buscar" class="rounded-search">
@@ -35,7 +48,6 @@
             </div>
         </div>
 
-        <!-- Center Section for Icons -->
         <!-- Center Section for Icons -->
         <nav class="nav-icons">
             <a href="{% url 'home' %}" title="Inicio"
@@ -56,7 +68,6 @@
             </a>
         </nav>
 
-
         <!-- Right Section for Profile and Messages -->
         <div class="header-right">
             {% if user.is_authenticated %}
@@ -73,7 +84,7 @@
                     <div id="notificationList"></div>
                     {% for notification in notifications %}
                         <a>{{ notification.message }}</a>
-                        {% empty %}
+                    {% empty %}
                         <a>No hay nuevas notificaciones</a>
                     {% endfor %}
                 </div>
@@ -99,8 +110,6 @@
             <a href="{% url 'login' %}" class="login-btn">Iniciar Sesión</a>
             <a href="{% url 'register' %}" class="register-btn">Regístrate</a>
             {% endif %}
-
-        </div>
         </div>
     </header>
 
@@ -122,7 +131,6 @@
     </footer>
 
     <!-- JS for Tooltip and Dropdown -->
-
     <script src="{% static 'core/js/dropMenu.js' %}"></script>
     {% if user.is_authenticated %}
     <script>const userId = "{{ user.id }}"; </script>
