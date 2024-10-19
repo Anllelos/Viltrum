@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     #App de usuarios
     'users.apps.UsersConfig',
     #App de torneos
+    'ai_verification.apps.AiConfig',
+    #App de verificacion
     'tournaments.apps.TournamentsConfig',
     #App de clasificaciones
     'clasifications.apps.ClasificationsConfig',
