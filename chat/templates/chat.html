@@ -15,9 +15,10 @@ Viltrum | Chat
     <ul class="chat-thread" id="chat-messages">
         {% for message in chat_messages %}
         <li class="message {% if message.author.username == user.username %}outgoing{% else %}incoming{% endif %}">
-            <img class="avatar" src="{{ message.author.profile_image }}" alt="{{ message.author.username }}">
+            <!-- Imagen de perfil del autor del mensaje -->
+            <img class="avatar" src="{% if message.author.profile_img %}{{ message.author.profile_img.url }}{% else %}https://ui-avatars.com/api/?name={{ message.author.username }}{% endif %}" alt="{{ message.author.username }}">
             <div class="message-content">
-                <strong class="message-author">{{ message.author.username }}</strong>
+                <strong class="message-author">{{ message.author.username }}:</strong>
                 <span class="message-body">{{ message.body }}</span>
             </div>
         </li>
@@ -58,7 +59,7 @@ Viltrum | Chat
 
         const avatar = document.createElement('img');
         avatar.className = "avatar";
-        avatar.src = data.author_profile_image;
+        avatar.src = data.author_profile_img ? data.author_profile_img : `https://ui-avatars.com/api/?name=${data.author}`;
 
         const messageContent = document.createElement('div');
         messageContent.className = "message-content";
