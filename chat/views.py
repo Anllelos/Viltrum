@@ -3,7 +3,9 @@ from django.contrib.auth.models import User
 from django.http import Http404
 from .models import *
 from .form import ChatMessageCreateForm
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def chat_view(request, chatroom_name):
     chat_group = get_object_or_404(ChatGroup, group_name=chatroom_name)
     chat_messages = chat_group.chat_messages.all().order_by('-created')[:10]
@@ -36,6 +38,7 @@ def chat_view(request, chatroom_name):
 
     return render(request, 'chat.html', data_context)
 
+@login_required
 def get_or_create_chatroom(request, username):
     if request.user.username == username:
         return redirect('home')

@@ -3,7 +3,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from .models import ChatGroup, GroupMessage
 from django.template.loader import render_to_string
 from asgiref.sync import sync_to_async
-from . import translator as tl
+import iamodule as tl
 
 class ChatroomConsumer(AsyncWebsocketConsumer):
     async def connect(self):

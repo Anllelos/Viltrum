@@ -16,6 +16,8 @@ class ExtendedData(models.Model):
     user_description = models.TextField(null=True, blank=True)  # Descripción del usuario}
     viltrum_rank = models.CharField(max_length=3, choices=TYPE_CHOICES, default="E")
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)  # Relación uno a uno con el usuario
+    user_identification = models.ImageField(null=True, upload_to="identification")
+    user_photo = models.ImageField(null=True, upload_to="verification_photo")
     user_verification = models.BooleanField(default=False)
     
     # Campos obligatorios en la creación

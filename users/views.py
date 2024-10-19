@@ -11,6 +11,8 @@ from datetime import date
 from tournaments.models import Tournament
 from django.http import JsonResponse
 from notifications.models import NotificationSystem
+import iamodule as imgia
+import json
 
 #-------------------------------------------------------------- Ver perfil --------------------------------------------------------------#
 # Verificación de roles dentro de la página
@@ -472,8 +474,36 @@ def upload_image(request):
 
 def verification(request, username):
     active_user = request.user
-    verification_profile = User.objects.get(username=username)
-    if verification_profile == request.user:
-        return render(request, "verification.html")
+    verification_profile = get_object_or_404(User, username=username)
+    extended_data = get_object_or_404(ExtendedData, user=active_user)
+    
+    if verification_profile == active_user:
+        if extended_data.user_verification == True:
+            return redirect('home')
+        if request.method == "POST":
+            verification_form = VerificationForm(request.POST, request.FILES, instance=extended_data)
+            if verification_form.is_valid():
+                form = verification_form.save(commit=False)
+                form.user = active_user
+                form.save()
+                identification_photo = extended_data.user_identification.url
+                user_photo = extended_data.user_photo.url
+                verification = imgia.llm_promt_engineering_image(identification_photo, user_photo)
+                print(verification)
+                if verification is None:
+                    return redirect('home')
+                else:
+                    verification = json.loads(verification)
+                    if verification['is_verified'] == "True":
+                        extended_data.user_verification = True
+                        extended_data.save()
+                    elif verification['is_verified'] == "False":
+                        print("No esta verificado")
+        else:
+            verification_form = VerificationForm()
+
+        data_context = {"verification_form": verification_form}
+        return render(request, "verification.html", data_context)
+    
     else:
-        return redirect('home')
+        return render(request, "error.html", {"message": "No estás autorizado para verificar este perfil."})

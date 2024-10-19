@@ -147,3 +147,8 @@ class ImageUploadForm(forms.ModelForm):
     class Meta:
         model = UserGalleryImage
         fields = ['image']
+
+class VerificationForm(forms.ModelForm):
+    class Meta:
+        model = models.ExtendedData
+        fields = ['user_identification', 'user_photo']

@@ -29,6 +29,15 @@ Viltrum | Chat
     <div class="chat-input-container">
         <form id="chat-messages_form">
             {% csrf_token %}
+            <select name="language" id="language">
+                <option value="ingles">Ingles</option>
+                <option value="español">Español</option>
+                <option value="ruso">Ruso</option>
+                <option value="japones">Japones</option>
+                <option value="frances">Frances</option>
+                <option value="italiano">Italiano</option>
+                <option value="portugues">Portugues</option>
+            </select>
             <input class="chat-window-message styled-input" id="message-input" name="body" type="text" placeholder="Escribe un mensaje..." required autofocus />
             <button type="submit" class="send-button">Enviar</button>
         </form>
@@ -86,10 +95,12 @@ Viltrum | Chat
     document.getElementById('chat-messages_form').addEventListener('submit', function (event) {
         event.preventDefault(); 
         const messageInput = document.getElementById('message-input');
+        const language = document.getElementById('language');
 
         if (messageInput.value.trim() !== "") {
             chatSocket.send(JSON.stringify({
-                'body': messageInput.value.trim()
+                'body': messageInput.value.trim(),
+                'language': language.value.trim()
             }));
             messageInput.value = ""; 
         }
