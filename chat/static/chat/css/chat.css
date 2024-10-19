@@ -8,56 +8,95 @@
 /* Body styling */
 body {
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #3d2c8d 0%, #5a3fba 50%, #1f4f8b 100%); /* Gradiente entre morado y azul */
+    background: linear-gradient(135deg, #3d2c8d 0%, #5a3fba 50%, #1f4f8b 100%);
     color: #c5c6c7;
-    height: 100vh;
-    overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Header and Footer full width */
+header, footer {
+    width: 100%;
+    background-color: #0b0c10;
+    padding: 15px 0;
+    text-align: center;
+}
+
+header .container, footer .container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+footer p {
+    color: #c5c6c7;
 }
 
 /* Full-page chat styling */
 .chat-page {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
     width: 80%;
-    max-width: 1000px;
-    height: 80vh;
-    background-color: rgba(93, 64, 185, 0.2); /* Fondo con un toque morado */
+    max-width: 1200px;
+    height: 100%;  /* Ajustar la altura total disponible */
+    margin: 0 auto;
+    background-color: transparent; /* Fondo invisible */
     border-radius: 15px;
     padding: 20px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    margin: 0 auto;
 }
 
-/* Chat messages styling */
-.chat-thread {
-    list-style: none;
+/* Chat header */
+.chat-header {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.chat-title {
+    color: #66fcf1;
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* Messages styling */
+.chat-messages {
+    flex-grow: 1;
+    padding: 20px;
+    width: 100%;
     overflow-y: auto;
-    padding: 0 20px;
-    height: calc(100% - 100px);
     margin-bottom: 20px;
+}
+
+.no-messages {
+    text-align: center;
+    color: #c5c6c7;
 }
 
 /* Message styling */
 .message {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     margin-bottom: 15px;
-    max-width: 70%;
+    width: 100%;
 }
 
+/* Messages alignment */
 .message.outgoing {
     justify-content: flex-end;
+    align-items: flex-start;
 }
 
 .message.incoming {
     justify-content: flex-start;
+    align-items: flex-start;
 }
 
-/* Avatar */
+/* Avatar styling */
 .avatar {
     width: 40px;
     height: 40px;
@@ -65,23 +104,32 @@ body {
     margin-right: 10px;
 }
 
-/* Message content */
+/* Message content styling */
 .message-content {
-    background: linear-gradient(135deg, #5a3fba 0%, #1f4f8b 100%); /* Gradiente en burbujas de mensaje entre morado y azul */
+    background: linear-gradient(135deg, #5a3fba 0%, #1f4f8b 100%);
     border-radius: 15px;
     padding: 10px;
+    max-width: 60%;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    max-width: 100%;
 }
 
+/* Style for the current user's message (outgoing) */
 .message.outgoing .message-content {
-    background: linear-gradient(135deg, #7b2cbf, #4361ee); /* Gradiente para mensajes salientes entre morado y azul */
+    background: linear-gradient(135deg, #7b2cbf, #4361ee);
     color: white;
+    margin-left: 10px;
+}
+
+/* Style for incoming messages */
+.message.incoming .message-content {
+    background: linear-gradient(135deg, #5a3fba, #1f4f8b);
+    color: white;
+    margin-right: 10px;
 }
 
 .message-author {
     font-weight: bold;
-    color: #d4a5ff; /* Tono morado claro para el nombre del autor */
+    color: #d4a5ff;
 }
 
 .message-body {
@@ -92,70 +140,87 @@ body {
 /* Chat input container */
 .chat-input-container {
     display: flex;
-    justify-content: center; /* Centrar el contenido del formulario */
-    align-items: center;
-    background-color: #1f4f8b; /* Fondo azul oscuro para el input */
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    margin-top: auto;
-}
-
-/* Input and button group */
-.input-group {
-    display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    max-width: 600px;
-    gap: 10px; /* Espaciado entre el input y el botón */
+    background-color: transparent; /* Hacer el fondo transparente */
+    border: none; /* Quitar cualquier borde */
+    padding: 0; /* Reducir el padding */
+    margin-bottom: 20px; /* Aumentar espacio inferior si es necesario */
 }
 
-/* Styled input */
-.styled-input {
-    flex-grow: 1;
-    padding: 10px;
-    background-color: #240046; /* Morado oscuro para el input */
+/* Alinear los elementos dentro del input group */
+.input-group {
+    display: flex;
+    gap: 10px; /* Espacio entre los elementos */
+    justify-content: center;
+    align-items: center;
+    width: auto; /* Evita que ocupen todo el ancho */
+}
+
+/* Ajustar el ancho del select, input y botón para que se vean más proporcionados */
+.styled-select, .styled-input, .send-button {
+    width: auto; /* Evitar que se extiendan demasiado */
+    padding: 10px 20px; /* Ajustar padding para mayor consistencia */
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+/* Estilos adicionales para el input y select */
+.styled-select {
+    background-color: #240046;
+    color: #fff;
     border: 2px solid #9b5de5;
-    border-radius: 10px;
-    color: #c5c6c7;
-    outline: none;
-    font-size: 1rem;
-    transition: border-color 0.3s;
 }
 
-.styled-input:focus {
-    border-color: #d4a5ff; /* Morado más claro cuando el input está enfocado */
+.styled-input {
+    background-color: #240046;
+    border: 2px solid #9b5de5;
+    color: #fff;
 }
 
-/* Send button */
+/* Botón de enviar */
 .send-button {
-    background: linear-gradient(135deg, #7b2cbf, #4361ee); /* Gradiente morado a azul para el botón */
-    color: #ffffff;
-    padding: 10px 20px;
+    background: linear-gradient(135deg, #7b2cbf, #4361ee);
+    color: #fff;
     border: none;
-    border-radius: 10px;
-    font-size: 1rem;
-    font-weight: bold;
+    padding: 10px 20px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-.send-button:hover {
-    background: linear-gradient(135deg, #5a3fba, #3a86ff); /* Cambia de tono en hover */
-    transform: translateY(-2px);
 }
 
 /* Scrollbar customization */
-.chat-thread::-webkit-scrollbar {
+.chat-messages::-webkit-scrollbar {
     width: 8px;
 }
 
-.chat-thread::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #9b5de5, #3a86ff); /* Gradiente morado a azul para el scroll */
+.chat-messages::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #9b5de5, #3a86ff);
     border-radius: 10px;
 }
 
-.chat-thread::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(135deg, #7b2cbf, #4361ee); /* Gradiente más brillante en hover */
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .chat-page {
+        padding: 15px;
+        max-width: 90%;
+    }
+    .message {
+        max-width: 85%;
+    }
+}
+
+@media (max-width: 768px) {
+    .chat-page {
+        padding: 15px;
+        height: 75vh;
+    }
+
+    .styled-input {
+        flex-grow: 1;
+        padding: 10px;
+    }
+
+    .send-button {
+        width: 100%;
+        margin-top: 10px;
+    }
 }

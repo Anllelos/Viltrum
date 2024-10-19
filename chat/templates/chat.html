@@ -12,26 +12,38 @@ Viltrum | Chat
 
 {% block content %}
 <div class="chat-page">
-    <ul class="chat-thread" id="chat-messages">
+    <div class="chat-header">
+        <h2 class="chat-title">Chat con <span class="username-highlight">{{ other_user.username }}</span></h2>
+    </div>
+    
+    <div class="chat-messages" id="chat-messages">
         {% for message in chat_messages %}
-        <li class="message {% if message.author.username == user.username %}outgoing{% else %}incoming{% endif %}">
-            <!-- Imagen de perfil del autor del mensaje -->
-            <img class="avatar" src="{% if message.author.profile_img %}{{ message.author.profile_img.url }}{% else %}https://ui-avatars.com/api/?name={{ message.author.username }}{% endif %}" alt="{{ message.author.username }}">
+        <div class="message {% if message.author == user %}outgoing{% else %}incoming{% endif %}">
+            <img src="{% if message.author.profile_img %}{{ message.author.profile_img.url }}{% else %}https://ui-avatars.com/api/?name={{ message.author.username }}{% endif %}" alt="Avatar" class="avatar">
             <div class="message-content">
                 <strong class="message-author">{{ message.author.username }}:</strong>
                 <span class="message-body">{{ message.body }}</span>
             </div>
-        </li>
+        </div>
         {% empty %}
         <p class="no-messages">No hay mensajes aún por leer.</p>
         {% endfor %}
-    </ul>
+    </div>
 
     <div class="chat-input-container">
         <form id="chat-messages_form">
             {% csrf_token %}
-            <input class="chat-window-message styled-input" id="message-input" name="body" type="text" placeholder="Escribe un mensaje..." required autofocus />
-            <button type="submit" class="send-button">Enviar</button>
+            <div class="input-group">
+                <select name="language" id="language" class="styled-select">
+                    <option value="English">Inglés</option>
+                    <option value="Español">Español</option>
+                    <option value="Frances">Francés</option>
+                    <option value="Italiano">Italiano</option>
+                    <option value="Russian">Ruso</option>
+                </select>
+                <input type="text" id="message-input" name="body" placeholder="Escribe un mensaje..." required class="styled-input">
+                <button type="submit" class="send-button">Enviar</button>
+            </div>
         </form>
     </div>
 </div>
@@ -54,15 +66,12 @@ Viltrum | Chat
         }
 
         const chatMessages = document.getElementById('chat-messages');
-        const newMessage = document.createElement('li');
-        newMessage.className = "message incoming"; 
+        const newMessage = document.createElement('div');
+        newMessage.className = "message";
 
         const avatar = document.createElement('img');
+        avatar.src = data.profile_img ? data.profile_img : `https://ui-avatars.com/api/?name=${data.author}`;
         avatar.className = "avatar";
-        avatar.src = data.author_profile_img ? data.author_profile_img : `https://ui-avatars.com/api/?name=${data.author}`;
-
-        const messageContent = document.createElement('div');
-        messageContent.className = "message-content";
 
         const authorStrong = document.createElement('strong');
         authorStrong.className = "message-author";
@@ -72,10 +81,9 @@ Viltrum | Chat
         messageBody.className = "message-body";
         messageBody.textContent = data.message;
 
-        messageContent.appendChild(authorStrong);
-        messageContent.appendChild(messageBody);
         newMessage.appendChild(avatar);
-        newMessage.appendChild(messageContent);
+        newMessage.appendChild(authorStrong);
+        newMessage.appendChild(messageBody);
         chatMessages.appendChild(newMessage);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     };
@@ -87,10 +95,13 @@ Viltrum | Chat
     document.getElementById('chat-messages_form').addEventListener('submit', function (event) {
         event.preventDefault(); 
         const messageInput = document.getElementById('message-input');
+        const language = document.getElementById('language');
 
-        if (messageInput.value.trim() !== "") {
+        if (messageInput.value.trim() !== "" && language.value.trim() !== "") {
             chatSocket.send(JSON.stringify({
-                'body': messageInput.value.trim()
+                'body': messageInput.value.trim(),
+                'language': language.value.trim(),
+                'profile_img': "{{ user.profile_img.url }}", // Pasamos la imagen de perfil del usuario
             }));
             messageInput.value = ""; 
         }
