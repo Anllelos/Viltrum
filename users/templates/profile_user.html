@@ -30,13 +30,15 @@ Viltrum | Perfil {{User}}
     {% if profile.user != user %}
     <div class="text-end mt-5 profile-icons">
         <a href="{% url 'start_chat' profile.user %}"><i class="bi bi-envelope-fill me-3 fs-4"></i></a>
-        <a href=""><i class="bi bi-check-circle-fill fs-4"></i></a>
     </div>
     {% endif %}
 
     <!-- Información del usuario -->
     <div class="text-center mt-4">
         <h2 class="username">{{ profile_user.username }}</h2>
+        {% if profile.user_verification %}
+            <i class="bi bi-check-circle-fill fs-4">Verificado</i>
+        {% endif %}
         <p class="text-gray-600">{{ profile.user_description|default:"El usuario no ha agregado información aún." }}</p>
     </div>
 
@@ -49,10 +51,10 @@ Viltrum | Perfil {{User}}
             <div class="game-card">
                 {% if profile.user == user %}
                 <div class="icon-container">
-                    <a href="#" class="edit-icon" title="Editar">
+                    <a href="{% url 'edit_game_stat' game.id %}" class="edit-icon" title="Editar">
                         <i class="bi bi-pencil"></i>
                     </a>
-                    <a href="#" class="delete-icon" title="Eliminar">
+                    <a href="{% url 'delete_game_stats' game.id %}" class="delete-icon" title="Eliminar">
                         <i class="bi bi-x"></i>
                     </a>
                 </div>

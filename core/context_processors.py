@@ -1,6 +1,7 @@
 from django.contrib.auth.models import Group
 from notifications.models import NotificationSystem
 from chat.models import ChatGroup
+from users.models import ExtendedData
 
 def user_role(request):
     if request.user.is_authenticated:
@@ -23,3 +24,12 @@ def chats(request):
         notifications = ChatGroup.objects.filter(member=request.user).order_by('-created_at')
         return {'chats': chats}
     return {'chats': []}
+
+def verification(request):
+    if request.user.is_authenticated:
+        verificate = ExtendedData.objects.filter(user=request.user, user_verification=True)
+        if verificate.exists():
+            return {'verified':True}
+        else:
+            return {'verified':False}
+    return {'verified':False}

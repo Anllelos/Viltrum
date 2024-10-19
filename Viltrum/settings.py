@@ -105,6 +105,7 @@ TEMPLATES = [
                 #Manejador de roles a nivel global
                 'core.context_processors.user_role',
                 'core.context_processors.notifications',
+                'core.context_processors.verification',
             ],
         },
     },
