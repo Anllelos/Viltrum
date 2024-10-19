@@ -1,9 +1,13 @@
 from django.db import models
+from taggit.managers import TaggableManager  # Importamos el administrador de tags
 
 class Game(models.Model):
-    title = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    category = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='games/')
     description = models.TextField()
-    category = models.CharField(max_length=100)  # Ensure to store categories like Action, Shooter, etc.
-    popularity = models.IntegerField()  # For sorting by popularity
-    release_date = models.DateField()  # For sorting by release date
-    cover_image = models.ImageField(upload_to='game_covers/')  # For displaying game covers
+    is_live = models.BooleanField(default=False)
+    tags = TaggableManager()  # Añadimos los tags
+
+    def __str__(self):
+        return self.name

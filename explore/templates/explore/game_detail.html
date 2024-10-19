@@ -1,0 +1,16 @@
+{% extends 'template.html' %}
+
+{% block title %}
+    {{ game.name }}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ game.name }}</h1>
+    <img src="{{ game.image.url }}" alt="{{ game.name }}">
+    <p>Categoría: {{ game.category }}</p>
+    <p>Descripción: {{ game.description }}</p>
+    <p>Tags: {{ game.tags.all|join:", " }}</p>
+    {% if game.is_live %}
+        <span>EN VIVO</span>
+    {% endif %}
+{% endblock %}

@@ -8,50 +8,38 @@ Viltrum | Chat
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'chat/css/chat.css' %}">
-<style>
-    select{
-        background-color: #333;
-    }
-    option{
-        background-color: #333;
-    }
-</style>
 {% endblock %}
 
 {% block content %}
-<div class="chat-container" id="chat-messages">
-    <h2>Chat con {{ other_user.username }}</h2>
+<div class="chat-page">
+    <ul class="chat-thread" id="chat-messages">
+        {% for message in chat_messages %}
+        <li class="message {% if message.author.username == user.username %}outgoing{% else %}incoming{% endif %}">
+            <img class="avatar" src="{{ message.author.profile_image }}" alt="{{ message.author.username }}">
+            <div class="message-content">
+                <strong class="message-author">{{ message.author.username }}</strong>
+                <span class="message-body">{{ message.body }}</span>
+            </div>
+        </li>
+        {% empty %}
+        <p class="no-messages">No hay mensajes aún por leer.</p>
+        {% endfor %}
+    </ul>
 
-    <!-- Los mensajes se agregarán aquí -->
-    {% for message in chat_messages %}
-    <div class="message">
-        <strong>{{ message.author.username }}:</strong> {{ message.body }}
+    <div class="chat-input-container">
+        <form id="chat-messages_form">
+            {% csrf_token %}
+            <input class="chat-window-message styled-input" id="message-input" name="body" type="text" placeholder="Escribe un mensaje..." required autofocus />
+            <button type="submit" class="send-button">Enviar</button>
+        </form>
     </div>
-    {% empty %}
-    <p>No hay mensajes aún.</p>
-    {% endfor %}
-</div>
-
-<!-- Formulario para enviar mensajes -->
-<div class="chat-input">
-    <form id="chat-messages_form">
-        {% csrf_token %}
-        <select name="language" id="language">
-            <option value="English">Inglés</option>
-            <option value="Español">Español</option>
-            <option value="Frances">Frances</option>
-            <option value="Italiano">Italiano</option>
-            <option value="Russian">Ruso</option>
-        </select>
-        <input type="text" id="message-input" name="body" placeholder="Escribe un mensaje..." required>
-        <button type="submit">Enviar</button>
-    </form>
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
     const chatSocket = new WebSocket(`ws://${window.location.host}/ws/chatroom/{{ chatroom_name }}`);
+    
     chatSocket.onopen = function (e) {
         console.log("Conectado al WebSocket de Chat");
     };
@@ -60,38 +48,50 @@ Viltrum | Chat
         const data = JSON.parse(event.data);
 
         if (data.error) {
-            console.error(data.error); // Manejo de errores
+            console.error(data.error); 
             return;
         }
 
         const chatMessages = document.getElementById('chat-messages');
-        const newMessage = document.createElement('div');
-        newMessage.className = "message";
+        const newMessage = document.createElement('li');
+        newMessage.className = "message incoming"; 
+
+        const avatar = document.createElement('img');
+        avatar.className = "avatar";
+        avatar.src = data.author_profile_image;
+
+        const messageContent = document.createElement('div');
+        messageContent.className = "message-content";
 
         const authorStrong = document.createElement('strong');
+        authorStrong.className = "message-author";
         authorStrong.textContent = data.author + ': '; 
-        newMessage.appendChild(authorStrong);
-        newMessage.appendChild(document.createTextNode(data.message)); 
+
+        const messageBody = document.createElement('span');
+        messageBody.className = "message-body";
+        messageBody.textContent = data.message;
+
+        messageContent.appendChild(authorStrong);
+        messageContent.appendChild(messageBody);
+        newMessage.appendChild(avatar);
+        newMessage.appendChild(messageContent);
         chatMessages.appendChild(newMessage);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     };
 
     chatSocket.onclose = function (event) {
-        console.error('Chat socket closed unexpectedly, chat');
+        console.error('Chat socket closed unexpectedly');
     };
 
     document.getElementById('chat-messages_form').addEventListener('submit', function (event) {
-        event.preventDefault(); // Evita el comportamiento por defecto del formulario
+        event.preventDefault(); 
         const messageInput = document.getElementById('message-input');
-        const language = document.getElementById('language')
 
-        // Verifica si el campo de entrada no está vacío
-        if (messageInput.value.trim() !== "" && language.value.trim() != "") {
+        if (messageInput.value.trim() !== "") {
             chatSocket.send(JSON.stringify({
-                'body': messageInput.value.trim(), // Envío del mensaje
-                'language':language.value.trim()
+                'body': messageInput.value.trim()
             }));
-            messageInput.value = ""; // Limpiar el campo de entrada
+            messageInput.value = ""; 
         }
     });
 </script>

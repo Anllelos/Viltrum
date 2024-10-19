@@ -1,0 +1,37 @@
+/* Main Title */
+main{
+    background: #efeff1;
+}
+
+h2 {
+    margin-top: 20px;
+    font-size: 15px;
+    color: #000000;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+span{
+    color: black;
+}
+
+/* Tournament List */
+.tournament{
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+.tournament a{
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    border-radius: 5px;
+    background-color: #0000002a;
+    padding: 5px;
+}
+
+.tournament-members{
+    background-color: rgba(0, 0, 0, 0.082);
+    border-radius: 10px;
+}

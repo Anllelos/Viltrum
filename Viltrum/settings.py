@@ -45,6 +45,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'daphne',
     #App principal
+    'taggit',
     'core.apps.CoreConfig',
     #App de usuarios
     'users.apps.UsersConfig',
