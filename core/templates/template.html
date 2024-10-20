@@ -71,7 +71,7 @@
         <!-- Right Section for Profile and Messages -->
         <div class="header-right">
             {% if user.is_authenticated %}
-            <a href="#" title="Messages" class="nav-icon" data-bs-toggle="tooltip" data-bs-placement="bottom">
+            <a href="{% url 'chats_list' %}" title="Messages" class="nav-icon" data-bs-toggle="tooltip" data-bs-placement="bottom">
                 <i class="bi bi-chat-dots"></i>
             </a>
 
@@ -81,12 +81,20 @@
                     <i class="bi bi-bell"></i>
                 </a>
                 <div class="dropdown-content" id="dropdownMenuNotify">
-                    <div id="notificationList"></div>
-                    {% for notification in notifications %}
-                        <a>{{ notification.message }}</a>
-                    {% empty %}
-                        <a>No hay nuevas notificaciones</a>
-                    {% endfor %}
+                    <div id="notificationList">
+                        {% for notification in notifications %}
+                            <div class="notification">
+                                <div class="notiglow"></div>
+                                <div class="notiborderglow"></div>
+                                <div class="notititle">{{ notification.title }}</div>
+                                <div class="notibody">{{ notification.message }}</div>
+                            </div>
+                        {% empty %}
+                            <div class="notification">
+                                <div class="notititle">No hay nuevas notificaciones</div>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
 
@@ -112,8 +120,10 @@
                 </div>
             </div>
             {% else %}
+            <div class="auth-buttons">
             <a href="{% url 'login' %}" class="login-btn">Iniciar Sesión</a>
             <a href="{% url 'register' %}" class="register-btn">Regístrate</a>
+            </div>
             {% endif %}
         </div>
     </header>

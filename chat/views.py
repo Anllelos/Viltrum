@@ -54,9 +54,26 @@ def get_or_create_chatroom(request, username):
     # Buscar chatroom existente
     for chatroom in my_chatrooms:
         if other_user in chatroom.members.all():
-            break
+            break   
     else:
         chatroom = ChatGroup.objects.create(is_private=True)
         chatroom.members.add(other_user, request.user)
 
     return redirect('chatroom', chatroom.group_name)
+
+@login_required
+def chats_list(request):
+    active_user = request.user
+    chats = ChatGroup.objects.filter(members=active_user) 
+    chats_with_other_user = []
+
+    for chat in chats:
+        other_members = chat.members.exclude(id=active_user.id)
+        if other_members.exists():
+            chats_with_other_user.append({
+                'chat': chat,
+                'other_user': other_members.first() 
+            })
+
+    data_context = {'chats_with_other_user': chats_with_other_user}
+    return render(request, 'chatslist.html', data_context)

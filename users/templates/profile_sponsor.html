@@ -4,7 +4,7 @@
 {% load extras %}
 
 {% block title %}
-Viltrum | Patrocinador {{profile_sponsor.username}}
+Viltrum | Patrocinador {{ profile_sponsor.username }}
 {% endblock %}
 
 {% block extra_css %}
@@ -15,52 +15,42 @@ Viltrum | Patrocinador {{profile_sponsor.username}}
 <div class="profile-container">
   <div class="profile-header">
     <div class="profile-banner">
-      <img src="" alt="">
+      <img src="{% if profile.profile_banner %}{{ profile.profile_banner.url }}{% else %}https://via.placeholder.com/770x200{% endif %}" alt="Banner">
     </div>
     <div class="profile-header-user">
       <div class="profile-image">
-        <img src="https://ui-avatars.com/api/?name={{profile_sponsor.username}}" alt="Foto de perfil" id="profile-pic">
-        <h2 class="username">{{profile_sponsor.username}}</h2>
+        <img src="https://ui-avatars.com/api/?name={{ profile_sponsor.username }}" alt="Foto de perfil" id="profile-pic">
+        <h2 class="username">{{ profile_sponsor.username }}</h2>
+      </div>
+      <div class="description">
+          <p>{{ profile.user_description|default:"El patrocinador no ha agregado información aún." }}</p>
       </div>
     </div>
-    <!--         <div class="profile-header-info">
-          <h3>Sponsor Social Media</h3>
-          <a href="#"><i class="fab fa-facebook-f"></i> | Lorem</a>
-          <a href="#"><i class="fab fa-twitter"></i> | @Lorem</a>
-          <a href="#"><i class="fab fa-instagram"></i> | Lorem</a>
-          <a href="#"><i class="fab fa-youtube"></i> | Lorem</a>
-          <a href="#"><i class="fa-brands fa-twitch"></i> | Lorem</a>
-        </div> -->
   </div>
-  <h2>Sponsor Products</h2>
+  <h2>Productos del patrocinador</h2>
   <div class="profile-body">
     {% if products %}
     {% for product in products %}
-    <div class="profile-products">
-      {% if user.id == profile_sponsor.id %}
-      <a href="{% url 'edit_product' product.id %}"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
-      <!-- Formulario de eliminación -->
-      <form id="deleteForm" method="post" action="{% url 'delete_product' product.id %}" style="display: inline;">
-        {% csrf_token %}
-        <a href="javascript:void(0);" onclick="confirmDeletion('{{ product.id }}')">
-          <i class="fa-solid fa-ban"></i> Borrar
-        </a>
-      </form> <br>
-      {% endif %}
-      <img
-        src="{% if product.product_image %}{{ product.product_image.url }}{% else %}https://ui-avatars.com/api/?name={{product.product_name}}{% endif %}"
-        alt="{{product.product_name}}" id="profile-pic">
-      <div class="profile-products-info">
-        <h3>{{product.product_name}}</h3>
-        <p>
-          {{product.product_description}}
-        </p>
+      <div class="profile-products">
+        {% if user.id == profile_sponsor.id %}
+          <div class="edit-buttons">
+            <a href="{% url 'edit_product' product.id %}" class="edit-btn"><i class="bi bi-pencil-square"></i> Editar</a>
+            <form id="deleteForm" method="post" action="{% url 'delete_product' product.id %}" style="display: inline;">
+              {% csrf_token %}
+              <a href="javascript:void(0);" onclick="confirmDeletion('{{ product.id }}')" class="delete-btn"><i class="bi bi-x-circle"></i> Borrar</a>
+            </form>
+          </div>
+        {% endif %}
+        <img src="{% if product.product_image %}{{ product.product_image.url }}{% else %}https://ui-avatars.com/api/?name={{ product.product_name }}{% endif %}" alt="{{ product.product_name }}" class="product-image">
+        <div class="profile-products-info">
+          <h3>{{ product.product_name }}</h3>
+          <p>{{ product.product_description }}</p>
+        </div>
       </div>
-    </div>
     {% endfor %}
-    {% else %}
-    <p>El patrocinador aún no ha registrado productos.</p>
-    {% endif %}
+  {% else %}
+    <p class="no-products">El patrocinador aún no ha registrado productos.</p>
+  {% endif %}
   </div>
 </div>
 {% endblock %}
@@ -68,7 +58,7 @@ Viltrum | Patrocinador {{profile_sponsor.username}}
 {% block extra_js %}
 <script>
   function confirmDeletion() {
-      if (confirm("¿Estás seguro de que deseas eliminar estas estadísticas de juego?")) {
+      if (confirm("¿Estás seguro de que deseas eliminar este producto?")) {
           document.getElementById("deleteForm").submit();
       }
   }

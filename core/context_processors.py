@@ -15,7 +15,7 @@ def user_role(request):
 
 def notifications(request):
     if request.user.is_authenticated:
-        notifications = NotificationSystem.objects.filter(receiver=request.user).order_by('-created_at')
+        notifications = NotificationSystem.objects.filter(receiver=request.user).order_by('-created_at')[:8]
         return {'notifications': notifications}
     return {'notifications': []}
 
