@@ -12,7 +12,7 @@ Viltrum | Patrocinador {{ profile_sponsor.username }}
 {% endblock %}
 
 {% block content %}
-<div class="profile-container">
+<div class="container mt-5">
   <div class="profile-header">
     <div class="profile-banner">
       <img src="{% if profile.profile_banner %}{{ profile.profile_banner.url }}{% else %}https://via.placeholder.com/770x200{% endif %}" alt="Banner">
@@ -23,23 +23,25 @@ Viltrum | Patrocinador {{ profile_sponsor.username }}
         <h2 class="username">{{ profile_sponsor.username }}</h2>
       </div>
       <div class="description">
-          <p>{{ profile.user_description|default:"El patrocinador no ha agregado información aún." }}</p>
+        <p>{{ profile.user_description|default:"El patrocinador no ha agregado información aún." }}</p>
       </div>
     </div>
   </div>
+
   <h2>Productos del patrocinador</h2>
+
   <div class="profile-body">
     {% if products %}
     {% for product in products %}
       <div class="profile-products">
         {% if user.id == profile_sponsor.id %}
-          <div class="edit-buttons">
-            <a href="{% url 'edit_product' product.id %}" class="edit-btn"><i class="bi bi-pencil-square"></i> Editar</a>
-            <form id="deleteForm" method="post" action="{% url 'delete_product' product.id %}" style="display: inline;">
-              {% csrf_token %}
-              <a href="javascript:void(0);" onclick="confirmDeletion('{{ product.id }}')" class="delete-btn"><i class="bi bi-x-circle"></i> Borrar</a>
-            </form>
-          </div>
+        <div class="edit-buttons">
+          <a href="{% url 'edit_product' product.id %}" class="edit-btn"><i class="bi bi-pencil-square"></i> Editar</a>
+          <form id="deleteForm" method="post" action="{% url 'delete_product' product.id %}" style="display: inline;">
+            {% csrf_token %}
+            <a href="javascript:void(0);" onclick="confirmDeletion('{{ product.id }}')" class="delete-btn"><i class="bi bi-x-circle"></i> Borrar</a>
+          </form>
+        </div>
         {% endif %}
         <img src="{% if product.product_image %}{{ product.product_image.url }}{% else %}https://ui-avatars.com/api/?name={{ product.product_name }}{% endif %}" alt="{{ product.product_name }}" class="product-image">
         <div class="profile-products-info">
@@ -48,19 +50,19 @@ Viltrum | Patrocinador {{ profile_sponsor.username }}
         </div>
       </div>
     {% endfor %}
-  {% else %}
+    {% else %}
     <p class="no-products">El patrocinador aún no ha registrado productos.</p>
-  {% endif %}
+    {% endif %}
   </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-  function confirmDeletion() {
-      if (confirm("¿Estás seguro de que deseas eliminar este producto?")) {
-          document.getElementById("deleteForm").submit();
-      }
+  function confirmDeletion(productId) {
+    if (confirm("¿Estás seguro de que deseas eliminar este producto?")) {
+        document.getElementById("deleteForm").submit();
+    }
   }
 </script>
 {% endblock %}
