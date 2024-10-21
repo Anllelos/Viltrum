@@ -497,8 +497,9 @@ def verification(request, username):
                     if verification['is_verified'] == "True":
                         extended_data.user_verification = True
                         extended_data.save()
+                        return render(request, 'verification_complete.html')
                     elif verification['is_verified'] == "False":
-                        print("No esta verificado")
+                        return render(request, 'verification_fail.html')
         else:
             verification_form = VerificationForm()
 

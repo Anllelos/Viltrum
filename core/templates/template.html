@@ -104,7 +104,7 @@
                     <a href="{% url 'redirect_profile' %}">Perfil</a>
                     <a href="{% url 'redirect_profile_edit' %}">Editar Perfil</a>
                     {% if verified %}
-                        <a href="">perfil ya vericado</a>
+                        <a href="">Tu perfil ya esta vericado</a>
                     {% else %}
                         <a href="{% url 'verification' user %}">Verificar perfil</a>
                     {% endif %}

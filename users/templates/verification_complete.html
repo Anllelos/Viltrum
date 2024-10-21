@@ -1,0 +1,21 @@
+{% extends 'template.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/verification.css' %}">
+<style>
+    main{
+    background: linear-gradient(45deg, #2ed341,#225009);
+    height: 100vh;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="complete">
+<h1>Perfil verificado</h1>
+<p>Tu identidad ha sido verificada, se te ha agregado una insignia de verificación al perfil</p>
+<a href="{% url 'home' %}">Volver al Inicio</a>
+</div>
+{% endblock %}

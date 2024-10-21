@@ -1,0 +1,22 @@
+{% extends 'template.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/verification.css' %}">
+<style>
+    main{
+    background: linear-gradient(45deg, #d32e2e,#500909);
+    height: 100vh;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="complete">
+<h1>Perfil no verificado</h1>
+<p>Tu identidad ha no ha podido ser comprobada, intentalo de nuevo</p>
+<a href="{% url 'home' %}">Volver al Inicio</a> <br>
+<a href="{% url 'verification' user %}">Volver a intentar verificar perfil</a>
+</div>
+{% endblock %}
