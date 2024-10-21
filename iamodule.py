@@ -113,22 +113,38 @@ def llm_promt_engineering_image(identification_photo_url, user_photo_url):
             files[0],
             files[1],
             '''
-            Buenas noches. Vas a recibir dos imágenes y debes determinar si ambas pertenecen a la misma persona. 
+            Buenas noches. Vas a recibir dos imágenes, y tu tarea es determinar si ambas imágenes corresponden a la misma persona y si al menos una de ellas proviene de una identificación oficial. Sigue estos pasos secuenciales para realizar el análisis:
+1. Verificación de Identificación:
 
-            Considera los siguientes rasgos faciales en tu análisis:
-            - Color, tamaño y forma de los ojos
-            - Tamaño y forma de la frente
-            - Color de piel (ten en cuenta que esto puede variar según la iluminación)
-            - Color, tamaño y forma de los labios
-            - Forma y grosor de las cejas
-            - Forma de la cara
-            - Otros rasgos faciales relevantes
+    Verifica si al menos una de las imágenes es una fotografía de una identificación oficial (por ejemplo, una tarjeta de identificación escaneada o fotografiada).
+        Si ninguna de las imágenes es de una identificación, devuelve inmediatamente {"is_verified":"False"} y no continúes con el resto de las verificaciones.
 
-            Por favor, devuelve el resultado en el siguiente formato, 
-            sin texto adicional como, ni cambios en la estructura, ni ```json
-            {"is_verified":"X"}
-            ``` solo el texto que te muestro a continuación:
-            {"is_verified":"(True si la persona es la misma o False si no se parecen en nada)"}
+2. Verificación de Diferencias en las Imágenes:
+
+    Asegúrate de que las dos imágenes no sean exactamente iguales.
+        Si ambas imágenes son idénticas (por ejemplo, dos fotos normales o dos fotos de la misma identificación), devuelve {"is_verified":"False"}.
+
+3. Verificación Facial:
+
+    Si se pasa la verificación de identificación y las imágenes son diferentes:
+        Compara los siguientes rasgos faciales entre las dos imágenes:
+            Color, tamaño y forma de los ojos
+            Tamaño y forma de la frente
+            Color de piel (ten en cuenta posibles variaciones debido a la iluminación)
+            Color, tamaño y forma de los labios
+            Forma y grosor de las cejas
+            Forma del rostro
+            Otros rasgos faciales relevantes
+        Si las dos imágenes muestran a la misma persona, procede al siguiente paso; de lo contrario, devuelve {"is_verified":"False"}.
+
+4. Resultado Final:
+
+    Si las dos imágenes corresponden a la misma persona y se cumplen todos los requisitos anteriores, devuelve {"is_verified":"True"}.
+    Si no se cumplen, devuelve {"is_verified":"False"}.
+
+Devuelve únicamente el resultado en el siguiente formato, sin texto adicional ni cambios en la estructura:
+
+{"is_verified":"(True si ambas imágenes corresponden a la misma persona, una es una identificación, y se cumplen los requisitos; False si no se parecen o no se cumplen los requisitos)"}
             ''']
             },
         ]
@@ -139,7 +155,7 @@ def llm_promt_engineering_image(identification_photo_url, user_photo_url):
 
 def llm_basic(language, phrase):
     model = model_config()
-    response = model.generate_content(f"Traduce el siguiente texto al {language}, solo responde con la traducción: {phrase}")
+    response = model.generate_content(f"Traduce el siguiente texto al {language}, solo responde con la traducción no agregues ni cambies texto: {phrase}")
     return response.text
 
 

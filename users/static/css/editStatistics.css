@@ -1,0 +1,229 @@
+/* Global styles */
+body {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Container for the form */
+.edit-stats-container {
+    max-width: 700px;
+    margin: 80px auto;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative elements */
+.edit-stats-container::before,
+.edit-stats-container::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(102, 126, 234, 0.2);
+    animation: float 6s ease-in-out infinite;
+}
+
+.edit-stats-container::before {
+    width: 200px;
+    height: 200px;
+    top: -50px;
+    right: -50px;
+}
+
+.edit-stats-container::after {
+    width: 300px;
+    height: 300px;
+    bottom: -100px;
+    left: -100px;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(45deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header h2 {
+    font-size: 32px;
+    color: #333; /* Cambiado a un tono oscuro */
+    position: relative;
+    display: inline-block;
+    animation: slideIn 1s forwards;
+}
+
+.header h2 i {
+    margin-right: 10px;
+    color: #333; /* Asegura que el icono sea visible */
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Form styles */
+.form-group {
+    margin-bottom: 25px;
+    animation: fadeInUp 1s forwards;
+}
+
+.form-group:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.form-group:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.form-group:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.form-group:nth-child(4) {
+    animation-delay: 0.8s;
+}
+
+.form-group:nth-child(5) {
+    animation-delay: 1s;
+}
+
+.form-group label {
+    font-size: 16px;
+    color: #333; /* Cambiado a un tono oscuro */
+    display: block;
+    margin-bottom: 8px;
+}
+
+.form-group label i {
+    margin-right: 8px;
+    color: #333; /* Asegura que el icono sea visible */
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: #fff; /* Fondo blanco */
+    color: #333; /* Texto en tono oscuro */
+    transition: all 0.3s;
+    box-sizing: border-box;
+}
+
+.form-group input::placeholder {
+    color: #888; /* Color de placeholder más oscuro */
+    opacity: 1;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #667eea;
+    background-color: #f9f9f9; /* Cambio de fondo al enfocar */
+    box-shadow: 0 0 10px rgba(102, 126, 234, 0.1);
+    outline: none;
+}
+
+.form-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg%20xmlns="http://www.w3.org/2000/svg"%20width="14"%20height="8"%20viewBox="0%200%2014%208"><path%20fill="%23333"%20d="M7%208L0%200h14z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 12px;
+}
+
+/* Submit button */
+button[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.5s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 1s forwards;
+    animation-delay: 1.2s;
+}
+
+button[type="submit"] i {
+    margin-right: 10px;
+}
+
+button[type="submit"]::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.5s;
+}
+
+button[type="submit"]:hover::after {
+    left: 100%;
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-3px);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .edit-stats-container {
+        padding: 30px 20px;
+        margin: 60px auto;
+    }
+
+    .header h2 {
+        font-size: 28px;
+    }
+
+    button[type="submit"] {
+        font-size: 18px;
+        padding: 12px;
+    }
+}

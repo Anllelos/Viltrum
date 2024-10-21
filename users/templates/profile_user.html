@@ -30,6 +30,17 @@ Viltrum | Perfil {{User}}
     {% if profile.user != user %}
     <div class="text-end mt-5 profile-icons">
         <a href="{% url 'start_chat' profile.user %}"><i class="bi bi-envelope-fill me-3 fs-4"></i></a>
+        {% if role == 'sponsor'%}
+            {% if notify_sended %}
+                <button class="match-button" id="notificationForm" disabled>
+                     <i class="fa fa-check-circle"></i> Notificación enviada
+                 </button>
+            {% else %}
+                <button class="match-button" id="notificationForm" onclick="sendInvitationNotify(this)">
+                    <i class="fa fa-check-circle"></i> Conectar
+                </button>
+            {% endif %}
+        {% endif %}
     </div>
     {% endif %}
 
@@ -93,4 +104,18 @@ Viltrum | Perfil {{User}}
         }
     }
 </script>
+{% if user.is_authenticated and role == 'sponsor'%}
+<script>
+    const receiver = "{{profile.id}}";
+    function sendInvitationNotify(button) {
+        button.disabled = true;
+        const message = "¡Un patrocinador quiere colaborar contigo!, {{user}}";
+        // Enviar el mensaje al WebSocket
+        notificationSocket.send(JSON.stringify({
+            "message": message,
+            "receiver": receiver
+        }));
+    };
+</script>
+{% endif %}
 {% endblock %}

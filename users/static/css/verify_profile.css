@@ -1,0 +1,308 @@
+/* Global styles */
+body {
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Animated background */
+.animated-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.bubble {
+    position: absolute;
+    bottom: -100px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    animation: rise 20s infinite ease-in;
+}
+
+.bubble1 {
+    width: 80px;
+    height: 80px;
+    left: 10%;
+    animation-duration: 25s;
+}
+
+.bubble2 {
+    width: 100px;
+    height: 100px;
+    left: 20%;
+    animation-duration: 20s;
+    animation-delay: 5s;
+}
+
+.bubble3 {
+    width: 60px;
+    height: 60px;
+    left: 35%;
+    animation-duration: 22s;
+    animation-delay: 2s;
+}
+
+.bubble4 {
+    width: 90px;
+    height: 90px;
+    left: 50%;
+    animation-duration: 18s;
+    animation-delay: 6s;
+}
+
+.bubble5 {
+    width: 70px;
+    height: 70px;
+    left: 65%;
+    animation-duration: 24s;
+    animation-delay: 1s;
+}
+
+.bubble6 {
+    width: 110px;
+    height: 110px;
+    left: 80%;
+    animation-duration: 26s;
+    animation-delay: 3s;
+}
+
+.bubble7 {
+    width: 50px;
+    height: 50px;
+    left: 90%;
+    animation-duration: 30s;
+    animation-delay: 4s;
+}
+
+.bubble8 {
+    width: 100px;
+    height: 100px;
+    left: 75%;
+    animation-duration: 20s;
+    animation-delay: 7s;
+}
+
+@keyframes rise {
+    0% {
+        bottom: -100px;
+        transform: translateX(0) scale(1);
+    }
+    50% {
+        transform: translateX(30px) scale(1.1);
+    }
+    100% {
+        bottom: 110%;
+        transform: translateX(-50px) scale(1);
+    }
+}
+
+/* Container for the form */
+.verification-container {
+    max-width: 600px;
+    margin: 80px auto;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+}
+
+/* Decorative elements */
+.verification-container::before,
+.verification-container::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 183, 77, 0.15);
+    animation: float 6s ease-in-out infinite;
+}
+
+.verification-container::before {
+    width: 200px;
+    height: 200px;
+    top: -50px;
+    right: -50px;
+}
+
+.verification-container::after {
+    width: 300px;
+    height: 300px;
+    bottom: -100px;
+    left: -100px;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(45deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+/* Header */
+.verification-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.verification-header h2 {
+    font-size: 32px;
+    color: #ff6f61;
+    position: relative;
+    display: inline-block;
+    animation: slideIn 1s forwards;
+}
+
+.verification-header h2 i {
+    margin-right: 10px;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Form styles */
+.form-group {
+    margin-bottom: 30px;
+    animation: fadeInUp 1s forwards;
+}
+
+.form-group:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.form-group:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.form-group label {
+    font-size: 18px;
+    color: #555;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.form-group label i {
+    margin-right: 8px;
+}
+
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-sizing: border-box;
+}
+
+.form-group input[type="file"]:focus {
+    border-color: #ff6f61;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(255, 111, 97, 0.1);
+}
+
+.form-group input[type="file"]::file-selector-button {
+    padding: 10px 15px;
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-right: 15px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.form-group input[type="file"]::file-selector-button:hover {
+    background-color: #e65c50;
+}
+
+/* Submit button */
+button[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(45deg, #ff6f61, #de6262);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.5s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 1s forwards;
+    animation-delay: 0.6s;
+}
+
+button[type="submit"] i {
+    margin-right: 10px;
+}
+
+button[type="submit"]::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.5s;
+}
+
+button[type="submit"]:hover::after {
+    left: 100%;
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-3px);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .verification-container {
+        padding: 30px 20px;
+        margin: 60px auto;
+    }
+
+    .verification-header h2 {
+        font-size: 28px;
+    }
+
+    button[type="submit"] {
+        font-size: 18px;
+        padding: 12px;
+    }
+}

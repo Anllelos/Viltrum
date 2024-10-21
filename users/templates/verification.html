@@ -3,23 +3,36 @@
 {% load static %}
 
 {% block extra_css %}
-<style>
-    main{
-        background-color: #333;
-    }
-    button{
-        background-color: #444;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'css/verify_profile.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 {% endblock %}
 
 {% block content %}
-<form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <h2>Foto</h2>
-    <input type="file" name="user_photo">
-    <h2>Identificación con foto</h2>
-    <input type="file" name="user_identification"> <br>
-    <button type="submit">Enviar</button>
-</form>
+<div class="animated-bg">
+    <div class="bubble bubble1"></div>
+    <div class="bubble bubble2"></div>
+    <div class="bubble bubble3"></div>
+    <div class="bubble bubble4"></div>
+    <div class="bubble bubble5"></div>
+    <div class="bubble bubble6"></div>
+    <div class="bubble bubble7"></div>
+    <div class="bubble bubble8"></div>
+</div>
+<div class="verification-container">
+    <div class="verification-header">
+        <h2><i class="fas fa-user-check"></i> Verificación de Perfil</h2>
+    </div>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="user_photo"><i class="fas fa-camera"></i> Foto Personal</label>
+            <input type="file" id="user_photo" name="user_photo" accept="image/*" required>
+        </div>
+        <div class="form-group">
+            <label for="user_identification"><i class="fas fa-id-card"></i> Identificación Oficial</label>
+            <input type="file" id="user_identification" name="user_identification" accept="image/*" required>
+        </div>
+        <button type="submit"><i class="fas fa-paper-plane"></i> Enviar</button>
+    </form>
+</div>
 {% endblock %}
