@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-Viltrum | Perfil {{User}}
+Viltrum | Perfil {{ profile_user.username }}
 {% endblock %}
 
 {% block extra_css %}
@@ -17,6 +17,7 @@ Viltrum | Perfil {{User}}
     <div class="profile-header">
         <div class="profile-banner">
             <img src="{% if profile.profile_banner %}{{ profile.profile_banner.url }}{% else %}https://via.placeholder.com/770x200{% endif %}" alt="Banner">
+            <!-- La superposición de nebulosa se maneja en CSS -->
         </div>
         
         <!-- Imagen de perfil -->
@@ -48,15 +49,15 @@ Viltrum | Perfil {{User}}
     <div class="text-center mt-4">
         <h2 class="username">{{ profile_user.username }}</h2>
         {% if profile.user_verification %}
-            <i class="bi bi-check-circle-fill fs-4">Verificado</i>
+            <i class="bi bi-check-circle-fill fs-4 verificado"></i>
         {% endif %}
-        <p class="text-gray-600">{{ profile.user_description|default:"El usuario no ha agregado información aún." }}</p>
+        <p class="user-description">{{ profile.user_description|default:"El usuario no ha agregado información aún." }}</p>
     </div>
 
     <!-- Sección de juegos -->
     <div class="gallery-container">
 
-        <!-- Mostrar imágenes de la galería -->
+        <!-- Mostrar las tarjetas de juegos -->
         <div class="grid grid-cols-2 md:grid-cols-4 g-4">
             {% for game in games %}
             <div class="game-card">
@@ -94,6 +95,10 @@ Viltrum | Perfil {{User}}
     </div>
 </div>
 
+<!-- Añadimos el contenedor para el fondo estrellado y las partículas -->
+<div id="starry-background"></div>
+<div id="particle-background"></div>
+
 {% endblock %}
 
 {% block extra_js %}
@@ -106,10 +111,10 @@ Viltrum | Perfil {{User}}
 </script>
 {% if user.is_authenticated and role == 'sponsor'%}
 <script>
-    const receiver = "{{profile.id}}";
+    const receiver = "{{ profile.id }}";
     function sendInvitationNotify(button) {
         button.disabled = true;
-        const message = "¡Un patrocinador quiere colaborar contigo!, {{user}}";
+        const message = "¡Un patrocinador quiere colaborar contigo!, {{ user }}";
         // Enviar el mensaje al WebSocket
         notificationSocket.send(JSON.stringify({
             "message": message,
@@ -118,4 +123,45 @@ Viltrum | Perfil {{User}}
     };
 </script>
 {% endif %}
+
+<!-- Añadimos el JavaScript para las animaciones -->
+<script>
+    // Generar partículas flotantes
+    const particleBackground = document.getElementById('particle-background');
+    particleBackground.classList.add('particle-background');
+
+    function createParticle() {
+        for (let i = 0; i < 5; i++) { // Aumentamos el número de partículas
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = Math.random() * window.innerWidth + 'px';
+            particle.style.bottom = '-10px';
+            particle.style.animationDuration = 5 + Math.random() * 10 + 's';
+            particle.style.opacity = Math.random();
+            particle.style.transform = `scale(${Math.random()})`;
+            particleBackground.appendChild(particle);
+
+            // Eliminar la partícula después de que termine la animación
+            particle.addEventListener('animationend', () => {
+                particle.remove();
+            });
+        }
+    }
+
+    // Crear partículas cada cierto tiempo
+    setInterval(createParticle, 300); // Reducimos el intervalo para generar más partículas
+
+    // Fondo estrellado
+    const starryBackground = document.getElementById('starry-background');
+    starryBackground.classList.add('starry-background');
+
+    for (let i = 0; i < 200; i++) { // Aumentamos el número de estrellas
+        const star = document.createElement('div');
+        star.classList.add('star');
+        star.style.left = Math.random() * window.innerWidth + 'px';
+        star.style.top = Math.random() * window.innerHeight + 'px';
+        star.style.animationDelay = Math.random() * 5 + 's';
+        starryBackground.appendChild(star);
+    }
+</script>
 {% endblock %}

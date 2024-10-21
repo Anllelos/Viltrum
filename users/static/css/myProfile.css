@@ -1,152 +1,461 @@
-/* Contenedor principal del perfil */
-.profile-container {
-    max-width: 770px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #2c2f33; /* Fondo oscuro para todo el contenedor */
-    border-radius: 10px;
-    color: #ffffff; /* Color del texto para contraste */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* Global Styles */
+body {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    overflow-x: hidden;
+    position: relative;
 }
 
-/* Encabezado del perfil y banner */
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Starry Background */
+.starry-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.starry-background .star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: radial-gradient(circle, #fff, transparent);
+    border-radius: 50%;
+    animation: twinkle 2s infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+/* Particle Background */
+.particle-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,204,0,0) 70%);
+    border-radius: 50%;
+    animation: floatUp linear;
+}
+
+@keyframes floatUp {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-1000px);
+        opacity: 0;
+    }
+}
+
+/* Profile Container */
+.profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Profile Header */
 .profile-header {
     position: relative;
     margin-bottom: 50px;
 }
 
+/* Profile Banner */
+.profile-banner {
+    position: relative;
+    overflow: hidden;
+}
+
 .profile-banner img {
     width: 100%;
-    border-radius: 10px;
+    height: 300px;
+    object-fit: cover;
+    filter: brightness(0.7);
+    transition: transform 5s ease;
 }
 
-/* Imagen de perfil */
+.profile-banner img:hover {
+    transform: scale(1.1);
+}
+
+/* Animated Nebula Overlay */
+.profile-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 200%;
+    height: 100%;
+    background: url('{% static "images/nebula.png" %}') repeat;
+    background-size: cover;
+    animation: nebulaAnimation 30s linear infinite;
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+@keyframes nebulaAnimation {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Profile Image */
 .profile-image {
     position: absolute;
-    bottom: -40px;
+    bottom: -60px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) rotate(0deg);
     border-radius: 50%;
     overflow: hidden;
-    border: 4px solid #ffffff; /* Borde blanco */
+    border: 5px solid #fff;
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(45deg, #ff0066, #ffcc00);
+    animation: pulse 5s infinite;
 }
 
-/* Íconos debajo del banner */
-.profile-icons i {
-    color: #ffffff;
-    transition: color 0.3s;
+@keyframes pulse {
+    0%, 100% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.1); }
 }
 
-.profile-icons i:hover {
-    color: #7289da; /* Color de icono al hacer hover */
-    cursor: pointer;
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-/* Información del usuario */
+/* Profile Icons */
+.profile-icons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+}
+
+.profile-icons a {
+    color: #fff;
+    font-size: 24px;
+    transition: color 0.3s, transform 0.3s;
+    position: relative;
+}
+
+.profile-icons a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0%;
+    height: 2px;
+    background: #ffcc00;
+    transition: width 0.3s, left 0.3s;
+}
+
+.profile-icons a:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+.profile-icons a:hover {
+    color: #ffcc00;
+    transform: scale(1.2);
+}
+
+/* User Information */
 .username {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: bold;
+    margin-top: 80px;
+    position: relative;
+    display: inline-block;
+    background: linear-gradient(45deg, #ff0066, #ffcc00, #00ccff);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbowText 10s ease infinite;
 }
 
-.text-gray-600 {
-    color: #b9bbbe;
+@keyframes rainbowText {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
-/* Botón de subir fotos */
-.btn-gradient {
-    background: linear-gradient(to right, #7289da, #99aab5);
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
+.username::after {
+    content: '';
+    position: absolute;
+    left: -5px;
+    right: -5px;
+    bottom: -10px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ffcc00, transparent);
+    animation: underlineAnimation 3s infinite;
 }
 
-.btn-gradient:hover {
-    background: linear-gradient(to right, #677bc4, #8c9aa3);
+@keyframes underlineAnimation {
+    0% { left: -100%; right: 100%; }
+    50% { left: 0%; right: 0%; }
+    100% { left: 100%; right: -100%; }
 }
 
-/* Galería */
-.gallery-container h3 {
-    color: #ffffff;
-    font-size: 1.5rem;
-    margin-bottom: 20px;
+.verificado {
+    color: #ffcc00;
+    font-size: 1.2rem;
+    margin-left: 10px;
+    animation: shine 3s infinite;
 }
 
-.upload-modal input[type="file"] {
-    display: block;
-    margin: 0 auto;
-    padding: 10px;
-    color: #ffffff;
-    background-color: #2c2f33;
-    border: 1px solid #7289da;
-    border-radius: 5px;
-    margin-top: 10px;
+@keyframes shine {
+    0% { text-shadow: none; }
+    50% { text-shadow: 0 0 10px #ffcc00; }
+    100% { text-shadow: none; }
 }
 
-.upload-modal button {
-    margin-top: 10px;
+/* Typing Animation for Description */
+.user-description {
+    color: #fff;
+    font-size: 1.1rem;
+    margin-top: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: .15em solid #ffcc00;
+    animation: typing 6s steps(40, end), blink-caret .75s step-end infinite;
 }
 
-/* Footer del perfil (redes sociales) */
-.profile-footer a {
-    color: #ffffff;
-    margin-right: 15px;
-    text-decoration: none;
-    transition: color 0.3s;
+@keyframes typing {
+    0% { width: 0 }
+    50% { width: 100% }
+    100% { width: 100% }
 }
 
-.profile-footer a:hover {
-    color: #7289da;
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: #ffcc00 }
+}
+
+/* Game Cards */
+.gallery-container {
+    margin-top: 70px;
 }
 
 .game-card {
-    background-color: #3e3e3e; /* Fondo gris oscuro */
-    color: #ecf0f1; /* Texto blanco */
-    border-radius: 0.5rem; /* Bordes redondeados */
-    padding: 1.5rem; /* Espaciado interno */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra */
-    margin: 1rem 0; /* Margen vertical */
-    transition: transform 0.3s, box-shadow 0.3s; /* Transiciones suaves para hover */
-    position: relative; /* Para posicionar los íconos en la esquina superior derecha */
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid #ffcc00;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    color: #fff;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    backdrop-filter: blur(5px);
 }
 
-.icon-container {
-    position: absolute; /* Posición absoluta para los íconos */
-    top: 1rem; /* Espaciado desde la parte superior */
-    right: 1rem; /* Espaciado desde el lado derecho */
+.game-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
 }
 
-.icon-container a {
-    color: #ecf0f1; /* Color blanco para los íconos */
-    margin-left: 0.5rem; /* Espaciado entre íconos */
-    font-size: 1.5rem; /* Tamaño de íconos */
-    transition: color 0.3s; /* Transición suave para hover */
+.game-card::before {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(255,204,0,0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.5s;
 }
 
-.icon-container a:hover {
-    color: #bdc3c7; /* Color gris claro al pasar el ratón */
+.game-card:hover::before {
+    opacity: 1;
+    animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg) translate(-50%, -50%); }
+    to { transform: rotate(360deg) translate(-50%, -50%); }
 }
 
 .game-title {
-    font-size: 1.75rem; /* Tamaño de fuente más grande para el título */
-    margin-bottom: 0.5rem; /* Espacio debajo del título */
-    font-weight: bold; /* Negrita para el título */
-    text-transform: uppercase; /* Mayúsculas para el título */
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    color: #ffcc00;
+    position: relative;
 }
 
-.game-info {
-    display: flex; /* Flexbox para alinear elementos */
-    flex-direction: column; /* Coloca los elementos en columnas */
+.game-title::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: #ffcc00;
+    transition: width 0.5s;
+}
+
+.game-card:hover .game-title::after {
+    width: 100%;
 }
 
 .game-info span {
-    display: block; /* Cada línea ocupa su propia línea */
-    margin-bottom: 0.5rem; /* Espaciado entre líneas */
-    font-size: 1.1rem; /* Tamaño de fuente ligeramente mayor */
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 5px;
 }
 
-.game-info span strong {
-    color: #ecf0f1; /* Color blanco para las etiquetas (Usuario, Rango, etc.) */
+/* Icon Container */
+.icon-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.icon-container a {
+    color: #fff;
+    margin-left: 10px;
+    font-size: 20px;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.icon-container a:hover {
+    color: #ffcc00;
+    transform: scale(1.2);
+}
+
+/* Profile Footer (Social Media Links) */
+.profile-footer {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.profile-footer a {
+    color: #fff;
+    font-size: 1.5rem;
+    transition: color 0.3s, transform 0.3s;
+    position: relative;
+}
+
+.profile-footer a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0%;
+    height: 2px;
+    background: #ffcc00;
+    transition: width 0.3s, left 0.3s;
+}
+
+.profile-footer a:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+.profile-footer a:hover {
+    color: #ffcc00;
+    transform: scale(1.1);
+}
+
+/* Match Button */
+.match-button {
+    background: linear-gradient(45deg, #ff0066, #ffcc00);
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.5s, transform 0.2s;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.match-button i {
+    margin-right: 10px;
+}
+
+.match-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.2);
+    transition: left 0.5s;
+}
+
+.match-button:hover::after {
+    left: 100%;
+}
+
+.match-button:hover {
+    background: linear-gradient(45deg, #ffcc00, #ff0066);
+    transform: translateY(-3px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .username {
+        font-size: 2rem;
+    }
+
+    .profile-image {
+        width: 100px;
+        height: 100px;
+        bottom: -50px;
+    }
+
+    .profile-icons a {
+        font-size: 20px;
+    }
+
+    .game-card {
+        padding: 15px;
+    }
+
+    .user-description {
+        font-size: 1rem;
+    }
 }
