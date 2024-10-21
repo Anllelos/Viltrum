@@ -2,21 +2,37 @@
 
 {% load static %}
 
+{% block title %}
+Perfil No Verificado
+{% endblock %}
+
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/verification.css' %}">
-<style>
-    main{
-    background: linear-gradient(45deg, #d32e2e,#500909);
-    height: 100vh;
-    }
-</style>
+<!-- Importamos Google Fonts y Font Awesome para iconos -->
+<link rel="stylesheet" href="{% static 'css/verificationfail.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-<div class="complete">
-<h1>Perfil no verificado</h1>
-<p>Tu identidad ha no ha podido ser comprobada, intentalo de nuevo</p>
-<a href="{% url 'home' %}">Volver al Inicio</a> <br>
-<a href="{% url 'verification' user %}">Volver a intentar verificar perfil</a>
+<div class="verification-container">
+    <div class="verification-card">
+        <div class="icon">
+            <!-- SVG para la cruz con animaciones -->
+            <svg class="animated-cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <line x1="20" y1="20" x2="80" y2="80" />
+                <line x1="80" y1="20" x2="20" y2="80" />
+            </svg>
+        </div>
+        <h1>Perfil No Verificado</h1>
+        <p>Tu identidad no ha podido ser comprobada. Por favor, inténtalo de nuevo.</p>
+        <div class="buttons">
+            <a href="{% url 'home' %}" class="btn"><i class="fas fa-home"></i> Volver al Inicio</a>
+            <a href="{% url 'verification' user %}" class="btn retry"><i class="fas fa-redo"></i> Reintentar Verificación</a>
+        </div>
+    </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Font Awesome para los iconos -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 {% endblock %}

@@ -1,0 +1,151 @@
+/* Definición de la fuente personalizada */
+@font-face {
+    font-family: 'Viltrum';
+    src: url('../fonts/viltrum.woff2') format('woff2'),
+         url('../fonts/viltrum.woff') format('woff'),
+         url('../fonts/viltrum.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Aplicar la fuente personalizada al cuerpo del documento */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Viltrum', 'Montserrat', sans-serif;
+}
+
+main {
+    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.verification-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.verification-card {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 15px;
+    max-width: 500px;
+    margin: auto;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.verification-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 16px 32px rgba(0,0,0,0.3);
+}
+
+.verification-card .icon {
+    margin-bottom: 20px;
+}
+
+.animated-cross {
+    width: 100px;
+    height: 100px;
+    animation: spin 4s linear infinite;
+}
+
+.animated-cross line {
+    stroke: #e74c3c; /* Color rojo para la cruz */
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 150;
+    stroke-dashoffset: 150;
+    animation: draw 1s ease forwards, spin 4s linear infinite;
+}
+
+@keyframes draw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.verification-card h1 {
+    font-size: 32px;
+    color: #e74c3c;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.verification-card p {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.verification-card .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.verification-card .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    background-color: #e74c3c;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 30px;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.verification-card .btn:hover {
+    background-color: #c0392b;
+    transform: translateY(-3px);
+}
+
+.verification-card .btn i {
+    margin-right: 8px;
+}
+
+.verification-card .btn.retry {
+    background-color: #3498db;
+}
+
+.verification-card .btn.retry:hover {
+    background-color: #2980b9;
+}
+
+@media (max-width: 600px) {
+    .verification-card {
+        padding: 30px 20px;
+    }
+
+    .animated-cross {
+        width: 80px;
+        height: 80px;
+    }
+
+    .verification-card h1 {
+        font-size: 28px;
+    }
+
+    .verification-card p {
+        font-size: 16px;
+    }
+
+    .verification-card .btn {
+        font-size: 14px;
+        padding: 10px 16px;
+    }
+}
