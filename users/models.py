@@ -96,3 +96,13 @@ class UserGalleryImage(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s image"
+
+class Sponsorship(models.Model):
+    TYPE_CHOICES = [
+        ("A", "Approved"),
+        ("P", "Pending"),
+        ("R", "Rejected")
+    ]
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    sponsor = models.ForeignKey(User, related_name="user_sponsors", on_delete=models.CASCADE, null=True)
+    status = models.CharField(max_length=20, choices=TYPE_CHOICES)

@@ -114,7 +114,8 @@ Viltrum | Perfil {{ profile_user.username }}
         // Enviar el mensaje al WebSocket
         notificationSocket.send(JSON.stringify({
             "message": message,
-            "receiver": receiver
+            "receiver": receiver,
+            "type":"sponsorship"
         }));
     };
 </script>

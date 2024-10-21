@@ -22,4 +22,6 @@ urlpatterns = [
     path('send_message/<int:recipient_id>/', views.send_message, name='send_message'),
     path('inbox/', views.inbox, name='inbox'),
     path('upload-image/', views.upload_image, name='upload_image'),
+    path('my-sponsors/', views.sponsorship, name='my-sponsors'),
+    path('my-sponsors/accept/<str:sponsorship>/<int:value>', views.accept_sponsorship, name='accept_sponsoship'),
 ]

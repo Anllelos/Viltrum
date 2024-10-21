@@ -2,6 +2,7 @@ import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from .models import NotificationSystem
 from django.contrib.auth import get_user_model
+from users.models import Sponsorship
 
 User = get_user_model()
 
@@ -35,6 +36,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
         receiver_id = text_data_json["receiver"]  # id del receptor
+        type = text_data_json["type"]
 
         try:
             receiver = await self.get_user(receiver_id)
@@ -45,6 +47,11 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         notification = await self.create_notification(
             sender=self.user, receiver=receiver, message=message
         )
+
+        if type == "sponsorship":
+            sponsorship = await self.create_sponsorship(
+                sponsor=self.user, user=receiver
+            )
 
         # Envía la notificación al grupo del receptor
         await self.channel_layer.group_send(
@@ -68,3 +75,9 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         return await NotificationSystem.objects.acreate(
             sender=sender, receiver=receiver, message=message
         )
+    
+    @staticmethod
+    async def create_sponsorship(sponsor, user):
+        return await Sponsorship.objects.acreate(
+            sponsor=sponsor, user=user, status="P"
+            )

@@ -508,3 +508,23 @@ def verification(request, username):
     
     else:
         return render(request, "error.html", {"message": "No estás autorizado para verificar este perfil."})
+
+@login_required
+def sponsorship(request):
+    invitations = Sponsorship.objects.filter(user=request.user, status="P")
+    data_context = {"invitations":invitations}
+    return render(request, 'sponsor_inv.html', data_context)
+
+def accept_sponsorship(request, sponsorship, value):
+    sponsor = Sponsorship.objects.get(pk=sponsorship)
+    if value == 1:
+        sponsor.status = "A"  # Asignación correcta con "="
+        sponsor.save()
+        return redirect('my-sponsors')
+    else:
+        sponsor.status = "R"  # Asignación correcta con "="
+        sponsor.save()
+        return redirect('my-sponsors')
+
+
+    
