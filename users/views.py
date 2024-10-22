@@ -35,6 +35,7 @@ def profile_user(request, username):
         game_stats_table = PlayerStats.objects.filter(user=user_to_validate, is_active=True)
         tournaments_created = Tournament.objects.filter(owner=user_to_validate)
         notification_sended = NotificationSystem.objects.filter(receiver=user_to_validate, sender=request.user).first()
+        sponsors = Sponsorship.objects.filter(user=user_to_validate, status="A")
 
         # Query gallery images associated with the user
         gallery_images = UserGalleryImage.objects.filter(user=user_to_validate)
@@ -44,6 +45,7 @@ def profile_user(request, username):
             'profile_user': user_to_validate,
             'tournaments_created': tournaments_created,
             'gallery_images': gallery_images,  # Pass gallery images to the template
+            'sponsors':sponsors,
         }
 
         if notification_sended:
