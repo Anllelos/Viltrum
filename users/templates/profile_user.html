@@ -74,19 +74,9 @@ Viltrum | Perfil {{ profile_user.username }}
         <div class="grid grid-cols-2 md:grid-cols-4 g-4">
             {% for game in games %}
             <div class="game-card">
-                {% if profile.user == user %}
-                <div class="icon-container">
-                    <a href="{% url 'edit_game_stat' game.id %}" class="edit-icon" title="Editar">
-                        <i class="bi bi-pencil"></i>
-                    </a>
-                    <a href="{% url 'delete_game_stats' game.id %}" class="delete-icon" title="Eliminar">
-                        <i class="bi bi-x"></i>
-                    </a>
-                </div>
-                {% endif %}
                 <h3 class="game-title">{{ game.game }}</h3>
                 <div class="game-info">
-                    <span><strong>Usuario:</strong> {{ game.user_game }}</span>
+                    <span><strong>Usuario:</strong> {   { game.user_game }}</span>
                     <span><strong>Rango:</strong> {{ game.rank }}</span>
                     <span><strong>Winrate:</strong> {{ game.winrate }}%</span>
                     <span><strong>Total Jugado:</strong> {{ game.total_played }}</span>

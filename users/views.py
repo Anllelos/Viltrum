@@ -9,7 +9,6 @@ import base64
 from django.http import Http404
 from datetime import date
 from tournaments.models import Tournament
-from django.http import JsonResponse
 from notifications.models import NotificationSystem
 import iamodule as imgia
 import json
@@ -273,7 +272,7 @@ def handle_upload(request, form_class, template_name):
 #-------------------------------------------------------------- Subir información (estadisticas/productos) --------------------------------------------------------------#
 #-------------------------------------------------------------- Estadísticas --------------------------------------------------------------#
 @login_required
-def games_stats(request):
+def add_games_stats(request):
     active_user = request.user
 
     if active_user.groups.filter(name='Gamer').exists():
@@ -528,5 +527,13 @@ def accept_sponsorship(request, sponsorship, value):
         sponsor.save()
         return redirect('my-sponsors')
 
+@login_required
+def games_stats(request):
+    active_user = request.user
+    if active_user.groups.filter(name='Gamer').exists():
+        user_stats = PlayerStats.objects.filter(user=active_user, is_active=True)
+        data_context = {'user_stats':user_stats}
+        return render(request,'stats.html', data_context)
+    return redirect('home')
 
     
