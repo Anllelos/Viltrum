@@ -1,13 +1,13 @@
 /* Definición de variables de color */
 :root {
-    --primary-bg: #18181b;
-    --secondary-bg: #333;
-    --text-color: white;
-    --border-color: rgb(70, 70, 70);
-    --highlight-color: rgb(199, 2, 94);
-    --highlight-color2: rgb(2, 125, 240);
+    --primary-bg: #0a0a0d; /* Fondo oscuro */
+    --secondary-bg: #1a1a1d; /* Fondo ligeramente más claro */
+    --text-color: #e0e0e0; /* Texto claro */
+    --border-color: #3c3c3f; /* Color de bordes */
+    --highlight-color: #4e9fdb; /* Azul para resaltar elementos */
 }
 
+/* Estilos generales */
 main {
     overflow: hidden;
     width: 100%;
@@ -30,27 +30,15 @@ video {
     transition: opacity 0.2s ease-in-out;
 }
 
-.form-button {
-    padding: 12px;
-    border: none;
-    background-color: #555;
-    color: var(--text-color);
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.form-button:hover {
-    background-color: #666;
-    cursor: pointer;
-}
 /* Estilos para el Formulario */
 .form-container {
     background-color: var(--secondary-bg);
     padding: 40px;
-    box-shadow: 1px 1px 10px black;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     max-width: 600px;
     margin: 100px auto;
     z-index: 2;
+    border-radius: 8px;
 }
 
 form {
@@ -59,28 +47,111 @@ form {
     gap: 20px;
 }
 
-.input-label {
-    padding: 10px;
+/* Asegurarse de que el contenedor no tenga márgenes que afecten los inputs */
+.form-group {
+    width: 100%; /* Asegurarte que el contenedor ocupe todo el ancho */
 }
 
+.input-label {
+    padding: 10px;
+    color: var(--text-color);
+}
+
+/* Ajustes para inputs y selects */
 .form-input,
 .form-select {
     background: none;
     border: none;
     border-bottom: var(--border-color) 2px solid;
-    padding: 15px;
-    width: 100%;
+    padding: 10px;
+    width: 100%; /* Asegurar que todos los inputs sean del mismo tamaño */
+    box-sizing: border-box; /* Incluir el padding y border en el ancho total */
     margin: auto;
     color: var(--text-color);
     font-size: 15px;
     outline: none;
     display: inline-block;
+    transition: border-color 0.3s;
 }
 
+/* Asegurando que el select tenga el color del texto */
 .form-select {
-    padding: 12px;
+    background-color: transparent; /* Fondo transparente */
+    color: var(--text-color); /* Color del texto */
 }
 
+/* Estilos específicos para el select */
 .form-select option {
-    background-color: #444;
+    background-color: var(--secondary-bg); /* Fondo de las opciones */
+    color: var(--text-color); /* Color del texto de las opciones */
+}
+
+.form-button {
+    padding: 12px;
+    border: none;
+    background-color: var(--highlight-color);
+    color: var(--text-color);
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.form-button:hover {
+    background-color: #3681b8; /* Azul más oscuro al pasar el ratón */
+}
+
+/* Asegúrate de que todas las entradas tengan la misma altura */
+.form-input,
+.form-select {
+    height: 40px; /* Establecer una altura uniforme */
+}
+
+/* Mensajes de error y notificaciones */
+.error {
+    color: #ff4c4c; /* Color rojo para los mensajes de error */
+}
+
+.notification {
+    color: var(--highlight-color); /* Azul para notificaciones */
+}
+
+/* Estilos para las notificaciones */
+/* Estilos para las notificaciones */
+.notification {
+    background-color: #ff4c4c; /* Color de fondo para el error */
+    color: white; /* Color del texto */
+    padding: 10px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    transition: opacity 0.3s ease; /* Para un suave desvanecimiento al cerrarlas */
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+    padding: 0;
+}
+
+.close-button:hover {
+    color: #ff1a1a; /* Cambia el color al pasar el ratón */
+}
+
+/* Mensajes de error y notificaciones */
+.error-message {
+    flex-grow: 1; /* Permite que el mensaje ocupe el espacio disponible */
+}
+
+/* Estilo para las notificaciones de juego ya registrado */
+.notification-message {
+    flex-grow: 1; /* Permite que el mensaje ocupe el espacio disponible */
+    color: #333; /* Color para el mensaje de notificación normal */
+    background-color: #e0e0e0; /* Fondo gris para notificación no crítica */
 }

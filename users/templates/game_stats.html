@@ -12,72 +12,83 @@ Viltrum | Estadísticas
 {% endblock %}
 
 {% block content %}
-        <video id="bgVideo" autoplay muted loop playsinline>
-            <source id="videoSource" src="" type="video/mp4">
-            Tu navegador no soporta videos en HTML5.
-        </video>
-        <div class="form-container">
-            {% if message %}
-                <span>{{message}}</span>
-            {% endif %}
-            <form action="" method="POST">
-                {% csrf_token %}
-                {% if player_stats_form.errors %}
-                <br>
-                <p>Hay error UwU</p>
-                {% for error in player_stats_form.errors %}
-                <p>{{error}}</p>
-                <br>
-                {% endfor %}
-                {% endif %}
-                {% if game_exist%}
-                <span>Ya registraste este juego</span>
-                {% endif %}
-                <div class="form-group">
-                    <span class="input-label">Juego</span>
-                    {{player_stats_form.game|set_attr:"class=form-select"}}
-                </div>
-                <div class="form-group">
-                    <span class="input-label">Nombre de usuario en juego</span>
-                    {{player_stats_form.user_game|set_attr:"class=form-input,placeholder=Nombre de Usuario"}}
-                </div>
-                <div class="form-group">
-                <span class="input-label">Rango</span>
-                <select id="rank" name="rank" class="form-select">
-                    <!-- Las opciones se llenarán dinámicamente -->
-                </select>
-                </div>
-                <div class="form-group">
-                    <span class="input-label">Partidas ganadas</span>
-                {{player_stats_form.wins|set_attr:"class=form-input"}}
-                </div>
-                <div class="form-group">
-                    <span class="input-label">Partidas perdidas</span>
-                {{player_stats_form.losses|set_attr:"class=form-input"}}
-                </div>
-                <div class="form-group">
-                    <span class="input-label">Horas totales jugadas</span>
-                {{player_stats_form.total_played|set_attr:"class=form-input"}}
-                </div>
-                <button type="submit" class="form-button">Guardar datos</button>
-            </form>
+<video id="bgVideo" autoplay muted loop playsinline>
+    <source id="videoSource" src="" type="video/mp4">
+    Tu navegador no soporta videos en HTML5.
+</video>
+<div class="form-container">
+    {% if message %}
+        <span>{{ message }}</span>
+    {% endif %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        
+        {% if player_stats_form.errors %}
+        <div class="notification error">
+            <span class="error-message">Hay error UwU</span>
+            <button class="close-button" type="button">&times;</button>
         </div>
+        {% for error in player_stats_form.errors %}
+        <div class="notification error">
+            <span class="error-message">{{ error }}</span>
+            <button class="close-button" type="button">&times;</button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        
+        {% if game_exist %}
+        <div class="notification error">
+            <span class="error-message">Ya registraste este juego</span>
+            <button class="close-button" type="button">&times;</button>
+        </div>
+        {% endif %}
+        
+        <div class="form-group">
+            <span class="input-label">Juego</span>
+            {{ player_stats_form.game|set_attr:"class=form-select" }}
+        </div>
+        <div class="form-group">
+            <span class="input-label">Nombre de usuario en juego</span>
+            {{ player_stats_form.user_game|set_attr:"class=form-input,placeholder=Nombre de Usuario" }}
+        </div>
+        <div class="form-group">
+            <span class="input-label">Rango</span>
+            <select id="rank" name="rank" class="form-select">
+                <!-- Las opciones se llenarán dinámicamente -->
+            </select>
+        </div>
+        <div class="form-group">
+            <span class="input-label">Partidas ganadas</span>
+            {{ player_stats_form.wins|set_attr:"class=form-input" }}
+        </div>
+        <div class="form-group">
+            <span class="input-label">Partidas perdidas</span>
+            {{ player_stats_form.losses|set_attr:"class=form-input" }}
+        </div>
+        <div class="form-group">
+            <span class="input-label">Horas totales jugadas</span>
+            {{ player_stats_form.total_played|set_attr:"class=form-input" }}
+        </div>
+        <button type="submit" class="form-button">Guardar datos</button>
+    </form>
+</div>
+
 {% endblock %}
 
 {% block extra_js %}
 <script src="{% static 'js/ranksData.js' %}"></script>
 <script>
     const videos = {
-    "LoL": "https://motionbgs.com/media/1228/jinx-shattered-reflection.960x540.mp4",
-    "D2": "https://motionbgs.com/media/4179/windranger-dota-2.960x540.mp4",
-    "CSGO": "https://motionbgs.com/media/3403/neon-csgo.960x540.mp4",
-    "VAL": "https://motionbgs.com/media/3046/yoru-from-valorant.960x540.mp4",
-    "OW": "https://motionbgs.com/media/4/dva-overwatch.960x540.mp4",
-    "PUBG": "https://motionbgs.com/media/4817/pubg-mobile.960x540.mp4",
-    "FORT": "https://motionbgs.com/media/4774/fortnite-highwire.960x540.mp4",
-    "Apex": "https://motionbgs.com/media/1744/loba-from-apex-legends.960x540.mp4",
-    "R6": "https://motionbgs.com/media/6225/rainbow-six-siege-r6.960x540.mp4",
-    "RL": "https://motionbgs.com/media/622/rocket-league.960x540.mp4"
+        "LoL": "https://motionbgs.com/media/1228/jinx-shattered-reflection.960x540.mp4",
+        "D2": "https://motionbgs.com/media/4179/windranger-dota-2.960x540.mp4",
+        "CSGO": "https://motionbgs.com/media/3403/neon-csgo.960x540.mp4",
+        "VAL": "https://motionbgs.com/media/3046/yoru-from-valorant.960x540.mp4",
+        "OW": "https://motionbgs.com/media/4/dva-overwatch.960x540.mp4",
+        "PUBG": "https://motionbgs.com/media/4817/pubg-mobile.960x540.mp4",
+        "FORT": "https://motionbgs.com/media/4774/fortnite-highwire.960x540.mp4",
+        "Apex": "https://motionbgs.com/media/1744/loba-from-apex-legends.960x540.mp4",
+        "R6": "https://motionbgs.com/media/6225/rainbow-six-siege-r6.960x540.mp4",
+        "RL": "https://motionbgs.com/media/622/rocket-league.960x540.mp4"
     };
     const videoBg = document.getElementById("bgVideo");
     const videoSrc = document.getElementById("videoSource")
@@ -85,20 +96,30 @@ Viltrum | Estadísticas
     gameSelection.addEventListener('change', function(){
         const gameSelected = this.value;
         if (gameSelected in videos) {
-        // Desvanecer el video actual
-        videoBg.style.opacity = 0;
-
-        // Esperar a que el video actual se haya desvanecido antes de cambiar la fuente
-        videoBg.addEventListener('transitionend', function() {
-            // Cambiar la fuente del video
-            videoSrc.src = videos[gameSelected];
-            videoBg.load();
-
-            // Desvanecer el nuevo video
-            videoBg.style.opacity = 1;
-        }, { once: true });
-    }
+            videoBg.style.opacity = 0;
+            videoBg.addEventListener('transitionend', function() {
+                videoSrc.src = videos[gameSelected];
+                videoBg.load();
+                videoBg.style.opacity = 1;
+            }, { once: true });
+        }
     });
-
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const closeButtons = document.querySelectorAll('.close-button');
+        
+        closeButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const notification = this.parentElement; // El elemento padre de este botón
+                notification.style.opacity = '0'; // Oculta la notificación con un desvanecimiento
+                setTimeout(() => {
+                    notification.style.display = 'none'; // Finalmente oculta el elemento
+                }, 300); // Espera el tiempo del desvanecimiento
+            });
+        });
+    });
+</script>
+
+
 {% endblock %}
