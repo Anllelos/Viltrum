@@ -81,7 +81,7 @@
     </div>
 
     <div class="upload-game">
-        <button class="button">
+        <button class="button" id="addGameButton">
           Subir Nuevo Juego
           <div class="hoverEffect">
             <div></div>
@@ -113,4 +113,12 @@
         </select>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.getElementById('addGameButton').addEventListener('click', function(){
+        window.location.href = "{% url 'upload_game' %}"
+    })
+</script>
 {% endblock %}
