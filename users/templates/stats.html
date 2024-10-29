@@ -11,6 +11,16 @@ Viltrum | Estadísticas
 {% endblock %}
 
 {% block content %}
+<!-- Alerta de eliminación -->
+<div id="custom-confirmation" class="alert-hidden">
+    <div class="alert-content">
+      <p id="confirmation-message">¿Estás seguro de que deseas eliminar esta estadística?</p>
+      <button id="confirm-delete" class="confirm-btn">Eliminar</button>
+      <button id="cancel-delete" class="cancel-btn">Cancelar</button>
+    </div>
+  </div>
+  
+  
 <div class="main-container">
     <div class="five">
         <h1>Mis estadísticas</h1>
@@ -35,9 +45,10 @@ Viltrum | Estadísticas
                         <a href="{% url 'edit_game_stat' stat.id %}" class="icons edit-icon" title="Editar">
                             <i class="bi bi-pencil"></i>
                         </a>
-                        <a href="{% url 'delete_game_stats' stat.id %}" class="icons delete-icon" title="Eliminar">
+                        <a href="javascript:void(0);" class="icons delete-icon" title="Eliminar" onclick="showConfirmation('{% url 'delete_game_stats' stat.id %}')">
                             <i class="bi bi-x"></i>
                         </a>
+                        
                     </div>
                 </div>
                 <div class="card-time">{{stat.total_played}}h</div>
@@ -57,5 +68,31 @@ Viltrum | Estadísticas
     document.getElementById('redirectButton').addEventListener('click', function() {
         window.location.href = "{% url 'add_games_stats' %}";
     });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+  let deleteUrl = "";  // Variable para almacenar el URL de eliminación
+
+  // Muestra el cuadro de confirmación personalizado
+  window.showConfirmation = function(url) {
+    deleteUrl = url;  // Guarda el URL para usarlo en caso de confirmación
+    document.getElementById("custom-confirmation").classList.remove("alert-hidden");
+  };
+
+  // Cierra el cuadro de confirmación
+  function closeConfirmation() {
+    document.getElementById("custom-confirmation").classList.add("alert-hidden");
+  }
+
+  // Elimina el ítem si se confirma
+  document.getElementById("confirm-delete").addEventListener("click", function() {
+    window.location.href = deleteUrl;  // Redirige al enlace de eliminación
+  });
+
+  // Botón para cancelar (oculta la notificación)
+  document.getElementById("cancel-delete").addEventListener("click", closeConfirmation);
+});
+
 </script>
 {% endblock %}

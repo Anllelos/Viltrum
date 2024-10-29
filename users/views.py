@@ -151,32 +151,53 @@ def edit_profile_user(request, username):
 #-------------------------------------------------------------- Editar sponsor --------------------------------------------------------------#
 @login_required
 def edit_profile_sponsor(request, username):
-    user_to_validate = get_object_or_404(User, username=username)
-    profile_to_validate = get_object_or_404(ExtendedData, user=user_to_validate)
     active_user = request.user
 
     if not active_user.groups.filter(name='Sponsor').exists():
         return redirect('home')
 
-    if request.user.username != username:
-        return redirect('edit_profile', username=request.user.username)
+    if active_user.username != username:
+        return redirect('edit_profile_user', username=active_user.username)
 
-    upp_form = ProfilePicForm(request.POST or None, request.FILES or None, instance=profile_to_validate)
+    extended_data = get_object_or_404(ExtendedData, user=active_user)
+
+    data_context = {
+        'extended_data':extended_data,
+        'edit_user': EditSponsorForm(instance=active_user),
+        'edit_extended_data_user': EditExtendedDataUserForm(instance=extended_data),
+        'edit_profile_pic': ProfilePicForm(instance=extended_data),
+        'edit_profile_banner': BannerPicForm(instance=extended_data)
+    }
 
     if request.method == 'POST':
-        cropped_image = request.POST.get('cropped_image')
-        if cropped_image:
-            format, imgstr = cropped_image.split(';base64,') 
-            ext = format.split('/')[-1]
-            img_data = ContentFile(base64.b64decode(imgstr), name=f"profile_{request.user.username}.{ext}")
-            profile_to_validate.profile_img = img_data
+        form_type = request.POST.get('submit_form')
+        print(form_type)
 
-        if upp_form.is_valid():
-            upp_form.save()
-            return redirect('edit_profile', username=username)  # Redirigir después de éxito
+        if form_type == "personal_data":
+            form = EditUserForm(request.POST, instance=active_user)
+            if form.is_valid():
+                form.save()
 
-    data_context = {'upp_form': upp_form, 'profile': profile_to_validate}
-    return render(request, 'edit_profile.html', data_context)
+        elif form_type == "extra_data":
+            form = EditExtendedDataUserForm(request.POST, instance=extended_data)
+            if form.is_valid():
+                form.save()
+
+        elif form_type == "profile_image":
+            form = ProfilePicForm(request.POST, request.FILES, instance=extended_data)
+            if form.is_valid():
+                profile_pic = form.save(commit=False)
+                profile_pic.user = active_user
+                profile_pic.save()
+
+        elif form_type == "profile_banner":
+            form = BannerPicForm(request.POST, request.FILES, instance=extended_data)
+            if form.is_valid():
+                banner = form.save(commit=False)
+                banner.user = active_user
+                banner.save()
+
+    return render(request, 'edit_profile_user.html', data_context)
 
 
 #-------------------------------------------------------------- Crear usuario --------------------------------------------------------------#
@@ -355,7 +376,7 @@ def delete_game_stats(request, game_id):
     if active_user.groups.filter(name='Gamer').exists():
         game.is_active = False
         game.save()
-        return redirect('profile', username=active_user.username)
+        return redirect('games_stats')
     
     # Redirige a 'home' si el usuario no tiene acceso
     return redirect('home')

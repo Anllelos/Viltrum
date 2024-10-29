@@ -104,6 +104,11 @@ class EditUserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email']
+    
+class EditSponsorForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username','email']
 
 #Formulario para editar información adicional del usuario
 class EditExtendedDataUserForm(forms.ModelForm):
