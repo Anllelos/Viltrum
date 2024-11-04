@@ -1,330 +1,295 @@
-/* Estilos para el Hero Section */
+/* Estilos Generales */
+body {
+    background-color: #1C1C1E; /* Gris Carbón */
+    color: #E5E5E5; /* Blanco Suave */
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3 {
+    color: #E5E5E5; /* Blanco Suave */
+}
+
+p {
+    color: #A6A6A6; /* Gris Claro */
+}
+
+a {
+    color: #007BFF; /* Azul Eléctrico */
+    text-decoration: none;
+}
+
+a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* Hero Section */
 .hero-section {
     position: relative;
     text-align: center;
-    color: white;
-    padding: 100px 0;
-    /* Ajusta el espacio para que sea más prominente */
-    background-image: url('https://upload-os-bbs.hoyolab.com/upload/2024/07/07/244570541/bad4bd158529164f7d71f44d98a77eb2_6769761301970742193.gif');
-    background-repeat: no-repeat;
-    background-position: center center;
+    padding: 150px 20px;
+    background-image: url('https://media1.tenor.com/images/63968e7e25ac7f19d58f8b7e77e1f7c2/tenor.gif');
     background-size: cover;
-    /* Hace que la imagen cubra todo el contenedor */
+    background-position: center;
 }
 
-.banner {
-    background-image: url('https://upload-os-bbs.hoyolab.com/upload/2024/04/18/190435749/d90e47fd41f4d9c5af89b660a44f9a26_4231239746869581868.gif');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    /* Hace que la imagen cubra todo el contenedor */
-    padding: 50px;
-    border-radius: 15px;
-    /* Bordes redondeados para un mejor estilo */
-    max-width: 1000px;
-    /* Limita el ancho del banner */
-    margin: 0 auto;
-    /* Centra el banner */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    /* Añade una sombra para destacar */
-}
-
-
-.banner h1 {
-    font-size: 3em;
-    /* Texto más grande para el título */
-    margin-bottom: 20px;
-}
-
-.banner p {
-    font-size: 1.5em;
-    color: #f0f0f0;
-}
-
-/* Para asegurarnos de que el texto sea legible en el banner */
-.hero-section::before {
+.hero-section::after {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    /* Un fondo semitransparente */
+    background-color: rgba(28, 28, 30, 0.7); /* Overlay */
+}
+
+.hero-section .overlay {
+    position: relative;
     z-index: 1;
 }
 
-.banner h1,
-.banner p {
-    position: relative;
-    z-index: 2;
-    /* Asegura que el texto esté por encima del fondo semitransparente */
+.hero-section h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
 }
 
-/* Estilos para las Portadas de Videojuegos */
-.game-covers-section {
-    padding: 40px 20px;
-}
-
-.game-covers-section h2 {
-    text-align: center;
+.hero-section p {
+    font-size: 1.5rem;
     margin-bottom: 30px;
-    font-size: 2em;
+    color: #E5E5E5; /* Blanco Suave */
 }
 
-.game-cover-carousel {
-    margin: 0 auto;
-    max-width: 1200px;
-    /* Ajusta según sea necesario */
+.hero-section .btn-primary {
+    background-color: #007BFF; /* Azul Eléctrico */
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 30px;
+    transition: background-color 0.3s;
 }
 
-.game-cover-card {
-    background-color: white;
+.hero-section .btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Carousel Section */
+.carousel-section {
+    padding: 60px 0;
+    background-color: #1C1C1E; /* Gris Carbón */
+}
+
+.carousel-image {
+    height: 500px;
+    object-fit: cover;
+}
+
+.carousel-caption h5 {
+    font-size: 2rem;
+    color: #E5E5E5; /* Blanco Suave */
+}
+
+.carousel-caption p {
+    font-size: 1.2rem;
+    color: #A6A6A6; /* Gris Claro */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(100%);
+}
+
+.carousel-indicators [data-bs-target] {
+    background-color: #A6A6A6; /* Gris Claro */
+}
+
+.carousel-indicators .active {
+    background-color: #007BFF; /* Azul Eléctrico */
+}
+
+/* Info Section */
+.info-section {
+    padding: 80px 0;
+    background-color: #121212; /* Gris Muy Oscuro */
+}
+
+.info-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.info-section p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: #A6A6A6; /* Gris Claro */
+}
+
+.info-section .btn-primary {
+    background-color: #007BFF; /* Azul Eléctrico */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    color: #E5E5E5; /* Blanco Suave */
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.info-section .btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.info-section img {
+    max-width: 100%;
     border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    padding: 10px;
-    transition: transform 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.game-cover-card img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.game-cover-card p {
-    margin-top: 10px;
-    font-weight: 500;
-}
-
-.game-cover-card:hover {
-    transform: translateY(-5px);
-}
-
-.content-section,
-.tournaments-section,
-.leaderboards-section,
-.teams-section {
-    padding: 40px 20px;
-}
-
-.streaming-grid,
-.tournament-grid,
-.leaderboard-grid,
-.team-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    padding: 20px;
-}
-
-.streaming-card,
-.tournament-card,
-.leaderboard-card,
-.team-card {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    transition: transform 0.3s;
-}
-
-.streaming-card:hover,
-.tournament-card:hover,
-.leaderboard-card:hover,
-.team-card:hover {
-    transform: translateY(-5px);
-}
-
-/*----------------------------------------------------------------------------------------------------------------------------------------------*/
-
-.brand-carousel {
-    display: flex;
-    height: 50px;
-    justify-content: space-between;
-    background-color: #1c242b;
-    align-items: center;
-}
-
-.brand-carousel img {
-    background-position: 50%;
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 100px;
-    padding: 10px;
-}
-
-.festival-section {
-    background-image: url('../images/INICIO/esports-festival-bg.jpg');
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5rem 0;
-    background-size: cover;
-    /* Opcional: cubre toda el área */
-    background-position: center;
-    /* Opcional: centra la imagen */
-    background-repeat: no-repeat;
-    /* Opcional: evita que se repita la imagen */
-    color: white;
-}
-
-.festival-content {
-    max-width: 590px;
-    padding: 20px;
-}
-
-.festival-content h2 {
-    font-size: 60px;
-}
-
-.festival-content a {
-    background-color: #bb3b1b;
-    border-color: #bc1818;
-    color: #fff;
-    text-decoration: none;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.festival-content a:hover {
-    background-color: #8b331d;
-    cursor: pointer;
-}
-
-.festival-image img {
-    max-width: 512px;
-    padding: 20px;
-}
-
+/* Activities Section */
 .activities-section {
-    text-align: center;
-    background-color: #231536;
-    color: white;
-    padding: 20px 0px;
+    padding: 80px 0;
+    background-color: #1C1C1E; /* Gris Carbón */
 }
 
 .activities-section h2 {
-    margin: 0px auto 40px;
-    font-size: 60px;
-}
-
-.activities-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    /* Permite que las tarjetas se envuelvan en pantallas más pequeñas */
+    font-size: 2.5rem;
+    margin-bottom: 60px;
+    color: #E5E5E5; /* Blanco Suave */
 }
 
 .activity-card {
-    position: relative;
-    max-width: 362px;
-    margin: 10px;
-    /* Espaciado entre tarjetas */
-    overflow: hidden;
-    /* Esconde cualquier contenido que sobresalga */
-}
-
-.activity-card img {
-    width: 100%;
-    height: auto;
-}
-
-.text-overlay {
-    position: absolute;
-    /* Permite posicionar el texto sobre la imagen */
-    top: 70%;
-    /* Centra verticalmente */
-    left: 50%;
-    /* Centra horizontalmente */
-    width: 100%;
-    transform: translate(-50%, 0%);
-    /* Ajusta el centrado */
-    color: white;
-    /* Cambia el color del texto según el fondo */
+    background-color: #2A2A2A; /* Gris Oscuro */
+    padding: 40px 20px;
     text-align: center;
-    /* Centra el texto */
-    padding: 20px;
-    /* Añade un poco de espacio alrededor del texto */
-    border-radius: 5px;
-    /* Opcional: bordes redondeados */
+    border-radius: 10px;
+    margin-bottom: 30px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 4px 4px 8px #0e0e0f, -4px -4px 8px #2a2a2d;
+}
+
+.activity-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 8px 8px 16px #0e0e0f, -8px -8px 16px #2a2a2d;
+}
+
+.activity-card i {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #007BFF; /* Azul Eléctrico */
 }
 
 .activity-card h3 {
-    margin: 0;
-    /* Elimina margen para mejor alineación */
-    font-size: 1.5em;
-    /* Ajusta el tamaño del texto del título */
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #E5E5E5; /* Blanco Suave */
 }
 
 .activity-card p {
-    margin: 0;
-    /* Elimina margen para mejor alineación */
-    font-size: 1em;
-    /* Ajusta el tamaño del texto del párrafo */
+    font-size: 1rem;
+    color: #A6A6A6; /* Gris Claro */
 }
 
-.blue img {
-    border: 2px solid blue;
+/* Community Section */
+.community-section {
+    padding: 80px 0;
+    background-color: #121212; /* Gris Muy Oscuro */
 }
 
-.red img {
-    border: 2px solid red;
+.community-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: #E5E5E5; /* Blanco Suave */
 }
 
-.yellow img {
-    border: 2px solid yellow;
+.community-section p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    color: #A6A6A6; /* Gris Claro */
 }
-
-.home-section-intro--title {
-    font-weight: bold;
-    font-size: 50px;
-}
-
 
 .social-ctas {
-    display: flex; /* Cambiar a flexbox para mejor alineación */
+    display: flex;
     justify-content: center;
-    align-items: center; /* Centra verticalmente los elementos */
-    padding: 2rem;
-    position: relative;
-    text-align: center;
+    gap: 20px;
 }
 
-.social-cta {
-    display: inline-block; /* Asegura que los enlaces se comporten como bloques */
-    margin: 0 1rem; /* Espaciado entre los botones */
-    width: 300px;
-    height: 100px; /* Ajusta la altura según tus necesidades */
-    padding: 40px;
+.social-ctas .btn {
+    padding: 15px 25px;
+    font-size: 1.1rem;
+    border-radius: 30px;
+    color: #E5E5E5; /* Blanco Suave */
+    border: none;
+    transition: background-color 0.3s;
 }
 
-.social-cta img {
-    width: 100%; /* Hace que la imagen ocupe todo el ancho del contenedor */
-    height: auto; /* Hace que la imagen ocupe toda la altura del contenedor */
-    object-fit: contain; /* Mantiene la proporción de la imagen */
+.btn-discord {
+    background-color: #5865F2;
 }
 
-.twitch-cta {
-    background-color: #6322a1;
-    border: 4px solid #9c38fc;
-    border-radius: 8px; /* Opcional: bordes redondeados */
-    transition: 0.3s ease;
+.btn-discord:hover {
+    background-color: #4854c7;
 }
 
-.twitch-cta:hover {
-    transform: translateY(-10px);
+.btn-twitch {
+    background-color: #9146FF;
 }
 
-.discord-cta {
-    background-color: #4362aa;
-    border: 4px solid #6588da;
-    border-radius: 8px; /* Opcional: bordes redondeados */
-    transition: 0.3s ease;
+.btn-twitch:hover {
+    background-color: #772ce8;
 }
 
-.discord-cta:hover {
-    transform: translateY(-10px);
+/* Footer Styles */
+.footer-container {
+    background-color: #1C1C1E; /* Gris Carbón */
+    padding: 20px 0;
+}
+
+.footer-content p {
+    color: #A6A6A6; /* Gris Claro */
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #A6A6A6; /* Gris Claro */
+    margin: 0 10px;
+}
+
+.footer-links a:hover {
+    color: #E5E5E5; /* Blanco Suave */
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-section p {
+        font-size: 1.2rem;
+    }
+
+    .info-section .col-md-6 {
+        text-align: center;
+    }
+
+    .info-section img {
+        margin-top: 30px;
+    }
+
+    .activities-section .row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .activity-card {
+        margin-bottom: 20px;
+    }
+
+    .social-ctas {
+        flex-direction: column;
+    }
+
+    .social-ctas .btn {
+        margin-bottom: 20px;
+    }
 }

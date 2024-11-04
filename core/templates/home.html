@@ -7,118 +7,150 @@ Viltrum | Inicio
 {% endblock %}
 
 {% block extra_css %}
+<!-- Enlace al archivo CSS personalizado -->
 <link rel="stylesheet" href="{% static 'core/css/home.css' %}">
+<!-- Enlace a Bootstrap CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 {% endblock %}
 
 {% block content %}
+<!-- Hero Section -->
 <section class="hero-section">
     <div class="overlay">
         <h1>Bienvenido a Viltrum</h1>
         <p>Únete a torneos, compite en equipos y escala en las clasificaciones.</p>
-    </div>
-    <img src="https://media1.tenor.com/m/nFCWEjg4XDoAAAAd/zenless-zone-zero-zzz.gif" alt="Background GIF"
-        class="background-gif">
-</section>
-
-<!-- Carrusel de Patrocinadores -->
-<section class="brand-carousel-section">
-    <div class="brand-carousel">
-        <div class="brand-item">
-            <img src="{% static 'images/INICIO/TELCEL.png' %}" alt="Telcel">
-        </div>
-        <div class="brand-item">
-            <img src="{% static 'images/INICIO/HISENSE.png' %}" alt="Hisense">
-        </div>
-        <div class="brand-item">
-            <img src="{% static 'images/INICIO/AMAZONADS.png' %}" alt="Amazon Ads">
-        </div>
-        <div class="brand-item">
-            <img src="{% static 'images/INICIO/LENOVO.png' %}" alt="Lenovo">
-        </div>
-        <div class="brand-item">
-            <img src="{% static 'images/INICIO/VISA.png' %}" alt="Intel">
-        </div>
+        <a href="{% url 'register' %}" class="btn btn-primary btn-lg">Regístrate ahora</a>
     </div>
 </section>
 
-<!-- Sección de Festival -->
-<section class="festival-section">
-    <div class="festival-content">
-        <h2>Viltrum - Plataforma de eSports</h2>
-        <p>
-            Viltrum es la plataforma definitiva para los apasionados de los eSports. Ofrecemos un espacio dinámico
-            donde los jugadores de todos los niveles pueden participar en torneos emocionantes, formar equipos y
-            competir por la gloria en las clasificaciones. Con una comunidad en constante crecimiento, Viltrum se
-            convierte en el hogar de los mejores talentos y aficionados de todo el mundo.
-        </p>
-        <p>
-            Nuestra plataforma te brinda la oportunidad de mostrar tus habilidades, conectar con otros jugadores y
-            escalar hasta la cima en un entorno competitivo pero inclusivo. ¿Eres un espectador? También puedes
-            disfrutar viendo las partidas en vivo y apoyar a tus equipos y jugadores favoritos. ¡Aquí, cada partida
-            cuenta!
-        </p>
-        <p>
-            Únete a nosotros y vive la emoción de los eSports en un entorno diseñado para que todos puedan brillar.
-            ¡Viltrum es donde el futuro de los deportes electrónicos se juega hoy!
-        </p>
-        <a href="{% url 'register' %}">Registrarse ahora</a>
-    </div>
-    <div class="festival-image">
-        <img src="{% static 'images/INICIO/chicojugando.jpg' %}" alt="Viltrum Image">
+<!-- Carrusel de Juegos Destacados -->
+<section class="carousel-section">
+    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <!-- Indicadores -->
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+        </div>
+
+        <!-- Slides -->
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="5000">
+                <img src="{% static 'images/games/valorant.jpg' %}" class="d-block w-100 carousel-image" alt="Valorant">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Valorant</h5>
+                    <p>Compite en emocionantes partidas tácticas.</p>
+                </div>
+            </div>
+            <div class="carousel-item" data-bs-interval="5000">
+                <img src="{% static 'images/games/league_of_legends.jpg' %}" class="d-block w-100 carousel-image"
+                    alt="League of Legends">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>League of Legends</h5>
+                    <p>Demuestra tu habilidad en la Grieta del Invocador.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'images/games/call_of_duty.jpg' %}" class="d-block w-100 carousel-image"
+                    alt="Call of Duty">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Call of Duty</h5>
+                    <p>Acción intensa en el campo de batalla.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controles -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
     </div>
 </section>
 
+<!-- Sección de Información -->
+<section class="info-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 order-md-2">
+                <img src="{% static 'images/home/gaming_setup.jpg' %}" alt="Gaming Setup" class="img-fluid rounded">
+            </div>
+            <div class="col-md-6 order-md-1">
+                <h2>Viltrum - Plataforma de eSports</h2>
+                <p>
+                    Viltrum es la plataforma definitiva para los apasionados de los eSports. Ofrecemos un espacio
+                    dinámico donde los jugadores de todos los niveles pueden participar en torneos emocionantes, formar
+                    equipos y competir por la gloria en las clasificaciones.
+                </p>
+                <p>
+                    Nuestra plataforma te brinda la oportunidad de mostrar tus habilidades, conectar con otros jugadores
+                    y escalar hasta la cima en un entorno competitivo pero inclusivo.
+                </p>
+                <a href="{% url 'register' %}" class="btn btn-primary">Comienza tu aventura</a>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- Sección de Actividades -->
 <section class="activities-section">
-    <h2>¿Qué hacer en Viltrum?</h2>
-    <div class="activities-container">
-        <!-- Cuadro 1: Azul -->
-        <div class="activity-card blue">
-            <img src="{% static 'images/INICIO/AZUL.jpg' %}" alt="Cuadro Azul">
-            <div class="text-overlay">
-                <h3>Compite en Torneos</h3>
-                <p>Únete a nuestros torneos regulares y muestra tus habilidades frente a los mejores jugadores.</p>
+    <div class="container">
+        <h2 class="text-center">¿Qué hacer en Viltrum?</h2>
+        <div class="row">
+            <!-- Actividad 1 -->
+            <div class="col-md-4">
+                <div class="activity-card">
+                    <i class="bi bi-trophy-fill"></i>
+                    <h3>Compite en Torneos</h3>
+                    <p>Únete a nuestros torneos regulares y muestra tus habilidades frente a los mejores jugadores.</p>
+                </div>
             </div>
-        </div>
-        <!-- Cuadro 2: Rojo -->
-        <div class="activity-card red">
-            <img src="{% static 'images/INICIO/ROJO.jpg' %}" alt="Cuadro Rojo">
-            <div class="text-overlay">
-                <h3>Crea Equipos</h3>
-                <p>Forma equipos con otros jugadores y escala juntos hasta la cima de las clasificaciones.</p>
+            <!-- Actividad 2 -->
+            <div class="col-md-4">
+                <div class="activity-card">
+                    <i class="bi bi-people-fill"></i>
+                    <h3>Crea Equipos</h3>
+                    <p>Forma equipos con otros jugadores y escala juntos hasta la cima de las clasificaciones.</p>
+                </div>
             </div>
-        </div>
-        <!-- Cuadro 3: Amarillo -->
-        <div class="activity-card yellow">
-            <img src="{% static 'images/INICIO/AMARILLO.jpg' %}" alt="Cuadro Amarillo">
-            <div class="text-overlay">
-                <h3>Espectadores</h3>
-                <p>Disfruta viendo partidas en vivo y apoya a tus jugadores favoritos en cada torneo.</p>
+            <!-- Actividad 3 -->
+            <div class="col-md-4">
+                <div class="activity-card">
+                    <i class="bi bi-tv-fill"></i>
+                    <h3>Espectadores</h3>
+                    <p>Disfruta viendo partidas en vivo y apoya a tus jugadores favoritos en cada torneo.</p>
+                </div>
             </div>
         </div>
     </div>
+</section>
 
-    <div class="home-section-intro dark center">
-        <p class="home-section-intro--title">
-            COMUNIDAD VILTRUM
-        </p>
-        <p class="home-section-intro--description">
+<!-- Sección Comunidad -->
+<section class="community-section">
+    <div class="container text-center">
+        <h2>Comunidad Viltrum</h2>
+        <p>
             Desde Viltrum incentivamos la participación de todos los jugadores independientemente de su nivel de
             habilidad. ¡Compite en la categoría que mejor se adapte a tu modo de divertirse!
         </p>
-    </div>
-
-    <div class="social-ctas">
-        <a href="#" class="social-cta twitch-cta" target="_blank">
-            <img src="{% static 'images/INICIO/twitch.png' %}" alt="Discord">
-        </a>
-
-        <a href="#" class="social-cta discord-cta" target="_blank">
-            <img src="{% static 'images/INICIO/discord.png' %}" alt="Discord">
-        </a>
-    </div>
-
+        <div class="social-ctas">
+            <a href="#" class="btn btn-discord"><i class="bi bi-discord"></i> Únete a nuestro Discord</a>
+            <a href="#" class="btn btn-twitch"><i class="bi bi-twitch"></i> Síguenos en Twitch</a>
+        </div>
     </div>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Enlace a Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 {% endblock %}
