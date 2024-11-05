@@ -41,16 +41,20 @@
             </a>
         </div>
         <nav class="nav-center">
-            <a href="{% url 'home' %}" title="Inicio" class="viltrum-nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+            <a href="{% url 'home' %}" title="Inicio"
+                class="viltrum-nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
                 <i class="bi bi-house-door-fill"></i> Inicio
             </a>
-            <a href="{% url 'explore' %}" title="Explorar" class="viltrum-nav-link {% if request.resolver_match.url_name == 'explore' %}active{% endif %}">
+            <a href="{% url 'explore' %}" title="Explorar"
+                class="viltrum-nav-link {% if request.resolver_match.url_name == 'explore' %}active{% endif %}">
                 <i class="bi bi-compass-fill"></i> Explorar
             </a>
-            <a href="{% url 'tournaments' %}" title="Torneos" class="viltrum-nav-link {% if request.resolver_match.url_name == 'tournaments' %}active{% endif %}">
+            <a href="{% url 'tournaments' %}" title="Torneos"
+                class="viltrum-nav-link {% if request.resolver_match.url_name == 'tournaments' %}active{% endif %}">
                 <i class="bi bi-trophy-fill"></i> Torneos
             </a>
-            <a href="{% url 'clasifications' %}" title="Clasificaciones" class="viltrum-nav-link {% if request.resolver_match.url_name == 'clasifications' %}active{% endif %}">
+            <a href="{% url 'clasifications' %}" title="Clasificaciones"
+                class="viltrum-nav-link {% if request.resolver_match.url_name == 'clasifications' %}active{% endif %}">
                 <i class="bi bi-graph-up-arrow"></i> Clasificaciones
             </a>
         </nav>
@@ -60,14 +64,21 @@
                 <button class="search-btn"><i class="bi bi-search"></i></button>
             </div>
             {% if user.is_authenticated %}
+            <a class="icon-button" href="{% url 'chats_list' %}"><i class="bi bi-chat-left-fill"></i></a>
             <button class="icon-button"><i class="bi bi-bell-fill"></i></button>
             <div class="dropdown">
                 <button class="profile-button">
-                    <img src="{% static 'images/profile/default.jpg' %}" alt="Perfil">
+                    <img src="{% static 'images/profile_placeholder.png' %}" alt="Perfil">
                 </button>
                 <div class="dropdown-content">
                     <a href="{% url 'profile' user.username %}"><i class="bi bi-person-circle"></i> Mi Perfil</a>
-                    <a href="{% url 'settings' %}"><i class="bi bi-gear-fill"></i> Configuración</a>
+                    {% if role == 'gamer' %}
+                    <a href="{% url 'edit_profile_user' user.username %}"><i class="bi bi-pencil"></i>Editar Perfil</a>
+                    <a href="{% url 'games_stats' %}"><i class="bi bi-bar-chart-fill"></i>Estadísticas</a>
+                    {% else %}
+                    <a href="{% url 'edit_profile_sponsor' user.username %}"><i class="bi bi-pencil"></i>Editar Perfil</a>
+                    <a href="{% url 'sponsor_products' %}"><i class="bi bi-basket2-fill"></i>Añadir Producto</a>
+                    {% endif %}
                     <a href="{% url 'logout' %}"><i class="bi bi-box-arrow-right"></i> Cerrar Sesión</a>
                 </div>
             </div>
