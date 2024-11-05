@@ -87,7 +87,7 @@ a:hover {
     display: block;
     height: 100%;
     padding-left: 5px;
-    color: #A6A6A6; /* Gris Claro */
+    color: #ce3bf3; /* Gris Claro */
     animation: spin 8s infinite;
 }
 
