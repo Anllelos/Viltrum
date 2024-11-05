@@ -357,3 +357,77 @@ a:hover {
         justify-content: space-between;
     }
 }
+
+/* Estilo para el contenedor de las notificaciones */
+#dropdown-content {
+    background-color: #1e1e2e; /* Fondo oscuro similar al del menú */
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    max-width: 300px;
+}
+
+/* Estilo para cada notificación individual */
+.notification {
+    background-color: #2b2b3b;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Brillo en las notificaciones */
+.notiglow, .notiborderglow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 174, 255, 0.5);
+    opacity: 0.6;
+    z-index: -1;
+}
+
+/* Título y cuerpo de las notificaciones */
+.notititle {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #ffffff;
+}
+
+.notibody {
+    font-size: 0.9rem;
+    color: #c0c0c0;
+}
+
+/* Dropdown de notificaciones oculto por defecto */
+.dropdown-content.notifications {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    width: 300px;
+    background-color: #1e1e2e;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 1000;
+}
+
+/* Mostrar el dropdown cuando está activo */
+.dropdown-content.notifications.show {
+    display: block;
+}
+
+.notification {
+    background-color: #2b2b3b;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
