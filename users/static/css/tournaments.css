@@ -1,166 +1,157 @@
-/* Main Title */
-main{
-    background: #efeff1;
+/* Estilos Generales */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #0D0D0D; /* Fondo negro */
+    color: #FFFFFF; /* Texto blanco */
 }
 
-h2 {
+/* Contenedor Principal */
+.tournament-list {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
     text-align: center;
-    margin-top: 20px;
+}
+
+.tournament-list h2 {
     font-size: 36px;
-    color: #000000;
-    font-weight: 700;
-    letter-spacing: 1.5px;
+    font-weight: 600;
+    margin-bottom: 40px;
     text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #FF00CC, #3333FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: neonGlow 2s infinite alternate;
 }
 
-span{
-    color: black;
+/* Efecto de brillo en el título */
+@keyframes neonGlow {
+    from {
+        text-shadow: 0 0 10px #FF00CC, 0 0 20px #FF00CC, 0 0 30px #FF00CC;
+    }
+    to {
+        text-shadow: 0 0 10px #3333FF, 0 0 20px #3333FF, 0 0 30px #3333FF;
+    }
 }
 
-/* Tournament List */
+/* Lista de Torneos */
 .tournament-list ul {
     list-style: none;
     padding: 0;
-    width: 80%;
-    margin: 20px auto;
 }
 
 .tournament-list li {
-    background: rgba(255, 255, 255, 0.1);
-    color: #000000;
-    padding: 20px;
+    background: linear-gradient(135deg, #1A1A1A, #0D0D0D);
+    padding: 25px;
     margin-bottom: 20px;
-    border-radius: 10px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(255, 0, 204, 0.1);
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    align-items: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.tournament-list li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px rgba(51, 51, 255, 0.5);
 }
 
 .tournament-list li div {
     max-width: 70%;
+    text-align: left;
 }
 
-.tournament-list strong {
-    font-size: 20px;
-    display: block;
-    margin-bottom: 5px;
-    color: #000000;
+.tournament-list li strong {
+    font-size: 24px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
 }
 
-.tournament-status {
-    font-weight: bold;
-    color: #000000;
+.tournament-list li strong i {
+    margin-right: 10px;
+    color: #FF00CC;
 }
 
-.time-remaining {
-    font-size: 14px;
-    color: #000000;
+.tournament-list li .details {
+    margin-top: 10px;
 }
 
-/* Buttons */
-.tournament-list a, .tournament-list button {
-    background-color: #4A90E2;
-    color: white;
-    padding: 10px 20px;
+.tournament-list li .details span {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #CCCCCC;
+    margin-top: 5px;
+}
+
+.tournament-list li .details span i {
+    margin-right: 8px;
+    color: #FF00CC;
+}
+
+.tournament-list li a {
     text-decoration: none;
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    transition: background-color 0.3s ease;
-    box-shadow: 0px 4px 12px rgba(255, 79, 139, 0.5);
-}
-
-.tournament-list a:hover, .tournament-list button:hover {
-    background-color: #266dbe;
-}
-
-.new-tournament-link {
-    display: block;
-    text-align: center;
-    margin: 20px auto;
-    width: fit-content;
-    background-color: #6a00f4;
-}
-
-.new-tournament-link:hover {
-    background-color: #bc00dd;
-}
-
-/* Form */
-
-.tournament-form {
-    background: #ffffff;
-    box-shadow: 0px 0px 10px 2px rgb(207, 207, 207);
-    max-width: 800px;
-    padding: 30px;
-    margin: 50px auto;
-    border-radius: 10px;
-}
-
-
-.tournament-form  form{
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 30px;
-    border-radius: 10px;
-    margin: 30px auto;
-    width: 50%;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
-}
-
-.tournament-form label {
-    font-size: 16px;
-    margin-bottom: 10px;
-    display: block;
-    color: #000000;
-}
-
-.tournament-form input, select, textarea {
-    border: black 1px solid;
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    font-size: 14px;
-    color: #333;
-    box-sizing: border-box;
-}
-
-.tournament-form input[type="file"] {
-    color: white;
-    padding: 10px;
-    background-color: #333;
-    border: none;
-    border-radius: 5px;
-}
-
-.tournament-form button {
-    background-color: #4A90E2;
-    width: 100%;
-    color: white;
-    border: none;
     padding: 12px 20px;
-    cursor: pointer;
-    border-radius: 5px;
+    border-radius: 30px;
     font-size: 16px;
-    font-weight: bold;
-    text-transform: uppercase;
-    transition: background-color 0.3s ease;
+    color: #FFFFFF;
+    background: linear-gradient(90deg, #FF00CC, #3333FF);
+    box-shadow: 0 0 10px rgba(255, 0, 204, 0.5);
+    transition: box-shadow 0.3s, transform 0.3s;
 }
 
-.tournament-form button:hover {
-    background-color: #266dbe;
+.tournament-list li a:hover {
+    box-shadow: 0 0 20px rgba(51, 51, 255, 0.7);
+    transform: scale(1.05);
 }
 
-/* Error Messages */
-.error-messages {
-    background-color: rgba(255, 0, 0, 0.2);
-    border: 1px solid red;
-    padding: 10px;
-    margin-bottom: 20px;
+/* Botón de Crear Nuevo Torneo */
+.tournament-list .new-tournament-link {
+    display: inline-block;
+    margin: 30px auto 0;
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-size: 18px;
+    color: #FFFFFF;
+    background: linear-gradient(90deg, #FF00CC, #3333FF);
+    box-shadow: 0 0 15px rgba(255, 0, 204, 0.5);
+    transition: box-shadow 0.3s, transform 0.3s;
+    animation: neonPulse 3s infinite;
+}
+
+.tournament-list .new-tournament-link:hover {
+    box-shadow: 0 0 25px rgba(51, 51, 255, 0.7);
+    transform: scale(1.05);
+}
+
+/* Efecto de pulso en el botón */
+@keyframes neonPulse {
+    0%, 100% {
+        box-shadow: 0 0 15px rgba(255, 0, 204, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(51, 51, 255, 0.7);
+    }
+}
+
+/* Scrollbar Personalizado */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0D0D0D;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #FF00CC, #3333FF);
     border-radius: 5px;
-    color: red;
 }
 
-
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(90deg, #3333FF, #FF00CC);
+}
