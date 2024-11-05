@@ -90,20 +90,20 @@
                     <img src="{% static 'images/profile_placeholder.png' %}" alt="Perfil">
                 </button>
                 <div class="dropdown-content">
-                    <a href="{% url 'profile' user.username %}"><i class="bi bi-person-circle"></i> Mi Perfil</a>
+                    <a href="{% url 'redirect_profile'%}"><i class="bi bi-person-circle"></i> Mi Perfil</a>
+                    <a href="{% url 'redirect_profile_edit' %}"><i class="bi bi-pencil"></i> Editar Perfil</a>
                     {% if verified %}
                     <p>Tu perfil ya está verificado</p>
                     {% else %}
                     <a href="{% url 'verification' user %}"><i class="bi bi-patch-check-fill"></i> Verificar perfil</a>
                     {% endif %}
                     {% if role == 'gamer' %}
-                    <a href="{% url 'edit_profile_user' user.username %}"><i class="bi bi-pencil"></i> Editar Perfil</a>
+                    
                     <a href="{% url 'games_stats' %}"><i class="bi bi-bar-chart-fill"></i> Estadísticas</a>
                     {% else %}
-                    <a href="{% url 'edit_profile_sponsor' user.username %}"><i class="bi bi-pencil"></i> Editar Perfil</a>
                     <a href="{% url 'sponsor_products' %}"><i class="bi bi-basket2-fill"></i> Añadir Producto</a>
                     {% endif %}
-                    <a href="{% url 'logout' %}"><i class="bi bi-box-arrow-right"></i> Cerrar Sesión</a>
+                    <a href="{% url 'user_logout' %}">Cerrar sesión</a>
                 </div>
             </div>
             {% else %}
