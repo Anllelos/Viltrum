@@ -100,7 +100,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',  
         'NAME': 'viltrum',  
         'USER': 'viltrumadmin',  
-        'PASSWORD': 'AVNS_byM9S6uxFBoAS5Rzmvf',  
+        'PASSWORD': 'AIVEN_ADMIN',  
         'HOST': 'mysql-106b7d30-lasallistas-05c9.b.aivencloud.com',  
         'PORT': '24980',  
         'OPTIONS': {  
