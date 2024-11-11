@@ -1,0 +1,139 @@
+/* Fondo oscuro */
+body {
+    background-color: #121212;
+    color: #ddd;
+    font-family: 'Press Start 2P', sans-serif; /* Fuente gamer estilo retro */
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo del formulario */
+.tournament-form {
+    background-color: #1c1c1c;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 550px;
+    margin: 50px auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.9);
+    border: 2px solid #444;
+    transition: all 0.3s ease;
+}
+
+/* Animación de aparición del formulario */
+.tournament-form {
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+.tournament-form h2 {
+    color: #d62c64; /* Rojo saturado */
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px rgba(214, 44, 100, 1), 0 0 40px rgba(214, 44, 100, 0.8);
+    animation: glowText 1.5s infinite alternate;
+}
+
+/* Animación de resplandor en el título */
+@keyframes glowText {
+    0% {
+        text-shadow: 0 0 20px rgba(214, 44, 100, 1), 0 0 40px rgba(214, 44, 100, 0.8);
+    }
+    100% {
+        text-shadow: 0 0 40px rgba(214, 44, 100, 1), 0 0 60px rgba(214, 44, 100, 0.6);
+    }
+}
+
+/* Etiquetas de los campos */
+.tournament-form label {
+    color: #bbb;
+    font-size: 16px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Campos de entrada */
+.tournament-form input[type="text"],
+.tournament-form input[type="date"],
+.tournament-form input[type="number"],
+.tournament-form select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 2px solid #555;
+    border-radius: 5px;
+    background-color: #222;
+    color: #fff;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+/* Efecto de glow en los campos de entrada al hacer foco */
+.tournament-form input[type="text"]:focus,
+.tournament-form input[type="date"]:focus,
+.tournament-form input[type="number"]:focus {
+    border-color: #ff6f61; /* Rojo saturado */
+    box-shadow: 0 0 12px rgba(255, 111, 97, 1), 0 0 20px rgba(255, 111, 97, 0.6);
+    outline: none;
+    animation: pulseGlow 1s infinite alternate;
+}
+
+/* Animación de resplandor pulsante en campos de entrada */
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 10px rgba(255, 66, 49, 0.8);
+    }
+    100% {
+        box-shadow: 0 0 20px rgb(227, 55, 55);
+    }
+}
+
+/* Mensajes de error */
+.tournament-form span {
+    color: #e74c3c; /* Rojo brillante */
+    font-size: 14px;
+}
+
+/* Botón de envío */
+.btn-create {
+    background-color: #0031b6; /* Azul oscuro saturado */
+    color: #fff;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 20px;
+    cursor: pointer;
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    box-shadow: 0 0 8px rgba(0, 119, 182, 0.7);
+    transition: all 0.3s ease;
+}
+
+/* Glow y animación en el botón */
+.btn-create:hover {
+    background-color: #00b4d8; /* Azul más brillante */
+    box-shadow: 0 0 18px rgba(0, 180, 216, 1), 0 0 30px rgba(0, 180, 216, 0.8);
+    animation: buttonGlow 1s infinite alternate;
+}
+
+/* Animación de resplandor en el botón */
+@keyframes buttonGlow {
+    0% {
+        box-shadow: 0 0 10px rgba(0, 180, 216, 1);
+    }
+    100% {
+        box-shadow: 0 0 25px rgba(0, 180, 216, 1), 0 0 35px rgba(0, 180, 216, 0.7);
+    }
+}
+
+.btn-create:focus {
+    outline: none;
+    box-shadow: 0 0 30px rgba(0, 180, 216, 1);
+}

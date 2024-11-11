@@ -21,6 +21,7 @@ from django.urls import reverse_lazy
 
 # Configuración del correo electrónico
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+ca_path = Path(__file__).parent.parent / "ca.pem"
 
 # Directorio base del proyecto
 BASE_DIR = Path(__file__).resolve().parent.parent

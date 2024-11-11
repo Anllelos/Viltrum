@@ -1,5 +1,4 @@
 {% extends 'template.html' %}
-
 {% load static %}
 
 {% block title %}
@@ -7,77 +6,112 @@ Viltrum | Torneos
 {% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/tournament.css' %}">
+<link rel="stylesheet" href="{% static 'tournaments/css/tour_view.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="tournament">
-    <h2>Nombre: {{ tournament.name }}</h2>
-    {% if tournament.status %} <span>Abierto</span> {% else %} <span>Cerrado</span> {% endif %}
-    <h2>Juego: {{ tournament.game }}</h2>
-    <span>Máximo de jugadores: {{ n_members }}/{{ tournament.max_members }}</span> <br>
-
-    {% if user.id == tournament.owner.id %}
-        <span>Creado por: Tú ({{ tournament.owner }})</span>
-        {% if tournament.status %}
-            <a href="{% url 'edit_tournament' tournament.id %}">Editar <i class="fa-regular fa-pen-to-square"></i></a>
-        {% else %}
-            <span>El torneo ya termino, ya no puedes editarlo</span>
-        {% endif %}
-        <h2>Solicitudes para unirse al torneo</h2>
-        {% for inscription in tournament_inscriptions %}
-            <span>{{ inscription.user }}</span>
-            <a href="{% url 'accept_inscription' inscription_id=inscription.id tournament_id=tournament.id value=1 %}">Aceptar</a>
-            <a href="{% url 'accept_inscription' inscription_id=inscription.id tournament_id=tournament.id value=2 %}">Rechazar</a>
-            <br>
-        {% empty %}
-            <span>No hay Solicitudes Pendientes</span>
-        {% endfor %}
-    {% else %}
-        <span>Creado por: {{ tournament.owner }}</span>
-    {% endif %}
-
-    <div class="tournament-members">
-    <h2>Miembros:</h2>
-    {% for item in member_info %}
-        <div class="tournament-member">
-            <a href="{% url 'profile' username=item.member.user %}"><span>{{ item.member.user }}</span></a>
-            <p>
-                {% if item.member_stats %}
-                    {{item.member_stats.user_game}} <br>
-                    {{item.member_stats.rank}} <br> </p>
-                {% else %}
-                    <span>El jugador no tiene estadísticas para este juego</span>
-                {% endif %}
-            {% if tournament.owner.id == user.id %}
-                <form id="deleteForm-{{ item.member.id }}" action="{% url 'remove_member' inscription_id=item.member.id tournament_id=tournament.id %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <a href="#" onclick="confirmDeletion({{ item.member.id }}); return false;">
-                        <i class="fa-solid fa-ban"></i> Eliminar
-                    </a>
-                </form>
-            {% endif %}
+<div class="tournament-container">
+    <section class="tournament-header">
+        <h1 class="tournament-title">{{ tournament.name }}</h1>
+        <div class="tournament-status">
+            <span class="status {{ tournament.status|yesno:"open,closed" }}">{{ tournament.status|yesno:"Abierto,Cerrado" }}</span>
         </div>
-    {% empty %}
-        <span>Aún no se han registrado jugadores a este torneo</span>
-    {% endfor %}
-    </div>
+        <p class="tournament-winner">
+            {% if tournament.winner == "None" %}
+                <span>Aún no se ha declarado un ganador</span>
+            {% else %}
+                <span>El ganador es: {{ tournament.winner }}</span>
+            {% endif %}
+        </p>
+        <div class="game-info">
+            <h2>Juego: {{ tournament.game }}</h2>
+            <p>Máximo de jugadores: {{ n_members }}/{{ tournament.max_members }}</p>
+        </div>
+    </section>
 
-    {% if not is_full %}
-        {% if tournament.status and user.is_authenticated and user.id != tournament.owner.id and is_not_registered %}
-            <a href="{% url 'tournament_inscription' tournament.id %}">Inscribirse</a>
+    <section class="tournament-owner">
+        {% if user.id == tournament.owner.id %}
+            <p>Creado por: Tú ({{ tournament.owner }})</p>
+            {% if tournament.status %}
+                <a href="{% url 'edit_tournament' tournament.id %}" class="btn edit-btn"><i class="fa fa-edit"></i> Editar</a>
+            {% else %}
+                <span class="status-closed">El torneo ya terminó, ya no puedes editarlo</span>
+            {% endif %}
+        {% else %}
+            <p>Creado por: {{ tournament.owner }}</p>
         {% endif %}
-    {% else %}
-        <span>El torneo llegó a su capacidad máxima.</span>
-    {% endif %}
+    </section>
+
+    <section class="inscription-requests">
+        <h3>Solicitudes para unirse al torneo</h3>
+        {% for inscription in tournament_inscriptions %}
+            <div class="inscription-item">
+                <span>{{ inscription.user }}</span>
+                <div class="inscription-actions">
+                    <a href="{% url 'accept_inscription' inscription_id=inscription.id tournament_id=tournament.id value=1 %}" class="btn accept-btn"><i class="fa fa-check-circle"></i> Aceptar</a>
+                    <a href="{% url 'accept_inscription' inscription_id=inscription.id tournament_id=tournament.id value=2 %}" class="btn reject-btn"><i class="fa fa-times-circle"></i> Rechazar</a>
+                </div>
+            </div>
+        {% empty %}
+            <span class="no-inscriptions">No hay Solicitudes Pendientes</span>
+        {% endfor %}
+    </section>
+
+    <section class="tournament-members">
+        <h2>Miembros:</h2>
+        {% for item in member_info %}
+            <div class="member-card">
+                <a href="{% url 'profile' username=item.member.user %}" class="member-name">{{ item.member.user }}</a>
+                <div class="member-stats">
+                    {% if item.member_stats %}
+                        <p>{{ item.member_stats.user_game }}</p>
+                        <p>{{ item.member_stats.rank }}</p>
+                    {% else %}
+                        <p class="no-stats">El jugador no tiene estadísticas para este juego</p>
+                    {% endif %}
+                </div>
+                {% if tournament.owner.id == user.id %}
+                    <div class="member-actions">
+                        <form id="deleteForm-{{ item.member.id }}" action="{% url 'remove_member' inscription_id=item.member.id tournament_id=tournament.id %}" method="post" class="inline-form">
+                            {% csrf_token %}
+                            <a href="#" onclick="confirmAction('delete', {{ item.member.id }});" class="btn delete-btn"><i class="fa fa-ban"></i> Eliminar</a>
+                        </form>
+                        {% if not tournament.status and tournament.winner == "None" %}
+                            <form id="winnerForm-{{ item.member.id }}" action="{% url 'set_winner' inscription_id=item.member.id tournament_id=tournament.id %}" method="post" class="inline-form">
+                                {% csrf_token %}
+                                <a href="#" onclick="confirmAction('winner', {{ item.member.id }});" class="btn winner-btn"><i class="fa fa-crown"></i> Elegir como ganador</a>
+                            </form>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        {% empty %}
+            <span class="no-members">Aún no se han registrado jugadores a este torneo</span>
+        {% endfor %}
+    </section>
+
+    <section class="tournament-registration">
+        {% if not is_full %}
+            {% if tournament.status and user.is_authenticated and user.id != tournament.owner.id and is_not_registered %}
+                <a href="{% url 'tournament_inscription' tournament.id %}" class="btn register-btn"><i class="fa fa-plus"></i> Inscribirse</a>
+            {% else %}
+                <span class="already-registered">Ya estás inscrito a este torneo</span>
+            {% endif %}
+        {% else %}
+            <span class="full-tournament">El torneo alcanzó su capacidad máxima.</span>
+        {% endif %}
+    </section>
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    function confirmDeletion(memberId) {
-        if (confirm("¿Estás seguro de que deseas eliminar a este miembro del Torneo?")) {
-            document.getElementById("deleteForm-" + memberId).submit();
+    function confirmAction(action, memberId) {
+        const message = action === 'delete' 
+            ? "¿Estás seguro de que deseas eliminar a este miembro del Torneo?"
+            : "¿Estás seguro de que deseas elegir a este miembro como ganador?";
+        if (confirm(message)) {
+            document.getElementById(action + 'Form-' + memberId).submit();
         }
     }
 </script>
