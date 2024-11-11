@@ -17,6 +17,7 @@ class Tournament(models.Model):
         ("R6", "Rainbow Six Siege"),
         ("RL", "Rocket League")
     ]
+
     owner = models.ForeignKey(User, on_delete=models.CASCADE)  # Relación con el usuario
     name = models.CharField(max_length=255)
     game = models.CharField(max_length=255, choices=GAME_CHOICES)
@@ -27,6 +28,7 @@ class Tournament(models.Model):
     status = models.BooleanField(max_length=20, default=True)  # Default status is "True"
     max_members = models.IntegerField(default=10)  # Define max members
     members = models.ManyToManyField(User, related_name='tournaments', blank=True)
+    winner = models.CharField(max_length=10, default="None")
 
     def is_full(self):
         """Check if the tournament has reached the maximum number of members."""

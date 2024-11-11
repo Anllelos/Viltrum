@@ -18,7 +18,7 @@ def create_tournament(request):
             if form.is_valid():
                 start_date = form.cleaned_data.get('start_date')
                 end_date = form.cleaned_data.get('end_date')
-                today = timezone.now() - timedelta(hours=24)
+                today = timezone.now() - timedelta(hours=23)
                 if start_date < today:
                     form.add_error('start_date', "La fecha de inicio no puede ser anterior al día de hoy")
                 elif end_date < start_date:
@@ -195,8 +195,15 @@ def edit_tournament(request, tournament_id):
         return render(request, 'tournament_edit.html', data_context)
     return redirect('tournaments')
 
+def set_winner(request, inscription_id, tournament_id):
+    active_user = request.user
+    tournament = get_object_or_404(Tournament, pk=tournament_id)
+    inscription = get_object_or_404(TournamentInscription, pk=inscription_id)
+    winner = inscription.user.username
 
+    if tournament.owner == active_user:
+        tournament.winner = winner
+        tournament.save()
 
-
-
-
+        return redirect('view_tournament', tournament_id=tournament_id)
+    return (request) 

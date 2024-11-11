@@ -20,14 +20,8 @@ from django.urls import reverse_lazy
 # API_KEY_RIOT = config('API_KEY_RIOT')
 
 # Configuración del correo electrónico
-#EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 ca_path = Path(__file__).parent.parent / "ca.pem"
-aiven_admin = os.getenv("AIVEN_ADMIN")
-
-if aiven_admin:
-    print("Hay clabe")
-else:
-    print("No hay")
 
 # Directorio base del proyecto
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -107,7 +101,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',  
         'NAME': 'viltrum',  
         'USER': 'viltrumadmin',  
-        'PASSWORD': aiven_admin,  
+        'PASSWORD': "AVNS_byM9S6uxFBoAS5Rzmvf",  
         'HOST': 'mysql-106b7d30-lasallistas-05c9.b.aivencloud.com',  
         'PORT': '24980',  
         'OPTIONS': {  
@@ -149,7 +143,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'sviltrum@gmail.com'
-#EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
+EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
 DEFAULT_FROM_EMAIL = 'no-reply@viltrum.com'
 
 # Configuración de capas de canales (Daphne)
