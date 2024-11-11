@@ -1,9 +1,10 @@
-/* General Layout */
+/* Estilos de la página y animación */
+
+/* Configuración General */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
-    line-height: 1.6;
+    font-family: 'Poppins', sans-serif;
+    background-color: #1C1C1E;
+    color: #E5E5E5;
 }
 
 .page-wrapper {
@@ -11,28 +12,35 @@ body {
     margin: 40px auto;
     max-width: 1200px;
     padding: 20px;
-    gap: 20px; /* Space between the filter panel and content section */
+    gap: 30px;
 }
 
-/* Filter Panel Styling */
+/* Panel de Filtros */
 .filter-panel {
     width: 25%;
-    background-color: #fff;
+    background-color: #2A2A2A;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    color: #E5E5E5;
+    transition: transform 0.3s ease-in-out;
+    opacity: 0;
+    transform: translateY(20px);
 }
 
 .filter-panel h3 {
-    font-size: 20px;
-    margin-bottom: 20px;
-    color: #4A90E2;
+    font-size: 22px;
+    /* Cambiar color sólido por gradiente */
+    background: linear-gradient(45deg, #007BFF, #FF00FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
 }
 
 .filter-section h4 {
-    font-size: 16px;
+    font-size: 18px;
+    color: #A6A6A6;
     margin-bottom: 10px;
-    color: #666;
 }
 
 .filter-section ul {
@@ -44,113 +52,112 @@ body {
     margin-bottom: 10px;
 }
 
-/* Update color for inputs, labels, and selects */
-.filter-panel label, 
-.filter-panel input[type="checkbox"], 
-.filter-panel input[type="radio"], 
-.filter-panel input[type="number"] {
-    color: #000; /* Set label and input text color to black */
-}
-
-.filter-checkbox, .filter-radio {
-    margin-right: 10px;
-}
-
-/* Style for the button */
 .filter-button {
-    background-color: #4A90E2;
-    color: white;
+    background: linear-gradient(45deg, #007BFF, #FF00FF);
+    color: #E5E5E5;
     border: none;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 12px;
+    border-radius: 8px;
     cursor: pointer;
-    text-transform: uppercase;
     font-weight: bold;
-    transition: background-color 0.3s ease;
     width: 100%;
     margin-top: 20px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .filter-button:hover {
-    background-color: #2C73D2;
+    box-shadow: 0 4px 15px rgba(106, 13, 173, 0.4);
 }
 
-/* Clasifications Content */
+/* Contenido de Clasificaciones */
 .content-section {
     width: 75%;
 }
 
-/* Game Section Title */
+/* Título de Juego */
 .game-title {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    color: #333;
+    font-size: 28px;
+    font-weight: bold;
+    /* Cambiar color sólido por gradiente */
+    background: linear-gradient(45deg, #007BFF, #FF00FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border-bottom: 2px solid #333;
     text-transform: uppercase;
-    border-bottom: 2px solid #eee;
     padding-bottom: 10px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
 }
 
-/* Player List */
+/* Lista de Jugadores */
 .player-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
 }
 
-/* Player Card */
+/* Tarjeta de Jugador */
 .player-card {
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 20px;
-    width: calc(33.333% - 20px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background-color: #2A2A2A;
+    border-radius: 10px;
+    padding: 25px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(20px);
 }
 
 .player-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+    box-shadow: 0 4px 20px rgba(255, 0, 255, 0.4);
 }
 
-/* Player Info */
+/* Información del Jugador */
 .player-info {
-    text-align: left;
+    color: #A6A6A6;
 }
 
 .player-username {
-    font-size: 18px;
-    font-weight: 600;
-    color: #4A90E2;
+    font-size: 20px;
+    font-weight: bold;
+    color: #4B0082;
     text-decoration: none;
+    text-shadow: 0 0 5px rgba(75, 0, 130, 0.5);
 }
 
 .player-username:hover {
-    text-decoration: underline;
+    /* Aplicar gradiente */
+    background: linear-gradient(45deg, #007BFF, #FF00FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 15px rgba(255, 0, 255, 0.8);
 }
 
 .player-details {
-    font-size: 14px;
-    color: #666;
+    font-size: 15px;
     margin-top: 10px;
 }
 
 .player-details strong {
-    font-weight: 600;
-    color: #333;
+    font-weight: bold;
+    /* Cambiar color sólido por gradiente */
+    background: linear-gradient(45deg, #007BFF, #FF00FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-/* Responsiveness */
+/* Responsividad */
 @media (max-width: 768px) {
-    .player-card {
-        width: 100%;
+    .page-wrapper {
+        flex-direction: column;
     }
-
+    
     .filter-panel, .content-section {
         width: 100%;
     }
-
-    .page-wrapper {
-        flex-direction: column;
+    
+    .player-list {
+        grid-template-columns: 1fr;
     }
 }

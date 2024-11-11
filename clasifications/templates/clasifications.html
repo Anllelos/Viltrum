@@ -12,58 +12,58 @@ Clasificaciones
 {% block content %}
 <div class="page-wrapper">
 
-    <!-- Filter Panel -->
-    <form method="GET" class="filter-panel">
+    <!-- Panel de Filtros -->
+    <form method="GET" class="filter-panel fade-in">
         <h3>Filtrar Resultados</h3>
 
-        <!-- Filter by Game -->
+        <!-- Filtrar por Juego -->
         <div class="filter-section">
             <h4>Videojuego</h4>
             <ul>
                 {% for game in game_stats %}
                 <li>
                     <label>
-                        <input type="checkbox" name="game" value="{{ game }}" {% if game in selected_game %}checked{% endif %} id="game_{{ forloop.counter }}"> {{ game }}
+                        <input type="checkbox" name="game" value="{{ game }}" {% if game in selected_game %}checked{% endif %}> {{ game }}
                     </label>
                 </li>
                 {% endfor %}
             </ul>
         </div>
 
-        <!-- Filter by Viltrum Rank -->
+        <!-- Filtrar por Rango Viltrum -->
         <div class="filter-section">
             <h4>Rango Viltrum</h4>
-            <label><input type="radio" name="viltrum_rank" value="E" {% if selected_rank == 'E' %}checked{% endif %} id="rank_E"> Elite</label><br>
-            <label><input type="radio" name="viltrum_rank" value="S" {% if selected_rank == 'S' %}checked{% endif %} id="rank_S"> Sakura</label><br>
-            <label><input type="radio" name="viltrum_rank" value="S+" {% if selected_rank == 'S+' %}checked{% endif %} id="rank_Splus"> Sakura +</label><br>
-            <label><input type="radio" name="viltrum_rank" value="V" {% if selected_rank == 'V' %}checked{% endif %} id="rank_V"> Viltrum</label><br>
-            <label><input type="radio" name="viltrum_rank" value="V+" {% if selected_rank == 'V+' %}checked{% endif %} id="rank_Vplus"> Viltrum +</label>
+            <label><input type="radio" name="viltrum_rank" value="E" {% if selected_rank == 'E' %}checked{% endif %}> Elite</label><br>
+            <label><input type="radio" name="viltrum_rank" value="S" {% if selected_rank == 'S' %}checked{% endif %}> Sakura</label><br>
+            <label><input type="radio" name="viltrum_rank" value="S+" {% if selected_rank == 'S+' %}checked{% endif %}> Sakura +</label><br>
+            <label><input type="radio" name="viltrum_rank" value="V" {% if selected_rank == 'V' %}checked{% endif %}> Viltrum</label><br>
+            <label><input type="radio" name="viltrum_rank" value="V+" {% if selected_rank == 'V+' %}checked{% endif %}> Viltrum +</label>
         </div>
 
-        <!-- Filter by Wins and Losses -->
+        <!-- Filtrar por Victorias y Derrotas -->
         <div class="filter-section">
             <h4>Victorias y Derrotas</h4>
             <label for="wins_filter">Victorias 
-                <input type="number" name="wins_filter" min="0" value="{{ wins_filter|default_if_none:0 }}" id="wins_filter">
+                <input type="number" name="wins_filter" min="0" value="{{ wins_filter|default_if_none:0 }}">
             </label><br>
             <label for="losses_filter">Derrotas 
-                <input type="number" name="losses_filter" min="0" value="{{ losses_filter|default_if_none:0 }}" id="losses_filter">
+                <input type="number" name="losses_filter" min="0" value="{{ losses_filter|default_if_none:0 }}">
             </label>
         </div>
 
-        <!-- Filter by Hours Played -->
+        <!-- Filtrar por Horas Jugadas -->
         <div class="filter-section">
             <h4>Horas Jugadas</h4>
             <label for="hours_filter">Horas 
-                <input type="number" name="hours_filter" min="0" value="{{ hours_filter|default_if_none:0 }}" id="hours_filter">
+                <input type="number" name="hours_filter" min="0" value="{{ hours_filter|default_if_none:0 }}">
             </label>
         </div>
 
-        <!-- Apply Filters Button -->
+        <!-- Botón de Aplicar Filtros -->
         <button class="filter-button" type="submit">Aplicar Filtros</button>
     </form>
 
-    <!-- Clasifications Content -->
+    <!-- Contenido de Clasificaciones -->
     <div class="content-section">
         {% for game, stats in game_stats.items %}
         <div class="game-section" data-game="{{ game }}">
@@ -71,7 +71,7 @@ Clasificaciones
 
             <div class="player-list">
                 {% for item in stats %}
-                <div class="player-card">
+                <div class="player-card fade-in">
                     <div class="player-info">
                         <a class="player-username" href="{% url 'profile' username=item.user.username %}">
                             {{ item.user.username }}
@@ -91,4 +91,20 @@ Clasificaciones
         {% endfor %}
     </div>
 </div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Animación de fade-in para el panel de filtros y tarjetas de jugador
+document.addEventListener("DOMContentLoaded", function () {
+    const elements = document.querySelectorAll('.fade-in');
+    elements.forEach((element, index) => {
+        setTimeout(() => {
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0)';
+        }, index * 100);
+    });
+});
+</script>
 {% endblock %}
