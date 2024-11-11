@@ -376,6 +376,11 @@ a:hover {
     position: relative;
     display: flex;
     flex-direction: column;
+    text-decoration: none;
+}
+
+.notification:hover {
+    text-decoration: none;
 }
 
 /* Brillo en las notificaciones */
@@ -420,14 +425,4 @@ a:hover {
 /* Mostrar el dropdown cuando está activo */
 .dropdown-content.notifications.show {
     display: block;
-}
-
-.notification {
-    background-color: #2b2b3b;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 8px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
 }

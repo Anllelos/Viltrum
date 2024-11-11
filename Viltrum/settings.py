@@ -97,8 +97,18 @@ TEMPLATES = [
 # Configuración de la base de datos
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',  
+        'NAME': 'viltrum',  
+        'USER': 'viltrumadmin',  
+        'PASSWORD': 'AVNS_byM9S6uxFBoAS5Rzmvf',  
+        'HOST': 'mysql-106b7d30-lasallistas-05c9.b.aivencloud.com',  
+        'PORT': '24980',  
+        'OPTIONS': {  
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'ssl':{
+                'ca':'C:\\ca.pem'
+            }
+        }
     }
 }
 

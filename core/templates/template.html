@@ -50,8 +50,13 @@
                 <i class="bi bi-trophy-fill"></i> Torneos
             </a>
             <a href="{% url 'clasifications' %}" class="viltrum-nav-link {% if request.resolver_match.url_name == 'clasifications' %}active{% endif %}">
-                <i class="bi bi-graph-up-arrow"></i> Clasificaciones
+                <i class="bi bi-graph-up-arrow"></i> Jugadores
             </a>
+            {% if role == 'gamer' %}
+            <a href="{% url 'games_stats' %}" class="viltrum-nav-link"><i class="bi bi-bar-chart-fill"></i> Juegos</a>
+            {% elif role == 'sponsor'   %}
+            <a href="{% url 'sponsor_products' %}" class="viltrum-nav-link"><i class="bi bi-basket2-fill"></i> Añadir Producto</a>
+            {% endif %}
         </nav>
 
         <div class="header-right">
@@ -65,21 +70,18 @@
 
             <!-- Dropdown de Notificaciones -->
             <div class="dropdown">
-                <button class="icon-button" id="notification-toggle" aria-expanded="false">
+                <a class="icon-button" id="notification-toggle" aria-expanded="false">
                     <i class="bi bi-bell-fill"></i>
-                </button>
-                <div class="dropdown-content notifications" id="notification-dropdown">
+                </a>
+                <div class="dropdown-content notifications" id="notificationList">
                     {% for notification in notifications %}
-                    <div class="notification">
-                        <div class="notiglow"></div>
-                        <div class="notiborderglow"></div>
-                        <div class="notititle">{{ notification.title }}</div>
-                        <div class="notibody">{{ notification.message }}</div>
-                    </div>
+                    <a class="notification">
+                        {{ notification.message }}
+                    </a>
                     {% empty %}
-                    <div class="notification">
+                    <a class="notification">
                         <div class="notititle">No hay nuevas notificaciones</div>
-                    </div>
+                    </a>
                     {% endfor %}
                 </div>
             </div>
@@ -98,12 +100,9 @@
                     <a href="{% url 'verification' user %}"><i class="bi bi-patch-check-fill"></i> Verificar perfil</a>
                     {% endif %}
                     {% if role == 'gamer' %}
-                    
-                    <a href="{% url 'games_stats' %}"><i class="bi bi-bar-chart-fill"></i> Estadísticas</a>
-                    {% else %}
-                    <a href="{% url 'sponsor_products' %}"><i class="bi bi-basket2-fill"></i> Añadir Producto</a>
+                    <a href="{% url 'my-sponsors' %}"><i class="bi bi-cash-coin"></i> Patrocinadores</a>
                     {% endif %}
-                    <a href="{% url 'user_logout' %}">Cerrar sesión</a>
+                    <a href="{% url 'user_logout' %}"><i class="bi bi-person-x-fill"></i> Cerrar sesión</a>
                 </div>
             </div>
             {% else %}
@@ -133,12 +132,11 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <!-- JS for Tooltip and Dropdown -->
         <script src="{% static 'core/js/dropMenu.js' %}"></script>
         {% if user.is_authenticated %}
-        <script>const userId = "{{ user.id }}"; </script>
-        <script src="{% static 'core/js/notifyWebSocket.js' %}"></script>
+            <script>const userId = "{{ user.id }}"; </script>
+            <script src="{% static 'core/js/notifyWebSocket.js' %}"></script>
         {% endif %}
     {% block extra_js %}{% endblock %}
 </body>

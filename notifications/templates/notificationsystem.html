@@ -33,8 +33,8 @@
 
     <script>
         // Obtener el ID del usuario autenticado desde un script del backend (puedes usar una plantilla para obtenerlo dinámicamente)
-        const userId = "{{ user.id }}";  // Asegúrate de pasar el id del usuario autenticado desde Django
-
+        const userId = "1";  // Asegúrate de pasar el id del usuario autenticado desde Django
+        const type = "asd";
         // Crear la URL del WebSocket
         const socketUrl = `ws://${window.location.host}/ws/notify/${userId}/`;
 
@@ -76,13 +76,16 @@
             const messageInput = document.getElementById('message');
             const receiverInput = document.getElementById('receiver');
 
+
             const message = messageInput.value;
             const receiver = receiverInput.value;
+            
 
             // Enviar el mensaje al WebSocket
             notificationSocket.send(JSON.stringify({
                 "message": message,
-                "receiver": receiver
+                "receiver": receiver,
+                "type":type
             }));
 
             // Limpiar los campos de entrada

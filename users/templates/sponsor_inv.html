@@ -8,104 +8,21 @@ Viltrum | Mis patrocinios
 {% endblock %}
 
 {% block extra_css %}
-<style>
-    /* Estilo general */
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #121212;
-    color: #fff;
-    margin: 0;
-    padding: 0;
-}
-
-/* Contenedor de patrocinios */
-.sponsorships-container {
-    max-width: 900px;
-    margin: 50px auto;
-    padding: 20px;
-}
-
-/* Título principal */
-h1 {
-    font-size: 2.5rem;
-    text-align: center;
-    margin-bottom: 40px;
-    color: #00ffff; /* Color gamer */
-}
-
-/* Tarjetas de patrocinio */
-.sponsorship-card {
-    background-color: #1e1e1e;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease;
-}
-
-.sponsorship-card:hover {
-    transform: scale(1.05);
-}
-
-/* Nombre del patrocinador */
-.sponsor-name {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-    color: #00d1ff; /* Detalle color cian */
-}
-
-/* Botones de acción */
-.actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-}
-
-.btn {
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-transform: uppercase;
-    font-size: 1rem;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-}
-
-.btn.accept {
-    background-color: #00ff5f;
-    color: #000;
-}
-
-.btn.reject {
-    background-color: #ff004c;
-    color: #fff;
-}
-
-.btn:hover {
-    opacity: 0.8;
-}
-
-/* ID del patrocinio */
-.sponsorship-id {
-    font-size: 0.9rem;
-    color: #888;
-    margin-top: 10px;
-    display: block;
-    text-align: right;
-}
-
-</style>
+<link rel="stylesheet" href="{% static 'css/sponsor_inv.css' %}">   
 {% endblock %}
 
 {% block content %}
-{% for inv in invitations %}
-<div>
-    <h2>{{inv.sponsor}}</h2>
-    <a href="{% url 'accept_sponsoship' sponsorship=inv.id value=1 %}">Aceptar</a>
-    <a href="{% url 'accept_sponsoship' sponsorship=inv.id value=2 %}">Rechazar</a>
+<div class="invitations-container">
+    {% for inv in invitations %}
+    <div class="invitation-card">
+        <h2 class="sponsor-name">{{inv.sponsor}}</h2>
+        <div class="actions">
+            <a class="btn accept" href="{% url 'accept_sponsoship' sponsorship=inv.id value=1 %}">Aceptar</a>
+            <a class="btn reject" href="{% url 'accept_sponsoship' sponsorship=inv.id value=2 %}">Rechazar</a>
+        </div>
+    </div>
+    {% empty %}
+    <span class="no-sponsorships">No hay patrocinios pendientes</span>
+    {% endfor %}
 </div>
-{% empty %}
-<span>No hay patrocinios pendientes</span>
-{% endfor %}
 {% endblock %}

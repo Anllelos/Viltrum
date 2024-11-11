@@ -19,7 +19,9 @@ Viltrum | Inicio
     <div class="overlay">
         <h1>Bienvenido a Viltrum</h1>
         <p>Únete a torneos, compite en equipos y escala en las clasificaciones.</p>
-        <a href="{% url 'register' %}" class="btn btn-primary btn-lg">Regístrate ahora</a>
+        {% if not user.is_authenticated %}
+            <a href="{% url 'register' %}" class="btn btn-primary btn-lg">Regístrate ahora</a>
+        {% endif %}
     </div>
 </section>
 
