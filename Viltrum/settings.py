@@ -21,6 +21,7 @@ from django.urls import reverse_lazy
 
 # Configuración del correo electrónico
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+ca_path = Path(__file__).parent.parent / "ca.pem"
 
 # Directorio base del proyecto
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -106,7 +107,7 @@ DATABASES = {
         'OPTIONS': {  
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
             'ssl':{
-                'ca':'C:\\ca.pem'
+                'ca': ca_path
             }
         }
     }
