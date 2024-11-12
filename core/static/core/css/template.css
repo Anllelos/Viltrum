@@ -40,6 +40,12 @@ a:hover {
     border-bottom: 1px solid #2A2A2A;
 }
 
+/* Ajustes para header-left */
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
 /* Logo con Animación */
 .logo-animation {
     text-decoration: none;
@@ -131,6 +137,71 @@ a:hover {
       -webkit-transform: translateY(-400%);
       transform: translateY(-400%);
     }
+}
+
+/* Estilos para el botón modificado */
+.button-icon {
+    display: flex;
+    border: none; /* Eliminamos el borde */
+    width: fit-content;
+    height: fit-content;
+    cursor: pointer;
+    margin-left: 20px; /* Espacio entre el logo y el botón */
+    border-radius: 10px; /* Esquinas redondeadas */
+    overflow: hidden; /* Para aplicar las esquinas redondeadas */
+    text-decoration: none; /* Para enlaces */
+}
+
+.icon {
+    background-color: #fff;
+    padding: 8px; /* Ajustamos el padding para hacer el botón ligeramente más grande */
+    border-top-left-radius: 10px; /* Esquinas redondeadas */
+    border-bottom-left-radius: 10px;
+}
+
+.icon svg {
+    width: 25px; /* Ajustamos el tamaño del icono */
+    height: 25px;
+}
+
+.cube {
+    transition: all 0.4s;
+    transform-style: preserve-3d;
+    width: 150px; /* Ajustamos el ancho para hacer el botón ligeramente más grande */
+    height: 25px;
+    position: relative;
+}
+
+.button-icon:hover .cube {
+    transform: rotateX(90deg);
+}
+
+.side {
+    position: fixed;
+    height: 46px;
+    width: 150px;
+    display: flex;
+    font-size: 0.9em;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+    backface-visibility: hidden;
+    border-top-right-radius: 5px; /* Esquinas redondeadas */
+    border-bottom-right-radius: 10px;
+}
+
+.top {
+    background: linear-gradient(to right, #6a0dad, #ff8c00); /* Degradado morado a naranja */
+    color: #fff;
+    transform: rotateX(-90deg) translate3d(0, 13.5px, 2em);
+}
+
+.front {
+    background: linear-gradient(to right, #6a0dad, #ff8c00); /* Degradado morado a naranja */
+    color: #fff;
+    transform: translate3d(0, 0, 1em);
 }
 
 /* Navegación Central */
