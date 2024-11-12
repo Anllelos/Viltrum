@@ -1,0 +1,31 @@
+{% extends 'template.html' %}
+{% load static %}  <!-- Cargar archivos estáticos -->
+
+{% block title %}
+Viltrum | Tienda de Productos
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'shop/product_list.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2>Tienda de Productos</h2>
+  <div class="shop-body">
+    {% if products %}
+      {% for product in products %}
+        <div class="shop-product-item">
+          <img src="{% if product.product_image %}{{ product.product_image.url }}{% else %}https://ui-avatars.com/api/?name={{ product.product_name }}{% endif %}" alt="{{ product.product_name }}" class="product-image">
+          <div class="shop-product-info">
+            <h3>{{ product.product_name }}</h3>
+            <p>{{ product.product_description }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="no-products">Actualmente no hay productos disponibles en la tienda.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

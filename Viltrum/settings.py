@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'explore.apps.ExploreConfig',
     'sponsors.apps.SponsorsConfig',
     'notifications.apps.NotificationsConfig',
+    'shop.apps.ShopConfig',
     'chat.apps.ChatConfig',
     'django.contrib.admin',
     'django.contrib.auth',

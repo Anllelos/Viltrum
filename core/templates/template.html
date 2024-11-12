@@ -52,9 +52,12 @@
             <a href="{% url 'clasifications' %}" class="viltrum-nav-link {% if request.resolver_match.url_name == 'clasifications' %}active{% endif %}">
                 <i class="bi bi-graph-up-arrow"></i> Jugadores
             </a>
+            <a href="{% url 'shop:product_list' %}" class="viltrum-nav-link {% if request.resolver_match.url_name == 'shop:product_list' %}active{% endif %}">
+                <i class="bi bi-basket-fill"></i> Tienda
+            </a>
             {% if role == 'gamer' %}
             <a href="{% url 'games_stats' %}" class="viltrum-nav-link"><i class="bi bi-bar-chart-fill"></i> Juegos</a>
-            {% elif role == 'sponsor'   %}
+            {% elif role == 'sponsor' %}
             <a href="{% url 'sponsor_products' %}" class="viltrum-nav-link"><i class="bi bi-basket2-fill"></i> Añadir Producto</a>
             {% endif %}
         </nav>
@@ -132,12 +135,12 @@
     </footer>
 
     <!-- Scripts -->
-        <!-- JS for Tooltip and Dropdown -->
-        <script src="{% static 'core/js/dropMenu.js' %}"></script>
-        {% if user.is_authenticated %}
-            <script>const userId = "{{ user.id }}"; </script>
-            <script src="{% static 'core/js/notifyWebSocket.js' %}"></script>
-        {% endif %}
+    <!-- JS for Tooltip and Dropdown -->
+    <script src="{% static 'core/js/dropMenu.js' %}"></script>
+    {% if user.is_authenticated %}
+        <script>const userId = "{{ user.id }}"; </script>
+        <script src="{% static 'core/js/notifyWebSocket.js' %}"></script>
+    {% endif %}
     {% block extra_js %}{% endblock %}
 </body>
 
