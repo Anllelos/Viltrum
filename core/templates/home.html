@@ -7,152 +7,163 @@ Viltrum | Inicio
 {% endblock %}
 
 {% block extra_css %}
-<!-- Enlace al archivo CSS personalizado -->
+<!-- CSS personalizado y Bootstrap -->
 <link rel="stylesheet" href="{% static 'core/css/home.css' %}">
-<!-- Enlace a Bootstrap CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 {% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
+<!-- Hero Section with Particles -->
 <section class="hero-section">
+    <div id="particles-js"></div>
     <div class="overlay">
-        <h1>Bienvenido a Viltrum</h1>
-        <p>Únete a torneos, compite en equipos y escala en las clasificaciones.</p>
+        <h1 class="hero-title">Bienvenido a Viltrum</h1>
+        <p class="hero-subtitle">Únete a torneos, compite en equipos y escala en las clasificaciones.</p>
         {% if not user.is_authenticated %}
-            <a href="{% url 'register' %}" class="btn btn-primary btn-lg">Regístrate ahora</a>
+            <a href="{% url 'register' %}" class="btn btn-primary btn-lg hero-button">Regístrate ahora</a>
         {% endif %}
     </div>
 </section>
 
-<!-- Carrusel de Juegos Destacados -->
-<section class="carousel-section">
-    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
-        <!-- Indicadores -->
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
-                aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
-                aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
-                aria-label="Slide 3"></button>
+<!-- Global Stats Section -->
+<section class="stats-section">
+    <h2 class="section-title">Estadísticas Globales</h2>
+    <div class="stats-container">
+        <div class="stat-item">
+            <p class="stat-number">120K+</p>
+            <p class="stat-desc">Usuarios Registrados</p>
         </div>
+        <div class="stat-item">
+            <p class="stat-number">50K+</p>
+            <p class="stat-desc">Torneos Jugados</p>
+        </div>
+        <div class="stat-item">
+            <p class="stat-number">300+</p>
+            <p class="stat-desc">Equipos Activos</p>
+        </div>
+    </div>
+</section>
 
-        <!-- Slides -->
+<!-- Carousel of Featured Games -->
+<section class="carousel-section">
+    <h2 class="section-title">Juegos Destacados</h2>
+    <div id="carouselExample" class="carousel slide">
         <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="5000">
-                <img src="{% static 'images/games/valorant.jpg' %}" class="d-block w-100 carousel-image" alt="Valorant">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Valorant</h5>
-                    <p>Compite en emocionantes partidas tácticas.</p>
-                </div>
-            </div>
-            <div class="carousel-item" data-bs-interval="5000">
-                <img src="{% static 'images/games/league_of_legends.jpg' %}" class="d-block w-100 carousel-image"
-                    alt="League of Legends">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>League of Legends</h5>
-                    <p>Demuestra tu habilidad en la Grieta del Invocador.</p>
-                </div>
+            <div class="carousel-item active">
+                <img src="{% static 'images/games/valorant.jpg' %}" class="d-block w-100" alt="Valorant">
             </div>
             <div class="carousel-item">
-                <img src="{% static 'images/games/call_of_duty.jpg' %}" class="d-block w-100 carousel-image"
-                    alt="Call of Duty">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Call of Duty</h5>
-                    <p>Acción intensa en el campo de batalla.</p>
-                </div>
+                <img src="{% static 'images/games/league_of_legends.jpg' %}" class="d-block w-100" alt="League of Legends">
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'images/games/call_of_duty.jpg' %}" class="d-block w-100" alt="Call of Duty">
             </div>
         </div>
-
-        <!-- Controles -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
-            data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Anterior</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark"
-            data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Siguiente</span>
         </button>
     </div>
 </section>
 
-<!-- Sección de Información -->
-<section class="info-section">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-6 order-md-2">
-                <img src="{% static 'images/home/gaming_setup.jpg' %}" alt="Gaming Setup" class="img-fluid rounded">
-            </div>
-            <div class="col-md-6 order-md-1">
-                <h2>Viltrum - Plataforma de eSports</h2>
-                <p>
-                    Viltrum es la plataforma definitiva para los apasionados de los eSports. Ofrecemos un espacio
-                    dinámico donde los jugadores de todos los niveles pueden participar en torneos emocionantes, formar
-                    equipos y competir por la gloria en las clasificaciones.
-                </p>
-                <p>
-                    Nuestra plataforma te brinda la oportunidad de mostrar tus habilidades, conectar con otros jugadores
-                    y escalar hasta la cima en un entorno competitivo pero inclusivo.
-                </p>
-                <a href="{% url 'register' %}" class="btn btn-primary">Comienza tu aventura</a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Sección de Actividades -->
+<!-- Activities Section -->
 <section class="activities-section">
-    <div class="container">
-        <h2 class="text-center">¿Qué hacer en Viltrum?</h2>
-        <div class="row">
-            <!-- Actividad 1 -->
-            <div class="col-md-4">
-                <div class="activity-card">
-                    <i class="bi bi-trophy-fill"></i>
-                    <h3>Compite en Torneos</h3>
-                    <p>Únete a nuestros torneos regulares y muestra tus habilidades frente a los mejores jugadores.</p>
-                </div>
+    <h2 class="section-title">¿Qué Hacer en Viltrum?</h2>
+    <div class="activities-container">
+        <div class="activity-card">
+            <h3 class="activity-title">Torneos en Vivo</h3>
+            <p>Únete y compite en torneos de los títulos más populares.</p>
+        </div>
+        <div class="activity-card">
+            <h3 class="activity-title">Comunidad de Jugadores</h3>
+            <p>Conéctate con otros gamers, forma equipos y colabora.</p>
+        </div>
+        <div class="activity-card">
+            <h3 class="activity-title">Meet & Greet</h3>
+            <p>Conoce a tus creadores de contenido favoritos.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section">
+    <h2 class="section-title">Lo Que Dicen Nuestros Jugadores</h2>
+    <div class="testimonials-container">
+        <div class="card" style="width: 18rem;">
+            <img src="{% static 'images/games/amlo.jpg' %}" class="card-img-top" alt="PlayerOne">
+            <div class="card-body">
+                <p class="card-text">"Viltrum ha cambiado la manera en que compito en torneos. ¡Es increíble! -Joe Biden"</p>
             </div>
-            <!-- Actividad 2 -->
-            <div class="col-md-4">
-                <div class="activity-card">
-                    <i class="bi bi-people-fill"></i>
-                    <h3>Crea Equipos</h3>
-                    <p>Forma equipos con otros jugadores y escala juntos hasta la cima de las clasificaciones.</p>
-                </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <img src="{% static 'images/games/biden.jpg' %}" class="card-img-top" alt="GamerGal">
+            <div class="card-body">
+                <p class="card-text">"La comunidad de Viltrum es muy acogedora. He hecho grandes amigos aquí. -Amlo"</p>
             </div>
-            <!-- Actividad 3 -->
-            <div class="col-md-4">
-                <div class="activity-card">
-                    <i class="bi bi-tv-fill"></i>
-                    <h3>Espectadores</h3>
-                    <p>Disfruta viendo partidas en vivo y apoya a tus jugadores favoritos en cada torneo.</p>
-                </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <img src="{% static 'images/games/kiritio.jpg' %}" class="card-img-top" alt="ProGamerX">
+            <div class="card-body">
+                <p class="card-text">"La organización de torneos es impecable. Todo un placer participar. -Kazuto"</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Sección Comunidad -->
-<section class="community-section">
-    <div class="container text-center">
-        <h2>Comunidad Viltrum</h2>
-        <p>
-            Desde Viltrum incentivamos la participación de todos los jugadores independientemente de su nivel de
-            habilidad. ¡Compite en la categoría que mejor se adapte a tu modo de divertirse!
-        </p>
-        <div class="social-ctas">
-            <a href="#" class="btn btn-discord"><i class="bi bi-discord"></i> Únete a nuestro Discord</a>
-            <a href="#" class="btn btn-twitch"><i class="bi bi-twitch"></i> Síguenos en Twitch</a>
-        </div>
+<!-- Sponsors Section -->
+<section class="sponsors-section">
+    <h2 class="section-title">Patrocinadores</h2>
+    <div class="sponsors-logos">
+        <img src="{% static 'images/games/HISENSE.png' %}" alt="Sponsor 1">
+        <img src="{% static 'images/games/LENOVO.png' %}" alt="Sponsor 1">
+        <img src="{% static 'images/games/LITTLECAESARS.png' %}" alt="Sponsor 1">
+        <img src="{% static 'images/games/MARUCHAN.png' %}" alt="Sponsor 1">
+        <img src="{% static 'images/games/TELCEL.png' %}" alt="Sponsor 1">
+        <img src="{% static 'images/games/twitch.png' %}" alt="Sponsor 1">
+        <img src="{% static 'images/games/VISA.png' %}" alt="Sponsor 1">
+        <img src="{% static 'images/games/WARNER.png' %}" alt="Sponsor 1">
+
     </div>
 </section>
 {% endblock %}
 
 {% block extra_js %}
-<!-- Enlace a Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const particleContainer = document.getElementById('particles-js');
+
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+
+            // Posición y tamaño aleatorio
+            const size = Math.random() * 5 + 3; // Tamaño entre 3 y 8 px
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+
+            // Añadir la partícula al contenedor
+            particleContainer.appendChild(particle);
+
+            // Configurar la animación y eliminar después de que termine
+            setTimeout(() => {
+                particle.remove();
+            }, 7000); // Dura 7 segundos antes de desaparecer
+        }
+
+        // Crear varias partículas inicialmente
+        for (let i = 0; i < 80; i++) { // Aumentamos el número de partículas a 80
+            createParticle();
+        }
+
+        // Crear partículas continuamente
+        setInterval(createParticle, 200); // Crear una nueva partícula cada 200 ms
+    });
+</script>
 {% endblock %}
