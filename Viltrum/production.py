@@ -20,16 +20,20 @@ from django.urls import reverse_lazy
 # API_KEY_RIOT = config('API_KEY_RIOT')
 
 # Configuración del correo electrónico
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-ca_path = Path(__file__).parent.parent / "ca.pem"
+EMAIL_HOST_PASSWORD = [os.environ['EMAIL_HOST_PASSWORD']]
+
 
 # Directorio base del proyecto
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Configuraciones rápidas para desarrollo (ajusta en producción)
-SECRET_KEY = config('SECRET_KEY', default='django-insecure--g9c3^4^y%@jkz%*edeqy=j&t4o+zu4qr&zo_)6^$1he2lgf+p')
-DEBUG = config('DEBUG', default=True, cast=bool)
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*').split(',')
+SECRET_KEY = [os.environ['SECRET']]
+
+DEBUG = False
+
+ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']]
+ 
+CSRF_TRUSTED_ORIGINS =  ['https://'+ os.environ['WEBSITE_HOSTNAME']]
 
 # Aplicaciones instaladas
 INSTALLED_APPS = [
@@ -101,13 +105,13 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'viltrum',
         'USER': 'viltrumadmin',
-        'PASSWORD': 'AVNS_byM9S6uxFBoAS5Rzmvf',
+        'PASSWORD': [os.environ['AIVEN_PASSWORD']],
         'HOST': 'mysql-106b7d30-lasallistas-05c9.b.aivencloud.com',
         'PORT': '24980',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
             'ssl': {
-                'ca': str(ca_path)
+                'ca': os.path.join(BASE_DIR, 'certificates', 'ca.pem'),
             }
         }
     }
@@ -129,9 +133,13 @@ USE_I18N = True
 USE_TZ = True
 
 # Archivos estáticos y de medios
-STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+ 
+STATICFILES_DIRS = (str(BASE_DIR.joinpath('azure_content/static')),)
+STATIC_URL = '/azure_content/static/'
+
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
