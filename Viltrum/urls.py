@@ -32,6 +32,7 @@ urlpatterns = [
     #Ruta de aplicaciones
     path('', include('core.urls')),  # Incluye todas las rutas de `core.urls` sin prefijo adicional
     path('', include('users.urls')),  # Incluye todas las rutas de `users.urls` sin prefijo adicional
+    path('shop/', include('shop.urls', namespace='shop')),
     path('', include('tournaments.urls')), # Incluye todas las rutas de `tournaments.urls` sin prefijo adicional
     path('', include('clasifications.urls')), # Incluye todas las rutas de `clasifications.urls` sin prefijo adicional
     path('', include('sponsors.urls')), # Incluye todas las rutas de `sponsors.urls` sin prefijo adicional

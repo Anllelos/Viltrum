@@ -1,301 +1,171 @@
-/* Global Styles */
+/* Estilos generales */
 body, html {
     margin: 0;
     padding: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
     color: #fff;
-    position: relative;
+    background: linear-gradient(135deg, #0A0B1A, #0B0D24);
 }
 
-/* Canvas Background */
-canvas {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1; /* Coloca el canvas detrás del contenido */
-}
-
-/* Profile Container */
-.profile-container {
-    max-width: 800px;
+/* Fondo del perfil */
+.profile-background {
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 20px;
-    position: relative;
-    z-index: 1; /* Asegura que el contenido esté por encima del canvas */
+    padding: 60px 20px;
+    text-align: center;
 }
 
-/* Profile Header */
+/* Banner del perfil */
 .profile-header {
     position: relative;
     margin-bottom: 50px;
 }
 
-/* Profile Banner */
-.profile-banner {
-    position: relative;
-    overflow: hidden;
-    border-radius: 10px;
-    border: 3px white solid;
-}
-
 .profile-banner img {
     width: 100%;
-    height: 300px;
+    height: 200px;
     object-fit: cover;
-    filter: brightness(0.7);
-    transition: transform 5s ease;
+    border-radius: 10px;
+    filter: brightness(0.6);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
-.profile-banner img:hover {
-    transform: scale(1.1);
-}
-
-/* Profile Image */
+/* Imagen de perfil */
 .profile-image {
-    position: absolute;
-    bottom: -60px;
-    left: 50%;
-    transform: translateX(-50%) rotate(0deg);
-    border-radius: 50%;
-    overflow: hidden;
+    width: 140px;
+    height: 140px;
     border: 5px solid #fff;
-    width: 120px;
-    height: 120px;
-    background: linear-gradient(45deg, #ff0066, #ffcc00);
-    animation: pulse 5s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: translateX(-50%) scale(1); }
-    50% { transform: translateX(-50%) scale(1.1); }
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0099FF, #FF00FF);
+    position: absolute;
+    top: 140px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px;
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.6), 0 0 30px rgba(0, 153, 255, 0.6);
 }
 
 .profile-image img {
     width: 100%;
     height: 100%;
+    border-radius: 50%;
     object-fit: cover;
 }
 
-/* Profile Icons */
-.profile-icons {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    gap: 15px;
+/* Información del usuario */
+.profile-info {
+    margin-top: 100px;
+    margin-bottom: 40px;
+    color: #e0e0e0;
 }
 
-.profile-icons a {
-    color: #fff;
-    font-size: 24px;
-    transition: color 0.3s, transform 0.3s;
-    position: relative;
-}
-
-.profile-icons a::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 50%;
-    width: 0%;
-    height: 2px;
-    background: #ffcc00;
-    transition: width 0.3s, left 0.3s;
-}
-
-.profile-icons a:hover::after {
-    width: 100%;
-    left: 0;
-}
-
-.profile-icons a:hover {
-    color: #ffcc00;
-    transform: scale(1.2);
-}
-
-/* User Information */
 .username {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     font-weight: bold;
-    margin-top: 10px;
-    position: relative;
-    display: inline-block;
-    background: linear-gradient(45deg, #ff0066, #ffcc00, #00ccff);
-    background-size: 400% 400%;
+    background: linear-gradient(90deg, #00FFFF, #FF00FF);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: rainbowText 10s ease infinite;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
-@keyframes rainbowText {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+.verificado-icon {
+    color: #FF00FF;
+    font-size: 1.3rem;
+    margin-left: 8px;
+    text-shadow: 0 0 8px rgba(255, 0, 255, 0.8);
 }
 
-.username::after {
-    content: '';
-    position: absolute;
-    left: -5px;
-    right: -5px;
-    bottom: -10px;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #ffcc00, transparent);
-    animation: underlineAnimation 3s infinite;
-}
-
-@keyframes underlineAnimation {
-    0% { left: -100%; right: 100%; }
-    50% { left: 0%; right: 0%; }
-    100% { left: 100%; right: -100%; }
-}
-
-.verificado {
-    color: #ffcc00;
-    font-size: 1.2rem;
-    margin-left: 10px;
-    animation: shine 3s infinite;
-}
-
-@keyframes shine {
-    0% { text-shadow: none; }
-    50% { text-shadow: 0 0 10px #ffcc00; }
-    100% { text-shadow: none; }
-}
-
-/* Typing Animation for Description */
 .user-description {
-    color: #fff;
     font-size: 1.1rem;
-    margin-top: 20px;
-    overflow: hidden;
-    white-space: nowrap;
-    border-right: .15em solid #ffcc00;
-    animation: typing 6s steps(40, end), blink-caret .75s step-end infinite;
+    max-width: 700px;
+    margin: 0 auto;
+    padding-top: 10px;
+    color: #bbb;
 }
 
-@keyframes typing {
-    0% { width: 0 }
-    50% { width: 100% }
-    100% { width: 100% }
+/* Estadísticas de juegos */
+.stats-section {
+    margin-top: 50px;
+    background: rgba(15, 15, 30, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
 }
 
-@keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: #ffcc00 }
+.section-title {
+    font-size: 2rem;
+    color: #FFFFFF;
+    background: linear-gradient(90deg, #00FFFF, #FF00FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    margin-bottom: 25px;
 }
 
-/* Game Cards */
-.gallery-container {
-    margin-top: 70px;
+.stats-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
 }
 
 .game-card {
-    background: rgba(0, 0, 0, 0.7);
-    border: 1px solid #ffcc00;
+    background: rgba(0, 0, 50, 0.8);
+    border: 1px solid #FF00FF;
     border-radius: 10px;
     padding: 20px;
-    margin-bottom: 20px;
-    position: relative;
+    width: 280px;
     color: #fff;
-    overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
-    backdrop-filter: blur(5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s;
 }
 
 .game-card:hover {
     transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
-}
-
-.game-card::before {
-    content: '';
-    position: absolute;
-    top: -100%;
-    left: -100%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at center, rgba(255,204,0,0.2), transparent);
-    opacity: 0;
-    transition: opacity 0.5s;
-}
-
-.game-card:hover::before {
-    opacity: 1;
-    animation: rotate 10s linear infinite;
-}
-
-@keyframes rotate {
-    from { transform: rotate(0deg) translate(-50%, -50%); }
-    to { transform: rotate(360deg) translate(-50%, -50%); }
+    box-shadow: 0 10px 20px rgba(255, 0, 255, 0.4);
 }
 
 .game-title {
+    color: #00FFFF;
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 10px;
     text-transform: uppercase;
-    color: #ffcc00;
-    position: relative;
-}
-
-.game-title::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0%;
-    height: 2px;
-    background: #ffcc00;
-    transition: width 0.5s;
-}
-
-.game-card:hover .game-title::after {
-    width: 100%;
 }
 
 .game-info span {
     display: block;
     font-size: 1rem;
     margin-bottom: 5px;
+    color: #bbb;
 }
 
-/* Icon Container */
-.icon-container {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+/* Mensaje sin juegos */
+.no-games {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #bbb;
 }
 
-.icon-container a {
-    color: #fff;
-    margin-left: 10px;
-    font-size: 20px;
-    transition: color 0.3s, transform 0.3s;
-}
-
-.icon-container a:hover {
-    color: #ffcc00;
-    transform: scale(1.2);
-}
-
-/* Profile Footer (Social Media Links) */
+/* Redes sociales */
 .profile-footer {
-    margin-top: 50px;
+    margin-top: 60px;
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 30px;
 }
 
 .profile-footer a {
-    color: #fff;
+    color: #bbb;
     font-size: 1.5rem;
     transition: color 0.3s, transform 0.3s;
     position: relative;
+    text-decoration: none;
+}
+
+.profile-footer a:hover {
+    color: #FF00FF;
+    transform: scale(1.1);
 }
 
 .profile-footer a::after {
@@ -305,212 +175,11 @@ canvas {
     left: 50%;
     width: 0%;
     height: 2px;
-    background: #ffcc00;
+    background: #FF00FF;
     transition: width 0.3s, left 0.3s;
 }
 
 .profile-footer a:hover::after {
     width: 100%;
     left: 0;
-}
-
-.profile-footer a:hover {
-    color: #ffcc00;
-    transform: scale(1.1);
-}
-
-/* Match Button */
-.match-button {
-    background: linear-gradient(45deg, #ff0066, #ffcc00);
-    color: #fff;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 30px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.5s, transform 0.2s;
-    display: inline-flex;
-    align-items: center;
-    margin-left: 15px;
-    position: relative;
-    overflow: hidden;
-}
-
-.match-button i {
-    margin-right: 10px;
-}
-
-.match-button::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: rgba(255,255,255,0.2);
-    transition: left 0.5s;
-}
-
-.match-button:hover::after {
-    left: 100%;
-}
-
-.match-button:hover {
-    background: linear-gradient(45deg, #ffcc00, #ff0066);
-    transform: translateY(-3px);
-}
-
-.message-button{
-    background: linear-gradient(45deg, #ff0066, #ffcc00);
-    color: #fff;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 30px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.5s, transform 0.2s;
-    display: inline-flex;
-    align-items: center;
-    margin-left: 15px;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .username {
-        font-size: 2rem;
-    }
-
-    .profile-image {
-        width: 100px;
-        height: 100px;
-        bottom: -50px;
-    }
-
-    .profile-icons a {
-        font-size: 20px;
-    }
-
-    .game-card {
-        padding: 15px;
-    }
-
-    .user-description {
-        font-size: 1rem;
-    }
-}
-
-/* From Uiverse.io by gagan-gv */ 
-
-.sponsors{
-    margin: 20px 0px;
-}
-
-.btn {
-    display: block;
-    padding: 0.7em 1em;
-    background: transparent;
-    outline: none;
-    border: 0;
-    color: #ffcc00;
-    letter-spacing: 0.1em;
-    font-family: monospace;
-    font-size: 17px;
-    font-weight: bold;
-    cursor: pointer;
-    z-index: 1;
-  }
-  
-  .cube {
-    position: relative;
-    transition: all 0.5s;
-  }
-  
-  .cube .bg-top {
-    position: absolute;
-    height: 10px;
-    background: #ffcc00;
-    bottom: 100%;
-    left: 5px;
-    right: -5px;
-    transform: skew(-45deg, 0);
-    margin: 0;
-    transition: all 0.4s;
-  }
-  
-  .cube .bg-top .bg-inner {
-    bottom: 0;
-  }
-  
-  .cube .bg {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    top: 0;
-    right: 0;
-    background: #ffcc00;
-    transition: all 0.4s;
-  }
-  
-  .cube .bg-right {
-    position: absolute;
-    background: #ffcc00;
-    top: -5px;
-    z-index: 0;
-    bottom: 5px;
-    width: 10px;
-    left: 100%;
-    transform: skew(0, -45deg);
-    transition: all 0.4s;
-  }
-  
-  .cube .bg-right .bg-inner {
-    left: 0;
-  }
-  
-  .cube .bg-inner {
-    background: #28282d;
-    position: absolute;
-    left: 2px;
-    right: 2px;
-    top: 2px;
-    bottom: 2px;
-  }
-  
-  .cube .text {
-    position: relative;
-    transition: all 0.4s;
-  }
-  
-  .cube:hover .bg-inner {
-    background: #ffcc00;
-    transition: all 0.4s;
-  }
-  
-  .cube:hover .text {
-    color: #28282d;
-    transition: all 0.4s;
-  }
-  
-  .cube:hover .bg-right,
-  .cube:hover .bg,
-  .cube:hover .bg-top {
-    background: #28282d;
-  }
-  
-  .cube:active {
-    z-index: 9999;
-    animation: bounce 0.1s linear;
-  }
-  
-  @keyframes bounce {
-    50% {
-      transform: scale(0.9);
-    }
-  }
-
-.interactions-buttons{
-    text-align: right;
-    color: white;
 }
