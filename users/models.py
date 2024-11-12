@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django_countries.fields import CountryField
+from storages.backends.azure_storage import AzureStorage
 
 # Modelo para información extra de usuarios (Jugadores Y Patrocinadores)
 class ExtendedData(models.Model):
@@ -11,13 +12,13 @@ class ExtendedData(models.Model):
         ("V", "Viltrum"),
         ("V+", "Viltrum +")
     ]
-    profile_img = models.ImageField(null=True, blank=True, upload_to="images/profileimg")  # Imagen de perfil
-    profile_banner = models.ImageField(null=True, blank=True, upload_to="images/profilebanner")  # Banner de perfil
+    profile_img = models.ImageField(null=True, blank=True, upload_to="images/profileimg", storage=AzureStorage())  # Imagen de perfil
+    profile_banner = models.ImageField(null=True, blank=True, upload_to="images/profilebanner", storage=AzureStorage())  # Banner de perfil
     user_description = models.TextField(null=True, blank=True)  # Descripción del usuario}
     viltrum_rank = models.CharField(max_length=3, choices=TYPE_CHOICES, default="E")
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)  # Relación uno a uno con el usuario
-    user_identification = models.ImageField(null=True, upload_to="identification")
-    user_photo = models.ImageField(null=True, upload_to="verification_photo")
+    user_identification = models.ImageField(null=True, upload_to="identification", storage=AzureStorage())
+    user_photo = models.ImageField(null=True, upload_to="verification_photo", storage=AzureStorage())
     user_verification = models.BooleanField(default=False)
     
     # Campos obligatorios en la creación
@@ -55,13 +56,13 @@ class SponsorProducts(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product_name = models.CharField(max_length=254, null=True)
     product_description = models.CharField(max_length=512, null=True)
-    product_image = models.ImageField(null=True, blank=True, upload_to="images/sponsorProducts")
+    product_image = models.ImageField(null=True, blank=True, upload_to="images/sponsorProducts", storage=AzureStorage())
     is_active = models.BooleanField(default=True)
 
 # Modelo para videojuegos
 class Videojuego(models.Model):
     nombre = models.CharField(max_length=100)  # Nombre del videojuego
-    portada = models.ImageField(upload_to='portadas/')  # Portada del videojuego
+    portada = models.ImageField(upload_to='portadas/', storage=AzureStorage())  # Portada del videojuego
 
     def __str__(self):
         return self.nombre  # Método para devolver el nombre del juego como string
@@ -72,7 +73,7 @@ class Stream(models.Model):
     descripcion = models.TextField()  # Descripción del stream
     enlace = models.URLField()  # Enlace al stream
     fecha = models.DateTimeField(auto_now_add=True)  # Fecha de creación automática
-    imagen = models.ImageField(upload_to='streams/')  # Imagen asociada al stream
+    imagen = models.ImageField(upload_to='streams/', storage=AzureStorage())  # Imagen asociada al stream
 
     def __str__(self):
         return self.titulo  # Devuelve el título del stream
@@ -91,7 +92,7 @@ class Message(models.Model):
 
 class UserGalleryImage(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='gallery_images/')
+    image = models.ImageField(upload_to='gallery_images/', storage=AzureStorage())
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

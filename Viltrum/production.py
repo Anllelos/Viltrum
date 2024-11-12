@@ -39,6 +39,7 @@ CSRF_TRUSTED_ORIGINS =  ['https://'+ os.environ['WEBSITE_HOSTNAME']]
 INSTALLED_APPS = [
     'daphne',
     'taggit',
+    'storages',
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',
     'tournaments.apps.TournamentsConfig',
@@ -139,9 +140,16 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = (str(BASE_DIR.joinpath('azure_content/static')),)
 STATIC_URL = '/azure_content/static/'
 
+#Media
+DEFAULT_FILE_STORAGE = 'backend.custom_azure.AzureMediaStorage'
+ 
+AZURE_ACCOUNT_NAME = os.environ.get('AZURE_ACCOUNT_NAME')
+AZURE_ACCOUNT_KEY = os.environ.get('AZURE_ACCOUNT_KEY')
+AZURE_CONTAINER = os.environ.get('AZURE_MEDIA_CONTAINER', 'media')
+AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_LOCATION = "media"
+MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
 
 # Tipo de campo de clave primaria por defecto
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
