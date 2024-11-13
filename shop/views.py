@@ -2,13 +2,14 @@ from django.shortcuts import render, get_object_or_404, redirect
 from users.forms import SponsorProductsForm  # Importamos el formulario existente
 from .models import Product
 from django.contrib.auth.decorators import login_required
+from users.models import SponsorProducts
 
 def product_list(request):
-    products = Product.objects.all()  # Obtener todos los productos
+    products = SponsorProducts.objects.filter(is_active=True)
     return render(request, 'shop/product_list.html', {'products': products})
 def product_detail(request, pk):
     """Muestra los detalles de un producto individual."""
-    product = get_object_or_404(Product, pk=pk)
+    product = SponsorProducts.objects.filter(pk=pk)
     return render(request, 'shop/product_detail.html', {'product': product})
 
 @login_required

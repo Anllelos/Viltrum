@@ -18,8 +18,9 @@ Viltrum | Tienda de Productos
         <div class="shop-product-item">
           <img src="{% if product.product_image %}{{ product.product_image.url }}{% else %}https://ui-avatars.com/api/?name={{ product.product_name }}{% endif %}" alt="{{ product.product_name }}" class="product-image">
           <div class="shop-product-info">
-            <h3>{{ product.product_name }}</h3>
-            <p>{{ product.product_description }}</p>
+            <a href="{% url 'profile_sponsor' product.user.username %}"><h3>{{ product.user.username }}</h3></a>
+            <a href="{% url 'shop:product_detail' product.id %}"><p>{{ product.product_name }}</p></a>
+            
           </div>
         </div>
       {% endfor %}
