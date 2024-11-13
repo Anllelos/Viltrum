@@ -162,19 +162,3 @@ CHANNEL_LAYERS = {
     },
 }
 
-# settings.py
-
-# Configuración oncloud -> En proceso
-# CHANNEL_LAYERS = {
-#     'default': {
-#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
-#         'CONFIG': {
-#             "hosts": [("redis://viltrum-redis.redis.cache.windows.net:6379", {
-#                 "password": "LrETpv6ev6pAbcGNPAu2sLhNSmvqz9pNzAzCaFZU1R0=",
-#                 "ssl": False,
-#             })],
-#         },
-#     },
-# }
-
-
