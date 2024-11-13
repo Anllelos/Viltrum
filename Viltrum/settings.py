@@ -155,9 +155,26 @@ EMAIL_HOST_USER = 'sviltrum@gmail.com'
 EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
 DEFAULT_FROM_EMAIL = 'no-reply@viltrum.com'
 
-# Configuración de capas de canales (Daphne)
+#Configuración de capas de canales (Daphne) --> Local
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels.layers.InMemoryChannelLayer",
     },
 }
+
+# settings.py
+
+# Configuración oncloud -> En proceso
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             "hosts": [("redis://viltrum-redis.redis.cache.windows.net:6379", {
+#                 "password": "LrETpv6ev6pAbcGNPAu2sLhNSmvqz9pNzAzCaFZU1R0=",
+#                 "ssl": False,
+#             })],
+#         },
+#     },
+# }
+
+
