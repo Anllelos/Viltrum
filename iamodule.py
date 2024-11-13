@@ -6,9 +6,9 @@ $ pip install google-generativeai
 
 import google.generativeai as genai
 import time
+import requests
 import imghdr
-import os
-from pathlib import Path
+import io
 
 def model_config():
 
@@ -66,44 +66,44 @@ def wait_for_files_active(files):
 def llm_promt_engineering_image(identification_photo_url, user_photo_url):
     model = model_config()
 
-    dir = str(os.path.dirname(os.path.abspath(__file__)))
-    print("------------Dir", dir)
-    identification_photo_url = str(Path(identification_photo_url))
-    print("--------------Identification", identification_photo_url)
-    user_photo_url = str(Path(user_photo_url))
-    print("--------------Foto", user_photo_url)
+    # Descargar las imágenes desde las URL
+    response1 = requests.get(identification_photo_url)
+    response2 = requests.get(user_photo_url)
 
+    # Verificar que ambas imágenes se descargaron correctamente
+    if response1.status_code != 200 or response2.status_code != 200:
+        return None  # Si alguna imagen no se descarga correctamente, devuelve None
 
-    identification_photo_path = dir + identification_photo_url
-    user_photo_path = dir + user_photo_url
-    
+    # Obtener el tipo MIME de las imágenes
+    mime_type1 = imghdr.what(None, h=response1.content)
+    mime_type2 = imghdr.what(None, h=response2.content)
 
-    mime_type1 = imghdr.what(identification_photo_path)
-    mime_type2 = imghdr.what(user_photo_path)
-
-# Mapeo de extensiones que imghdr.what devuelve a tipos MIME reales
+    # Mapeo de extensiones que imghdr.what devuelve a tipos MIME reales
     mime_type_map = {
-      'jpg': 'image/jpg',
-      'jpeg': 'image/jpeg',
-      'png': 'image/png',
-      'bmp': 'image/bmp'
+        'jpg': 'image/jpeg',
+        'jpeg': 'image/jpeg',
+        'png': 'image/png',
+        'bmp': 'image/bmp'
     }
 
-# Convertir lo que devuelve imghdr.what a un MIME real usando el mapeo
+    # Convertir lo que devuelve imghdr.what a un MIME real usando el mapeo
     mime_type1 = mime_type_map.get(mime_type1, None)
     mime_type2 = mime_type_map.get(mime_type2, None)
 
-# Lista de tipos MIME permitidos
+    # Lista de tipos MIME permitidos
     allowed_mime_types = ['image/jpeg', 'image/png', 'image/bmp', 'image/jpg']
 
-# Verificar si ambos tipos MIME están permitidos
+    # Verificar si ambos tipos MIME están permitidos
     if mime_type1 not in allowed_mime_types or mime_type2 not in allowed_mime_types:
-        return None
+        return None  # Si alguno no es permitido, retorna None
+    
+    image1 = io.BytesIO(response1.content)  # Crea un archivo temporal en memoria para la primera imagen
+    image2 = io.BytesIO(response2.content)  # Crea un archivo temporal en memoria para la segunda imagen
 
     files = [
-      upload_to_gemini(identification_photo_path, mime_type=mime_type1),
-      upload_to_gemini(user_photo_path, mime_type=mime_type2)
-  ]
+        upload_to_gemini(image1, mime_type=mime_type1),
+        upload_to_gemini(image2, mime_type=mime_type2)
+    ]
 
     chat = model.start_chat(
         history = [
