@@ -20,8 +20,9 @@ notificationSocket.onmessage = function (e) {
     // Añadir la notificación a la lista
     const notificationList = document.getElementById('notificationList');
     const newNotification = document.createElement('a');
+    newNotification.classList.add('notification'); // Agrega la clase 'notification'
     newNotification.textContent = message;
-    notificationList.appendChild(newNotification);
+    notificationList.prepend(newNotification);
 };
 
 // Cuando se cierre la conexión

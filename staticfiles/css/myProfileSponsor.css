@@ -1,128 +1,182 @@
 /* General styles */
 body {
     font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4; /* Fondo suave */
+    color: #333; /* Color de texto estándar */
 }
 
 /* Container */
 .profile-container {
     display: flex;
+    flex-direction: column;
     width: 100%;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 20px auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: #ffffff; /* Fondo blanco para el perfil */
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Sidebar */
-.sidebar {
-    flex: 0 0 250px;
-    padding-right: 20px;
-    border-right: 1px solid #ddd;
+/* Header */
+.profile-header {
+    position: relative;
 }
 
-.sidebar ul {
-    list-style: none;
-    padding: 0;
+.profile-banner {
+    height: 200px; /* Altura del banner */
+    overflow: hidden; /* Asegura que no haya desbordamiento */
+    border-radius: 8px; /* Bordes redondeados en todo el banner */
+    z-index: 0;
 }
 
-.sidebar ul li {
-    margin-bottom: 10px;
+.profile-banner img {
+    width: 100%; /* Ocupa todo el ancho del contenedor */
+    height: 100%; /* Ocupa toda la altura del contenedor */
+    object-fit: cover; /* Ajusta la imagen para cubrir el área sin distorsionarse */
+    border-radius: 8px 8px 0 0; /* Bordes redondeados en la parte superior */
+    top: 0; /* Alinea la imagen en la parte superior */
+    left: 0; /* Alinea la imagen a la izquierda */
 }
 
-.sidebar ul li a {
-    display: block;
-    padding: 10px;
-    color: #333;
-    background: #f0f0f0;
-    border-radius: 4px;
-    text-decoration: none;
-    transition: background 0.3s;
+.profile-header-user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -60px; /* Superpone la imagen de perfil */
+    z-index: 3;
 }
 
-.sidebar ul li a.active, .sidebar ul li a:hover {
-    background: #007bff;
-    color: white;
+.profile-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #007bff; /* Borde azul alrededor de la imagen de perfil */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Form container */
-.form-container {
-    flex: 1;
-    padding-left: 20px;
+#profile-pic {
+    width: 100%;
+    height: auto;
 }
 
-.form-section {
-    display: none;
+.username {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #007bff; /* Color del nombre del usuario */
 }
 
-.form-section.active {
-    display: block;
-}
-
+/* Productos */
 h2 {
     font-size: 24px;
-    margin-bottom: 20px;
+    margin: 20px 0;
+    color: #333;
 }
 
-.profile-data .input-group {
-    margin-bottom: 15px;
+/* Estilos para la lista de productos con grid */
+.profile-body {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Productos flexibles */
+    gap: 20px;
+    justify-content: space-around;
 }
 
-.profile-data .input-group input, 
-.profile-data .input-group textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background: #fff;
-    transition: border-color 0.3s;
-}
-
-.profile-data .input-group input:focus, 
-.profile-data .input-group textarea:focus {
-    border-color: #007bff;
-}
-
-.profile-data .input-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-/* Buttons */
-.button-group {
-    text-align: right;
-}
-
-.save-button {
-    display: inline-flex;
-    align-items: center;
-    padding: 10px 20px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.save-button i {
-    margin-left: 5px;
-}
-
-.save-button:hover {
-    background: #0056b3;
-}
-
-/* Images */
-.photo-section {
-    margin-bottom: 20px;
-}
-
-.photo-section img {
-    max-width: 100%;
+.profile-products {
+    background: #f0f0f0; /* Fondo gris claro */
     border-radius: 8px;
-    margin-bottom: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s; /* Transición suave */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+}
+
+.profile-products:hover {
+    transform: scale(1.05); /* Efecto de hover */
+}
+
+.product-image {
+    max-width: 100%;
+    max-height: 200px; /* Controla la altura máxima de las imágenes */
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px; /* Espacio entre la imagen y el texto */
+}
+
+.profile-products-info {
+    margin-top: 10px;
+}
+
+.profile-products-info h3 {
+    font-size: 18px;
+    color: #007bff; /* Tono azul para los nombres de los productos */
+}
+
+.profile-products-info p {
+    font-size: 14px;
+    color: #666; /* Color de la descripción */
+}
+
+/* Botones de edición y borrado */
+.edit-buttons {
+    display: flex; /* Cambia a flex para alineación horizontal */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    gap: 10px; /* Espacio entre los botones */
+    margin-bottom: 10px; /* Espacio entre los botones y la imagen */
+}
+
+.edit-btn,
+.delete-btn {
+    background-color: #4098e0; /* Color de fondo de los botones */
+    color: #ffffff; /* Color de texto */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 5px 10px; /* Espaciado interno */
+    text-decoration: none; /* Sin subrayado */
+    cursor: pointer; /* Cambia el cursor al pasar */
+    transition: background-color 0.3s; /* Transición para el hover */
+}
+
+.edit-btn:hover,
+.delete-btn:hover {
+    background-color: #006cd1; /* Color de fondo al pasar el ratón */
+}
+
+/* Estilo cuando no hay productos */
+.no-products {
+    text-align: center;
+    color: #777; /* Texto gris claro */
+}
+
+/* Descripción */
+.description p {
+    margin: 30px auto;
+    color: #666;
+    font-size: 1rem;
+    text-align: center;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .profile-body {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Menor cantidad de productos por fila en pantallas pequeñas */
+    }
+
+    .profile-products {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .product-image {
+        max-height: 150px; /* Ajusta la altura de las imágenes para pantallas pequeñas */
+    }
+
+    .profile-header-user {
+        margin-top: -40px; /* Ajustar la superposición de la imagen de perfil en pantallas pequeñas */
+    }
 }

@@ -1,3 +1,4 @@
+/* General */
 * {
     font-family: sans-serif;
     box-sizing: border-box; 
@@ -5,18 +6,15 @@
 
 body {
     color: white;
-    background-image: url('/static/images/login_background.gif');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;    
+    background: url('/static/images/login_background.gif') no-repeat center center / cover;    
     display: flex;
-    height: 100vh;
     flex-direction: column;
+    height: 100vh;
     margin: 0;
     backdrop-filter: blur(8px);
 }
 
-main{
+main {
     flex: 1;
 }
 
@@ -29,13 +27,12 @@ main{
     border: 2px solid transparent;
     border-radius: 10px;
     padding: 40px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 1px 10px black;
     text-align: center;
     width: 100%;
     max-width: 450px;
-    transition: 0.3s ease;
-    box-shadow: 1px 1px 10px black;
     margin: 100px auto;
+    transition: 0.3s ease;
 }
 
 h2 {
@@ -61,10 +58,26 @@ form {
     width: 100%;
 }
 
-.login-input {
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative; 
+    flex: 1; 
+    min-width: 40%; 
+}
+
+.input-group.name-data {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; 
+}
+
+.login-input,
+.input-group select,
+input {
     background: none;
     border: none;
-    border-bottom: rgb(70, 70, 70) 2px solid;
+    border-bottom: 2px solid rgb(70, 70, 70);
     padding: 12px;
     width: 100%;
     color: white;
@@ -73,20 +86,31 @@ form {
     outline: none;
 }
 
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1); 
+}
+
+
+.input-group select option {
+    background: #333;
+}
+
 .login-input::placeholder {
     color: transparent; 
 }
 
-.login-input:focus{
-    border-bottom: rgb(199, 2, 94) 2px solid;
+.login-input:focus {
+    border-bottom: 2px solid rgb(199, 2, 94);
 }
 
 .login-input:focus + label,
 .login-input:not(:placeholder-shown) + label {
-    top: -5px; 
+    top: -8px; 
     font-size: 12px; 
     color: rgb(199, 2, 94); 
     padding: 0 2px; 
+    background-color: #111; 
+    z-index: 1;
 }
 
 label {
@@ -98,41 +122,7 @@ label {
     color: rgb(70, 70, 70);
     transition: all 0.3s ease;
     pointer-events: none;
-}
-
-.google-btn {
-    padding: 12px;
-    width: 100%;
-    background: linear-gradient(#111, #111) padding-box, linear-gradient(45deg, rgb(199, 2, 94), rgb(2, 125, 240)) border-box;
-    border: 1px solid transparent;
-    border-radius: 10px;
-    color: white;
-    margin-bottom: 20px;
-    transition: 0.2s ease;
-}
-
-.google-icon {
-    width: 20px; 
-    height: auto;
-    margin-right: 8px; 
-}
-
-.google-btn:hover {
-    box-shadow: 0px 0px 10px 5px rgb(56, 20, 80);
-    cursor: pointer;
-}
-
-.remember-forgot {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    margin-bottom: 20px;
-    align-items: flex-start;
-    width: 100%;
-}
-
-.remember-forgot input[type="checkbox"] {
-    margin-right: 10px;
+    z-index: 1; 
 }
 
 .login-button {
@@ -166,12 +156,14 @@ a:hover {
     text-decoration: underline;
 }
 
-#password-requirements, #password-confirmation{
+#password-requirements,
+#password-confirmation {
     display: none;
     transition: 0.3s ease;
 }
 
-#password-requirements p, #password-confirmation p{
+#password-requirements p,
+#password-confirmation p {
     height: 25px;
     padding: 5px;
 }
@@ -180,6 +172,7 @@ a:hover {
     background-color: #4444448e;
     border-radius: 5px;
 }
+
 .valid {
     background-color: #0058db;
     border-radius: 3px;
@@ -189,7 +182,39 @@ a:hover {
     display: none;
 }
 
-/*Footer*/
+#form-type-buttons ul {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+}
+
+#form-type-buttons ul li {
+    border: 5px solid transparent;
+    border-image: linear-gradient(180deg, rgb(199, 2, 94), #111) 1;
+    padding: 10px;
+    min-width: 145px;
+}
+
+#form-type-buttons ul li a:hover {
+    cursor: pointer;
+}
+
+.form-section {
+    display: none;
+}
+
+.form-section.active {
+    display: block;
+}
+
+.activeli {
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-bottom: 2px solid white;
+}
+
+/* Footer */
 .footer-container {
     padding: 20px;
     background-color: #18181b;
@@ -210,8 +235,7 @@ a:hover {
     font-size: 20px;
 }
 
-#login-error{
+#login-error {
     color: #e80045;
     padding: 5px;
 }
-

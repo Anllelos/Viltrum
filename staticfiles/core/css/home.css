@@ -1,330 +1,217 @@
-/* Estilos para el Hero Section */
-.hero-section {
-    position: relative;
+/* General Body Styles */
+body {
+    background-color: #1C1C1E;
+    color: #FFFFFF;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    color: #FFFFFF;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    margin-bottom: 40px;
     text-align: center;
-    color: white;
-    padding: 100px 0;
-    /* Ajusta el espacio para que sea más prominente */
-    background-image: url('https://upload-os-bbs.hoyolab.com/upload/2024/07/07/244570541/bad4bd158529164f7d71f44d98a77eb2_6769761301970742193.gif');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    /* Hace que la imagen cubra todo el contenedor */
 }
 
-.banner {
-    background-image: url('https://upload-os-bbs.hoyolab.com/upload/2024/04/18/190435749/d90e47fd41f4d9c5af89b660a44f9a26_4231239746869581868.gif');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    /* Hace que la imagen cubra todo el contenedor */
-    padding: 50px;
-    border-radius: 15px;
-    /* Bordes redondeados para un mejor estilo */
-    max-width: 1000px;
-    /* Limita el ancho del banner */
-    margin: 0 auto;
-    /* Centra el banner */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    /* Añade una sombra para destacar */
+/* Hero Section with Particles */
+.hero-section {
+    padding: 150px 20px;
+    background: linear-gradient(135deg, #007BFF, #FF00FF);
+    text-align: center;
+    position: relative;
+    color: #FFFFFF;
+    overflow: hidden;
 }
 
-
-.banner h1 {
-    font-size: 3em;
-    /* Texto más grande para el título */
-    margin-bottom: 20px;
-}
-
-.banner p {
-    font-size: 1.5em;
-    color: #f0f0f0;
-}
-
-/* Para asegurarnos de que el texto sea legible en el banner */
-.hero-section::before {
-    content: '';
+#particles-js {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    /* Un fondo semitransparente */
+    width: 100%;
+    height: 100%;
     z-index: 1;
+    overflow: hidden;
 }
 
-.banner h1,
-.banner p {
+.particle {
+    position: absolute;
+    background-color: #FFFFFF;
+    opacity: 0.8;
+    border-radius: 50%;
+    box-shadow: 0 0 8px 4px rgba(255, 255, 255, 0.6);
+    animation: float-up 7s linear infinite, fade-out 7s linear infinite;
+}
+
+/* Animation for Particle Fade-out and Slow Upward Movement */
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes float-up {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-100px);
+    }
+}
+
+.hero-title, .hero-subtitle, .hero-button {
     position: relative;
     z-index: 2;
-    /* Asegura que el texto esté por encima del fondo semitransparente */
 }
 
-/* Estilos para las Portadas de Videojuegos */
-.game-covers-section {
-    padding: 40px 20px;
+.hero-button {
+    background: linear-gradient(135deg, #007BFF, #FF00FF);
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 30px;
+    color: #FFFFFF;
+    transition: box-shadow 0.3s ease;
 }
 
-.game-covers-section h2 {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 2em;
+.hero-button:hover {
+    box-shadow: 0 0 15px #FF00FF;
 }
 
-.game-cover-carousel {
-    margin: 0 auto;
-    max-width: 1200px;
-    /* Ajusta según sea necesario */
+/* Stats Section */
+.stats-section {
+    padding: 60px 0;
+    background-color: #1C1C1E;
 }
 
-.game-cover-card {
-    background-color: white;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    padding: 10px;
-    transition: transform 0.3s;
-}
-
-.game-cover-card img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.game-cover-card p {
-    margin-top: 10px;
-    font-weight: 500;
-}
-
-.game-cover-card:hover {
-    transform: translateY(-5px);
-}
-
-.content-section,
-.tournaments-section,
-.leaderboards-section,
-.teams-section {
-    padding: 40px 20px;
-}
-
-.streaming-grid,
-.tournament-grid,
-.leaderboard-grid,
-.team-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    padding: 20px;
-}
-
-.streaming-card,
-.tournament-card,
-.leaderboard-card,
-.team-card {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    transition: transform 0.3s;
-}
-
-.streaming-card:hover,
-.tournament-card:hover,
-.leaderboard-card:hover,
-.team-card:hover {
-    transform: translateY(-5px);
-}
-
-/*----------------------------------------------------------------------------------------------------------------------------------------------*/
-
-.brand-carousel {
+.stats-container {
     display: flex;
-    height: 50px;
-    justify-content: space-between;
-    background-color: #1c242b;
-    align-items: center;
+    justify-content: space-around;
+    text-align: center;
 }
 
-.brand-carousel img {
-    background-position: 50%;
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 100px;
-    padding: 10px;
+.stat-item {
+    font-size: 2rem;
+    color: #FFFFFF;
 }
 
-.festival-section {
-    background-image: url('../images/INICIO/esports-festival-bg.jpg');
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5rem 0;
-    background-size: cover;
-    /* Opcional: cubre toda el área */
-    background-position: center;
-    /* Opcional: centra la imagen */
-    background-repeat: no-repeat;
-    /* Opcional: evita que se repita la imagen */
-    color: white;
+.stat-number {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #FFFFFF;
+    animation: glow 2s ease-in-out infinite;
 }
 
-.festival-content {
-    max-width: 590px;
-    padding: 20px;
+@keyframes glow {
+    0% { text-shadow: 0 0 5px #FFFFFF, 0 0 10px #FFFFFF; }
+    50% { text-shadow: 0 0 15px #FFFFFF, 0 0 30px #FFFFFF; }
+    100% { text-shadow: 0 0 5px #FFFFFF, 0 0 10px #FFFFFF; }
 }
 
-.festival-content h2 {
-    font-size: 60px;
+/* Carousel Section */
+.carousel-section {
+    padding: 40px 0;
+    background-color: #1C1C1E;
 }
 
-.festival-content a {
-    background-color: #bb3b1b;
-    border-color: #bc1818;
-    color: #fff;
-    text-decoration: none;
-    padding: 10px;
-    border-radius: 5px;
+.carousel-inner img {
+    max-height: 400px;
+    object-fit: cover;
 }
 
-.festival-content a:hover {
-    background-color: #8b331d;
-    cursor: pointer;
-}
-
-.festival-image img {
-    max-width: 512px;
-    padding: 20px;
-}
-
+/* Activities Section */
 .activities-section {
-    text-align: center;
-    background-color: #231536;
-    color: white;
-    padding: 20px 0px;
-}
-
-.activities-section h2 {
-    margin: 0px auto 40px;
-    font-size: 60px;
+    background-color: #1C1C1E;
+    padding: 60px 0;
 }
 
 .activities-container {
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    /* Permite que las tarjetas se envuelvan en pantallas más pequeñas */
+    justify-content: space-around;
+    text-align: center;
 }
 
 .activity-card {
-    position: relative;
-    max-width: 362px;
+    background-color: #2A2A2A;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    width: 30%;
+    color: #FFFFFF;
+    transition: transform 0.3s;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.activity-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.activity-title {
+    font-size: 1.8rem;
+    color: #FFFFFF;
+    margin-bottom: 15px;
+}
+
+/* Testimonials Section */
+.testimonials-section {
+    background-color: #1C1C1E;
+    padding: 60px 0;
+}
+
+.testimonials-container {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.card {
+    background: #121212;
+    color: #FFFFFF;
+    border: none;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s;
+    width: 18rem;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img-top {
+    border-radius: 8px 8px 0 0;
+}
+
+/* Sponsors Section */
+.sponsors-section {
+    background-color: #1C1C1E;
+    padding: 60px 0;
+    text-align: center;
+}
+
+.sponsors-logos img {
+    max-width: 100px;
     margin: 10px;
-    /* Espaciado entre tarjetas */
-    overflow: hidden;
-    /* Esconde cualquier contenido que sobresalga */
+    transition: transform 0.3s;
 }
 
-.activity-card img {
-    width: 100%;
-    height: auto;
+.sponsors-logos img:hover {
+    transform: scale(1.1);
 }
 
-.text-overlay {
-    position: absolute;
-    /* Permite posicionar el texto sobre la imagen */
-    top: 70%;
-    /* Centra verticalmente */
-    left: 50%;
-    /* Centra horizontalmente */
-    width: 100%;
-    transform: translate(-50%, 0%);
-    /* Ajusta el centrado */
-    color: white;
-    /* Cambia el color del texto según el fondo */
-    text-align: center;
-    /* Centra el texto */
-    padding: 20px;
-    /* Añade un poco de espacio alrededor del texto */
-    border-radius: 5px;
-    /* Opcional: bordes redondeados */
-}
+/* Responsiveness */
+@media (max-width: 768px) {
+    .stats-container, .testimonials-container, .activities-container {
+        flex-direction: column;
+        align-items: center;
+    }
 
-.activity-card h3 {
-    margin: 0;
-    /* Elimina margen para mejor alineación */
-    font-size: 1.5em;
-    /* Ajusta el tamaño del texto del título */
-}
-
-.activity-card p {
-    margin: 0;
-    /* Elimina margen para mejor alineación */
-    font-size: 1em;
-    /* Ajusta el tamaño del texto del párrafo */
-}
-
-.blue img {
-    border: 2px solid blue;
-}
-
-.red img {
-    border: 2px solid red;
-}
-
-.yellow img {
-    border: 2px solid yellow;
-}
-
-.home-section-intro--title {
-    font-weight: bold;
-    font-size: 50px;
-}
-
-
-.social-ctas {
-    display: flex; /* Cambiar a flexbox para mejor alineación */
-    justify-content: center;
-    align-items: center; /* Centra verticalmente los elementos */
-    padding: 2rem;
-    position: relative;
-    text-align: center;
-}
-
-.social-cta {
-    display: inline-block; /* Asegura que los enlaces se comporten como bloques */
-    margin: 0 1rem; /* Espaciado entre los botones */
-    width: 300px;
-    height: 100px; /* Ajusta la altura según tus necesidades */
-    padding: 40px;
-}
-
-.social-cta img {
-    width: 100%; /* Hace que la imagen ocupe todo el ancho del contenedor */
-    height: auto; /* Hace que la imagen ocupe toda la altura del contenedor */
-    object-fit: contain; /* Mantiene la proporción de la imagen */
-}
-
-.twitch-cta {
-    background-color: #6322a1;
-    border: 4px solid #9c38fc;
-    border-radius: 8px; /* Opcional: bordes redondeados */
-    transition: 0.3s ease;
-}
-
-.twitch-cta:hover {
-    transform: translateY(-10px);
-}
-
-.discord-cta {
-    background-color: #4362aa;
-    border: 4px solid #6588da;
-    border-radius: 8px; /* Opcional: bordes redondeados */
-    transition: 0.3s ease;
-}
-
-.discord-cta:hover {
-    transform: translateY(-10px);
+    .activity-card {
+        width: 80%;
+        margin-bottom: 20px;
+    }
 }

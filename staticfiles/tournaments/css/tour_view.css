@@ -1,0 +1,251 @@
+/* Tournament Container */
+.tournament-container {
+    padding: 40px;
+    margin: 0 auto;
+    max-width: 1200px;
+    background: linear-gradient(135deg, #2b2b2b 0%, #121212 100%); /* Fondo oscuro con gradiente */
+    border-radius: 20px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.7);
+    background-image: url('https://www.transparenttextures.com/patterns/triangle.png'); /* Patrones geométricos */
+    background-size: 80px 80px;
+}
+
+/* Header */
+.tournament-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.tournament-title {
+    font-size: 42px;
+    font-weight: bold;
+    color: #00d4ff; /* Azul brillante */
+    text-shadow: 0 0 10px #00d4ff, 0 0 30px #00d4ff, 0 0 50px #00d4ff;
+    animation: glow 1.8s ease-in-out infinite alternate;
+}
+
+/* Tournament Status */
+.tournament-status {
+    font-size: 18px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.status {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.status.open {
+    color: #ff1f87; /* Rosa intenso */
+    text-shadow: 0 0 10px #ff1f87, 0 0 30px #ff1f87;
+}
+
+.status.closed {
+    color: #8e44ad; /* Morado */
+    text-shadow: 0 0 10px #8e44ad, 0 0 30px #8e44ad;
+}
+
+.tournament-winner {
+    font-size: 16px;
+    margin-top: 10px;
+    color: #ff1f87;
+    text-align: center;
+}
+
+/* Game Information */
+.game-info {
+    margin-top: 20px;
+}
+
+.game-info h2 {
+    font-size: 24px;
+    color: #ff1f87; /* Rosa intenso */
+    text-transform: uppercase;
+    text-shadow: 0 0 15px #ff1f87, 0 0 25px #ff1f87;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 14px 28px;
+    margin: 12px;
+    font-weight: bold;
+    color: #121212; /* Fondo oscuro */
+    text-decoration: none;
+    border-radius: 12px;
+    background-color: #00d4ff; /* Azul brillante */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s, background-color 0.3s ease-in-out;
+    position: relative;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    background-color: #ff1f87; /* Rosa intenso */
+    animation: pulse 1s infinite;
+}
+
+.btn:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background-color: #8e44ad; /* Morado */
+    transition: all 0.3s;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.2;
+}
+
+.btn:hover:before {
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+
+/* Animation for glow and pulsing effects */
+@keyframes glow {
+    0% {
+        text-shadow: 0 0 10px #ff1f87, 0 0 20px #ff1f87, 0 0 30px #ff1f87;
+    }
+    50% {
+        text-shadow: 0 0 20px #ff1f87, 0 0 40px #ff1f87, 0 0 60px #ff1f87;
+    }
+    100% {
+        text-shadow: 0 0 10px #ff1f87, 0 0 20px #ff1f87, 0 0 30px #ff1f87;
+    }
+}
+
+/* Pulsing effect */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        background-color: #00d4ff;
+    }
+    50% {
+        transform: scale(1.1);
+        background-color: #ff1f87;
+    }
+    100% {
+        transform: scale(1);
+        background-color: #00d4ff;
+    }
+}
+
+/* Member Cards */
+.member-card {
+    background-color: rgba(40, 40, 40, 0.85); /* Fondo oscuro translúcido */
+    margin: 20px 0;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrado verticalmente */
+    text-align: center; /* Centrado horizontalmente */
+}
+
+.member-card:hover {
+    transform: scale(1.07);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9);
+}
+
+.member-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #00d4ff; /* Azul brillante */
+    text-transform: uppercase;
+    text-shadow: 0 0 10px #00d4ff;
+    margin-bottom: 12px;
+}
+
+.member-stats p {
+    font-size: 16px;
+    color: #8e44ad; /* Morado */
+    margin-bottom: 12px;
+}
+
+/* Member Actions */
+.member-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+/* Empty State Text */
+.no-inscriptions, .no-members, .already-registered, .full-tournament {
+    font-size: 18px;
+    color: #888; /* Gris oscuro */
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Member Registration Section */
+.tournament-registration {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+/* Glow Effect on Links */
+a {
+    color: #ff1f87; /* Rosa intenso */
+    text-decoration: none;
+    position: relative;
+    font-weight: bold;
+}
+
+a:hover {
+    color: #00d4ff;
+    text-shadow: 0 0 10px #00d4ff, 0 0 30px #00d4ff;
+}
+
+a:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background: #ff1f87; /* Rosa intenso */
+    bottom: 0;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease;
+}
+
+a:hover:before {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .tournament-container {
+        padding: 20px;
+    }
+
+    .tournament-title {
+        font-size: 32px;
+    }
+
+    .game-info h2 {
+        font-size: 22px;
+    }
+
+    .member-card {
+        padding: 18px;
+        width: 90%; /* Ajuste para dispositivos pequeños */
+    }
+
+    .member-name {
+        font-size: 20px;
+    }
+
+    .member-stats p {
+        font-size: 14px;
+    }
+}
