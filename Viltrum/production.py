@@ -30,9 +30,9 @@ SECRET_KEY = os.environ['SECRET']
 
 DEBUG = False
 
-ALLOWED_HOSTS = os.environ['WEBSITE_HOSTNAME']
+ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']]
  
-CSRF_TRUSTED_ORIGINS =  'https://'+ os.environ['WEBSITE_HOSTNAME']
+CSRF_TRUSTED_ORIGINS = 'https://'+ os.environ['WEBSITE_HOSTNAME']
 
 # Aplicaciones instaladas
 INSTALLED_APPS = [
