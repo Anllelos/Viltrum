@@ -2,7 +2,7 @@
 // Obtener el ID del usuario autenticado desde un script del backend (puedes usar una plantilla para obtenerlo dinámicamente)
 
 // Crear la URL del WebSocket
-const socketUrl = `wss://${window.location.host}/ws/notify/${userId}/`;
+const socketUrl = `ws://${window.location.host}/ws/notify/${userId}/`;
 
 // Crear la conexión del WebSocket
 const notificationSocket = new WebSocket(socketUrl);
