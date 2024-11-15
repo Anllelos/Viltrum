@@ -72,7 +72,7 @@ Viltrum | Chat
 
 {% block extra_js %}
 <script>
-    const chatSocket = new WebSocket(`ws://${window.location.host}/ws/chatroom/{{ chatroom_name }}`);
+    const chatSocket = new WebSocket(`wss://${window.location.host}/ws/chatroom/{{ chatroom_name }}`);
     
     chatSocket.onopen = function (e) {
         console.log("Conectado al WebSocket de Chat");
