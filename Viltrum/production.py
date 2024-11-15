@@ -163,9 +163,12 @@ EMAIL_HOST_USER = 'sviltrum@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 DEFAULT_FROM_EMAIL = 'no-reply@viltrum.com'
 
-# Configuración de capas de canales (Daphne)
+# Configuración de capas de canales con Redis(Daphne)
 CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [f"redis://:{os.environ['REDIS_PASSWORD']}@{os.environ['REDIS_SERVER']}:{os.environ['REDIS_PORT']}"],
+        },
     },
 }
