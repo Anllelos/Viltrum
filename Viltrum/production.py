@@ -20,20 +20,19 @@ from django.urls import reverse_lazy
 # API_KEY_RIOT = config('API_KEY_RIOT')
 
 # Configuración del correo electrónico
-EMAIL_HOST_PASSWORD = [os.environ['EMAIL_HOST_PASSWORD']]
 
 
 # Directorio base del proyecto
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Configuraciones rápidas para desarrollo (ajusta en producción)
-SECRET_KEY = [os.environ['SECRET']]
+SECRET_KEY = os.environ['SECRET']
 
 DEBUG = False
 
-ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']]
+ALLOWED_HOSTS = os.environ['WEBSITE_HOSTNAME']
  
-CSRF_TRUSTED_ORIGINS =  ['https://'+ os.environ['WEBSITE_HOSTNAME']]
+CSRF_TRUSTED_ORIGINS =  'https://'+ os.environ['WEBSITE_HOSTNAME']
 
 # Aplicaciones instaladas
 INSTALLED_APPS = [
@@ -106,7 +105,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'viltrum',
         'USER': 'viltrumadmin',
-        'PASSWORD': [os.environ['AIVEN_PASSWORD']],
+        'PASSWORD': os.environ['AIVEN_PASSWORD'],
         'HOST': 'mysql-106b7d30-lasallistas-05c9.b.aivencloud.com',
         'PORT': '24980',
         'OPTIONS': {
@@ -160,7 +159,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'sviltrum@gmail.com'
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 DEFAULT_FROM_EMAIL = 'no-reply@viltrum.com'
 
 # Configuración de capas de canales (Daphne)

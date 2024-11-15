@@ -27,7 +27,7 @@ ca_path = Path(__file__).parent.parent / "ca.pem"
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Configuraciones rápidas para desarrollo (ajusta en producción)
-SECRET_KEY = config('SECRET_KEY', default='django-insecure--g9c3^4^y%@jkz%*edeqy=j&t4o+zu4qr&zo_)6^$1he2lgf+p')
+SECRET_KEY = 'django-insecure--g9c3^4^y%@jkz%*edeqy=j&t4o+zu4qr&zo_)6^$1he2lgf+p'
 DEBUG = config('DEBUG', default=True, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*').split(',')
 
