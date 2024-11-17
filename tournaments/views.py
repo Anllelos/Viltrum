@@ -68,7 +68,7 @@ def list_tournaments(request):
 #------------------------------------------------------------------------ Ver detalles de torneo ------------------------------------------------------------------------#
 
 def view_tournament(request, tournament_id):
-    active_user = request.user
+    active_user = request.user.is_authenticated
     tournament = get_object_or_404(Tournament, pk=tournament_id)
     tournament_inscriptions = TournamentInscription.objects.filter(tournament=tournament, status="P")
     tournament_members = TournamentInscription.objects.filter(tournament=tournament, status="A")

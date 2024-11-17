@@ -30,7 +30,7 @@ Viltrum | Torneos
     </section>
 
     <section class="tournament-owner">
-        {% if user.id == tournament.owner.id %}
+        {% if user.is_authenticated and user.id == tournament.owner.id %}
             <p>Creado por: Tú ({{ tournament.owner }})</p>
             {% if tournament.status %}
                 <a href="{% url 'edit_tournament' tournament.id %}" class="btn edit-btn"><i class="fa fa-edit"></i> Editar</a>
@@ -42,6 +42,7 @@ Viltrum | Torneos
         {% endif %}
     </section>
 
+    {% if user.is_authenticated and user.id == tournament.owner.id %}
     <section class="inscription-requests">
         <h3>Solicitudes para unirse al torneo</h3>
         {% for inscription in tournament_inscriptions %}
@@ -56,6 +57,7 @@ Viltrum | Torneos
             <span class="no-inscriptions">No hay Solicitudes Pendientes</span>
         {% endfor %}
     </section>
+    {% endif %}
 
     <section class="tournament-members">
         <h2>Miembros:</h2>
@@ -70,6 +72,7 @@ Viltrum | Torneos
                         <p class="no-stats">El jugador no tiene estadísticas para este juego</p>
                     {% endif %}
                 </div>
+                {% if user.is_authenticated %}
                 {% if tournament.owner.id == user.id %}
                     <div class="member-actions">
                         <form id="deleteForm-{{ item.member.id }}" action="{% url 'remove_member' inscription_id=item.member.id tournament_id=tournament.id %}" method="post" class="inline-form">
@@ -84,6 +87,7 @@ Viltrum | Torneos
                         {% endif %}
                     </div>
                 {% endif %}
+                {% endif %}
             </div>
         {% empty %}
             <span class="no-members">Aún no se han registrado jugadores a este torneo</span>
@@ -91,14 +95,16 @@ Viltrum | Torneos
     </section>
 
     <section class="tournament-registration">
+        {% if user.is_authenticated %}
         {% if not is_full %}
-            {% if tournament.status and user.is_authenticated and user.id != tournament.owner.id and is_not_registered %}
+            {% if tournament.status and user.id != tournament.owner.id and is_not_registered %}
                 <a href="{% url 'tournament_inscription' tournament.id %}" class="btn register-btn"><i class="fa fa-plus"></i> Inscribirse</a>
             {% else %}
                 <span class="already-registered">Ya estás inscrito a este torneo</span>
             {% endif %}
         {% else %}
             <span class="full-tournament">El torneo alcanzó su capacidad máxima.</span>
+        {% endif %}
         {% endif %}
     </section>
 </div>
