@@ -28,12 +28,16 @@ def profile_redirect(request):
     return redirect('home')
 
 def profile_user(request, username):
+    active_user = request.user
     user_to_validate = get_object_or_404(User, username=username)
     if user_to_validate.groups.filter(name='Gamer').exists():
         extended_data_table = get_object_or_404(ExtendedData, user=user_to_validate)
         game_stats_table = PlayerStats.objects.filter(user=user_to_validate, is_active=True)
         tournaments_created = Tournament.objects.filter(owner=user_to_validate)
-        notification_sended = NotificationSystem.objects.filter(receiver=user_to_validate, sender=request.user).first()
+        if request.user.is_authenticated:
+            notification_sended = NotificationSystem.objects.filter(receiver=user_to_validate, sender=active_user).first()
+        else:
+            notification_sended = None
         sponsors = Sponsorship.objects.filter(user=user_to_validate, status="A")
 
         # Query gallery images associated with the user
@@ -56,6 +60,7 @@ def profile_user(request, username):
                 total_games = game.wins + game.losses
                 game.winrate = (game.wins / total_games) * 100 if total_games > 0 else 0
                 n_games += 1
+                game.name = game.get_game_display()
             data_context['games'] = game_stats_table
             data_context['n_games'] = n_games
         else:

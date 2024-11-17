@@ -54,7 +54,7 @@ body, html {
 
 /* Información del usuario */
 .profile-info {
-    margin-top: 100px;
+    margin-top: 25px;
     margin-bottom: 40px;
     color: #e0e0e0;
 }
@@ -182,4 +182,76 @@ body, html {
 .profile-footer a:hover::after {
     width: 100%;
     left: 0;
+}
+
+.interaction-buton{
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    align-items: center;
+    justify-content: right;
+    
+}
+
+.interaction-buton a, .interaction-buton button{
+    text-decoration: none;
+    color: rgb(0, 204, 255);
+    font-weight: bold;
+    font-size: 17px;
+    background-color: #152052;
+    border-radius: 10px;
+    padding: 10px;
+    border: #FF00FF 1px solid;
+    transition: 0.2s ease;
+}
+
+.interaction-buton a:hover{
+    color: rgb(0, 204, 255);
+    transform: scale(1.1);
+    text-decoration: none;
+}
+
+.interaction-buton button:disabled{
+    color: rgb(32, 115, 136);
+    cursor:  not-allowed;
+    border: #970f97 1px solid;
+}
+
+.profile-sponsors{
+    background-color: #0A0B1A;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    border-radius: 15px;
+    padding: 30px;
+}
+
+.profile-sponsors h2{
+    font-size: 2rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, #00FFFF, #FF00FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.sponsors {
+    display: flex;
+    gap: 20px;
+}
+
+.sponsors a{
+    font-size: 1.5rem;
+    color: #0099FF;
+    border: #FF00FF 1px solid;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 10px;
+    transition: 0.2s ease;
+}
+
+.sponsors a:hover{
+    text-shadow: 3px 3px 5px #FF00FF;
+    color: #0099FF;
+    text-decoration: underline;
+    border-radius: 0px;
+    box-shadow: 2px 2px 2px 1px #FF00FF;
 }

@@ -25,6 +25,10 @@ class ExtendedData(models.Model):
     country = CountryField(blank_label='Selecciona tu país', null=True, blank=True)
     birthdate = models.DateField(null=True, blank=True)
 
+    @property
+    def country_display(self):
+        return self.get_country_display()
+
 # Modelo para agregar estadísticas de jugadores
 class PlayerStats(models.Model):
     TYPE_CHOICES = [
