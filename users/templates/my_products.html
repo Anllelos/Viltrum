@@ -1,0 +1,94 @@
+{% extends 'template.html' %}
+
+{% load static %}
+
+{% block title %}
+Viltrum | Productos
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/my-products.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Alerta de eliminación -->
+<div id="custom-confirmation" class="alert-hidden">
+    <div class="alert-content">
+        <p id="confirmation-message">¿Estás seguro de que deseas eliminar este producto?</p>
+        <button id="confirm-delete" class="confirm-btn">Eliminar</button>
+        <button id="cancel-delete" class="cancel-btn">Cancelar</button>
+    </div>
+</div>
+
+<div class="main-container">
+    <div class="five">
+        <h1>Mis Productos</h1>
+    </div>
+
+    <button class="button" id="redirectButton">
+        Añadir producto <i class="bi bi-cart-plus"></i>
+    </button>
+
+    <div class="stats-container">
+        {% for product in user_products %}
+        <div class="product-card">
+            <div class="product-image">
+                <img src="{% if product.product_image %}{{ product.product_image.url }}{% else %}https://ui-avatars.com/api/?name={{ product.product_name }}{% endif %}" 
+                     alt="{{ product.product_name }}">
+            </div>
+            <div class="product-info">
+                <h4 class="product-title">{{ product.product_name }}</h4>
+                <p class="product-description">{{ product.product_description }}</p>
+                <h4 class="product-title">$ {{ product.price }}</h4>
+            </div>
+            {% if user.id == product.user.id %}
+            <div class="product-actions">
+                <a href="{% url 'edit_product' product.id %}" class="btn edit-btn"><i class="bi bi-pencil-square"></i> Editar</a>
+                <form id="deleteForm-{{ product.id }}" method="post" action="{% url 'delete_product' product.id %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="button" onclick="showConfirmation({{ product.id }})" class="btn delete-btn">
+                        <i class="bi bi-x-circle"></i> Borrar
+                    </button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+        {% empty %}
+        <span>Aún no se han registrado productos</span>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.getElementById('redirectButton').addEventListener('click', function() {
+        window.location.href = "{% url 'sponsor_products' %}";
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        let deleteFormId = null;  // Variable para almacenar el ID del formulario a eliminar
+
+        // Muestra el cuadro de confirmación personalizado
+        window.showConfirmation = function(formId) {
+            deleteFormId = formId;
+            document.getElementById("custom-confirmation").classList.remove("alert-hidden");
+        };
+
+        // Cierra el cuadro de confirmación
+        function closeConfirmation() {
+            document.getElementById("custom-confirmation").classList.add("alert-hidden");
+        }
+
+        // Elimina el ítem si se confirma
+        document.getElementById("confirm-delete").addEventListener("click", function() {
+            if (deleteFormId) {
+                document.getElementById(`deleteForm-${deleteFormId}`).submit();
+            }
+        });
+
+        // Botón para cancelar (oculta la notificación)
+        document.getElementById("cancel-delete").addEventListener("click", closeConfirmation);
+    });
+</script>
+{% endblock %}

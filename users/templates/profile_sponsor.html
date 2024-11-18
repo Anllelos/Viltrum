@@ -32,7 +32,7 @@ Viltrum | Patrocinador {{ profile_sponsor.username }}
         <h2 class="username">{{ profile_sponsor.username }}</h2>
         <p class="user-description">{{ profile.user_description|default:"El patrocinador no ha agregado información aún." }}</p>
         <br>
-        <p>País <i class="bi bi-geo-alt-fill"></i> {{ profile.country_display }}</p>
+        <p>País <i class="bi bi-geo-alt-fill"></i> {{ extended_data.country_display }}</p>
     </div>
 
     <!-- Productos del patrocinador -->
@@ -49,15 +49,6 @@ Viltrum | Patrocinador {{ profile_sponsor.username }}
                             <h4 class="product-title">{{ product.product_name }}</h4>
                             <p class="product-description">{{ product.product_description }}</p>
                         </div>
-                        {% if user.id == profile_sponsor.id %}
-                        <div class="product-actions">
-                            <a href="{% url 'edit_product' product.id %}" class="btn edit-btn"><i class="bi bi-pencil-square"></i> Editar</a>
-                            <form id="deleteForm-{{ product.id }}" method="post" action="{% url 'delete_product' product.id %}" style="display: inline;">
-                                {% csrf_token %}
-                                <button type="button" onclick="confirmDeletion('{{ product.id }}')" class="btn delete-btn"><i class="bi bi-x-circle"></i> Borrar</button>
-                            </form>
-                        </div>
-                        {% endif %}
                     </div>
                 {% endfor %}
             {% else %}

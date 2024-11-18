@@ -20,6 +20,7 @@ urlpatterns = [
     path('profile/games_stats/edit/<int:game_id>', views.update_game_stats, name='edit_game_stat'),
     path('profile/game_stats/delete/<int:game_id>', views.delete_game_stats, name='delete_game_stats'),
     #Productos  
+    path('profile/my-products/', views.product_view, name='product_view'),
     path('profile/products/', views.sponsor_products, name='sponsor_products'),  
     path('profile/product/edit/<int:product_id>', views.update_product, name='edit_product'),
     path('profile/product/delete/<int:product_id>', views.delete_product, name='delete_product'),
