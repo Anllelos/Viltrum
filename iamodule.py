@@ -19,8 +19,8 @@ def model_config():
         "temperature": 1,
         "top_p": 0.95,
         "top_k": 64,
-        "max_output_tokens": 8192,
-        "response_mime_type": "text/plain",
+        "max_output_tokens": 10192,
+        "response_mime_type": "application/json",
     }
 
     model = genai.GenerativeModel(
@@ -144,8 +144,7 @@ def llm_promt_engineering_image(identification_photo_url, user_photo_url):
 
 Devuelve únicamente el resultado en el siguiente formato, sin texto adicional ni cambios en la estructura:
 
-{"is_verified":"(True si ambas imágenes corresponden a la misma persona, una es una identificación, y se cumplen los requisitos; False si no se parecen o no se cumplen los requisitos)"}
-            ''']
+{"is_verified":"(True si ambas imágenes corresponden a la misma persona, una es una identificación, y se cumplen los requisitos; False si no se parecen o no se cumplen los requisitos)"}''']
             },
         ]
     )

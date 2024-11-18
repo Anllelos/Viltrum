@@ -24,7 +24,7 @@ Viltrum | Torneos
             {% endif %}
         </p>
         <div class="game-info">
-            <h2>Juego: {{ tournament.game }}</h2>
+            <h2>Juego: {{ tournament.game_display }}</h2>
             <p>Máximo de jugadores: {{ n_members }}/{{ tournament.max_members }}</p>
         </div>
     </section>
@@ -97,7 +97,7 @@ Viltrum | Torneos
     <section class="tournament-registration">
         {% if user.is_authenticated %}
         {% if not is_full %}
-            {% if tournament.status and user.id != tournament.owner.id and is_not_registered %}
+            {% if tournament.status and user.id != tournament.owner.id and not is_not_registered %}
                 <a href="{% url 'tournament_inscription' tournament.id %}" class="btn register-btn"><i class="fa fa-plus"></i> Inscribirse</a>
             {% else %}
                 <span class="already-registered">Ya estás inscrito a este torneo</span>
