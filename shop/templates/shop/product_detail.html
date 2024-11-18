@@ -1,14 +1,60 @@
-<!-- shop/templates/shop/product_detail.html -->
 {% extends 'template.html' %}
 
-{% block title %}{{ product.name }}{% endblock %}
+{% block title %}{{ product.product_name }}{% endblock %}
+
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'shop/product_detail.css' %}">
+<style>
+    .star {
+    position: absolute;
+    width: 60px; /* Tamaño de la "estrella" (imagen) */
+    height: 60px;
+    background-image: url('{{ product.product_image.url }}'); /* Imagen del producto */
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    animation: moveAndRotate linear infinite;
+}
+</style>
+{% endblock %}
 
 {% block content %}
+<div class="star-field" id="star-field"></div>
 <div class="product-detail">
-    <img src="{{ product.image.url }}" alt="{{ product.name }}">
-    <h1>{{ product.name }}</h1>
-    <p>{{ product.description }}</p>
-    <p>Precio: ${{ product.price }} USD</p>
-    <p>Patrocinador: {{ product.sponsor.username }}</p>
+    <div class="product-image-container">
+        <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}" class="product-image">
+    </div>
+    <div class="product-info">
+        <h1>{{ product.product_name }}</h1>
+        <p class="product-description">{{ product.product_description }}</p>
+        <p class="product-price">Precio: ${{ product.price }} MXN</p>
+        <p class="product-sponsor">Patrocinador: <a href="{% url 'profile_sponsor' product.user.username %}">{{ product.user.username }}</a></p>
+    </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Crear estrellas en el fondo
+    const starField = document.getElementById('star-field');
+    const numberOfStars = 50;  // Número de estrellas
+
+    // Función para generar estrellas aleatorias
+    function generateStars() {
+        for (let i = 0; i < numberOfStars; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            // Generar una posición aleatoria para cada estrella
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.animationDuration = `${Math.random() * 4 + 6}s`; // Duración de rotación aleatoria
+            star.style.animationDelay = `${Math.random() * 1}s`; // Retraso aleatorio en la animación
+            starField.appendChild(star);
+        }
+    }
+
+    // Generar estrellas al cargar la página
+    generateStars();
+</script>
 {% endblock %}

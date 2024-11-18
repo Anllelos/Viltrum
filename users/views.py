@@ -400,7 +400,7 @@ def sponsor_products(request):
                 product = product_form.save(commit=False)
                 product.user = active_user
                 product.save()
-                return render(request, 'sponsor_products.html', {'product_form': product_form, 'message': "Product saved successfully."})
+                return render(request, 'sponsor_products.html', {'product_form': product_form, 'message': "Se ha agregado el producto."})
 
         return render(request, 'sponsor_products.html', {'product_form': product_form})
 

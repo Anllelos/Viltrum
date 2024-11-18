@@ -9,7 +9,7 @@ def product_list(request):
     return render(request, 'shop/product_list.html', {'products': products})
 def product_detail(request, pk):
     """Muestra los detalles de un producto individual."""
-    product = SponsorProducts.objects.filter(pk=pk)
+    product = SponsorProducts.objects.get(pk=pk)
     return render(request, 'shop/product_detail.html', {'product': product})
 
 @login_required
