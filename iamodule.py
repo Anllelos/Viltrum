@@ -31,6 +31,27 @@ def model_config():
 
     return model
 
+def model_config_text():
+
+    genai.configure(api_key="AIzaSyBdeTO2gxkLt8waX0s1lsSpJdiOkRffadU")
+
+# Create the model
+    generation_config = {
+        "temperature": 1,
+        "top_p": 0.95,
+        "top_k": 64,
+        "max_output_tokens": 10192,
+        "response_mime_type": "text/plain",
+    }
+
+    model = genai.GenerativeModel(
+    model_name="gemini-1.5-flash",
+    generation_config=generation_config,
+        
+    )   
+
+    return model
+
 
 def upload_to_gemini(path, mime_type=None):
   """Uploads the given file to Gemini.
@@ -153,7 +174,7 @@ Devuelve únicamente el resultado en el siguiente formato, sin texto adicional n
 
 
 def llm_basic(language, phrase):
-    model = model_config()
+    model = model_config_text()
     response = model.generate_content(f"Traduce el siguiente texto al {language}, solo responde con la traducción no agregues ni cambies texto: {phrase}")
     return response.text
 
