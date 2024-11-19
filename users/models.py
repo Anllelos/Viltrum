@@ -25,6 +25,10 @@ class ExtendedData(models.Model):
     country = CountryField(blank_label='Selecciona tu país', null=True, blank=True)
     birthdate = models.DateField(null=True, blank=True)
 
+    @property
+    def country_display(self):
+        return self.get_country_display()
+
 # Modelo para agregar estadísticas de jugadores
 class PlayerStats(models.Model):
     TYPE_CHOICES = [
@@ -56,6 +60,7 @@ class SponsorProducts(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product_name = models.CharField(max_length=254, null=True)
     product_description = models.CharField(max_length=512, null=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     product_image = models.ImageField(null=True, blank=True, upload_to="images/sponsorProducts", storage=AzureStorage())
     is_active = models.BooleanField(default=True)
 

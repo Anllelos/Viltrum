@@ -28,12 +28,16 @@ def profile_redirect(request):
     return redirect('home')
 
 def profile_user(request, username):
+    active_user = request.user
     user_to_validate = get_object_or_404(User, username=username)
     if user_to_validate.groups.filter(name='Gamer').exists():
         extended_data_table = get_object_or_404(ExtendedData, user=user_to_validate)
         game_stats_table = PlayerStats.objects.filter(user=user_to_validate, is_active=True)
         tournaments_created = Tournament.objects.filter(owner=user_to_validate)
-        notification_sended = NotificationSystem.objects.filter(receiver=user_to_validate, sender=request.user).first()
+        if request.user.is_authenticated:
+            notification_sended = NotificationSystem.objects.filter(receiver=user_to_validate, sender=active_user).first()
+        else:
+            notification_sended = None
         sponsors = Sponsorship.objects.filter(user=user_to_validate, status="A")
 
         # Query gallery images associated with the user
@@ -56,6 +60,7 @@ def profile_user(request, username):
                 total_games = game.wins + game.losses
                 game.winrate = (game.wins / total_games) * 100 if total_games > 0 else 0
                 n_games += 1
+                game.name = game.get_game_display()
             data_context['games'] = game_stats_table
             data_context['n_games'] = n_games
         else:
@@ -395,7 +400,7 @@ def sponsor_products(request):
                 product = product_form.save(commit=False)
                 product.user = active_user
                 product.save()
-                return render(request, 'sponsor_products.html', {'product_form': product_form, 'message': "Product saved successfully."})
+                return render(request, 'sponsor_products.html', {'product_form': product_form, 'message': "Se ha agregado el producto."})
 
         return render(request, 'sponsor_products.html', {'product_form': product_form})
 
@@ -414,7 +419,7 @@ def update_product(request, product_id):
             edit_product = EditProduct(request.POST, request.FILES, instance=product)
             if edit_product.is_valid():
                 edit_product.save()
-                return redirect('profile_sponsor', username=active_user.username)  # Asegúrate de pasar el username
+                return redirect('product_view')  # Asegúrate de pasar el username
 
         # Si no es POST, muestra el formulario para editar
         edit_product = EditProduct(instance=product)  # Crear instancia del formulario para GET
@@ -557,4 +562,11 @@ def games_stats(request):
         return render(request,'stats.html', data_context)
     return redirect('home')
 
-    
+
+def product_view(request):
+    active_user = request.user
+    if active_user.groups.filter(name='Sponsor').exists():
+        user_products = SponsorProducts.objects.filter(user=active_user, is_active=True)
+        data_context = {'user_products':user_products}
+        return render(request, 'my_products.html', data_context)
+    return redirect('home')

@@ -30,6 +30,11 @@ class Tournament(models.Model):
     members = models.ManyToManyField(User, related_name='tournaments', blank=True)
     winner = models.CharField(max_length=10, default="None")
 
+    @property
+    def game_display(self):
+        return self.get_game_display()
+
+
     def is_full(self):
         """Check if the tournament has reached the maximum number of members."""
         return self.members.count() >= self.max_members

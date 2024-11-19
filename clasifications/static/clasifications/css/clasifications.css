@@ -1,14 +1,14 @@
-/* Estilos de la página y animación */
-
-/* Configuración General */
+/* Estilos Generales */
 body {
     font-family: 'Poppins', sans-serif;
     background-color: #1C1C1E;
     color: #E5E5E5;
 }
 
+/* Contenedor Principal */
 .page-wrapper {
     display: flex;
+    flex-wrap: wrap;
     margin: 40px auto;
     max-width: 1200px;
     padding: 20px;
@@ -17,24 +17,30 @@ body {
 
 /* Panel de Filtros */
 .filter-panel {
-    width: 25%;
+    flex: 1;
+    min-width: 250px;
+    max-width: 300px;
     background-color: #2A2A2A;
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     color: #E5E5E5;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
     opacity: 0;
     transform: translateY(20px);
 }
 
 .filter-panel h3 {
-    font-size: 22px;
-    /* Cambiar color sólido por gradiente */
+    font-size: 24px;
+    font-weight: bold;
     background: linear-gradient(45deg, #007BFF, #FF00FF);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
+    margin-bottom: 20px;
+}
+
+.filter-section {
+    margin-bottom: 20px;
 }
 
 .filter-section h4 {
@@ -50,6 +56,35 @@ body {
 
 .filter-section ul li {
     margin-bottom: 10px;
+}
+
+.filter-section label {
+    display: block;
+    font-size: 16px;
+    color: #E5E5E5;
+    margin-bottom: 10px;
+}
+
+.filter-section label input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.filter-section input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: none;
+    background-color: #1C1C1E;
+    color: #E5E5E5;
+    font-size: 16px;
+    outline: none;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease;
+}
+
+.filter-section input[type="number"]:focus {
+    background-color: #333;
 }
 
 .filter-button {
@@ -71,14 +106,14 @@ body {
 
 /* Contenido de Clasificaciones */
 .content-section {
-    width: 75%;
+    flex: 3;
+    min-width: 300px;
 }
 
 /* Título de Juego */
 .game-title {
     font-size: 28px;
     font-weight: bold;
-    /* Cambiar color sólido por gradiente */
     background: linear-gradient(45deg, #007BFF, #FF00FF);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -86,13 +121,12 @@ body {
     text-transform: uppercase;
     padding-bottom: 10px;
     margin-bottom: 20px;
-    text-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
 }
 
 /* Lista de Jugadores */
 .player-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 25px;
 }
 
@@ -119,45 +153,55 @@ body {
 }
 
 .player-username {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: bold;
-    color: #4B0082;
+    color: #E5E5E5;
     text-decoration: none;
-    text-shadow: 0 0 5px rgba(75, 0, 130, 0.5);
-}
-
-.player-username:hover {
-    /* Aplicar gradiente */
+    margin-bottom: 10px;
+    display: inline-block;
     background: linear-gradient(45deg, #007BFF, #FF00FF);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+.player-username:hover {
     text-shadow: 0 0 15px rgba(255, 0, 255, 0.8);
 }
 
 .player-details {
-    font-size: 15px;
+    font-size: 16px;
     margin-top: 10px;
+    line-height: 1.5;
 }
 
 .player-details strong {
     font-weight: bold;
-    /* Cambiar color sólido por gradiente */
-    background: linear-gradient(45deg, #007BFF, #FF00FF);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #E5E5E5;
+}
+
+/* Animaciones */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
 /* Responsividad */
 @media (max-width: 768px) {
     .page-wrapper {
         flex-direction: column;
+        padding: 10px;
     }
-    
+
     .filter-panel, .content-section {
         width: 100%;
     }
-    
+
     .player-list {
         grid-template-columns: 1fr;
+    }
+
+    .filter-panel {
+        margin-bottom: 30px;
     }
 }

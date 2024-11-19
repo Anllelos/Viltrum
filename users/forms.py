@@ -96,7 +96,7 @@ class PlayerStatsForm(forms.ModelForm):
 class SponsorProductsForm(forms.ModelForm):
     class Meta:
         model = models.SponsorProducts
-        fields = ['product_name', 'product_description', 'product_image']
+        fields = ['product_name', 'product_description', 'product_image', 'price']
 
         
 # Formulario para editar información del usuario
@@ -136,7 +136,7 @@ class EditGameStat(forms.ModelForm):
 class EditProduct(forms.ModelForm):
     class Meta:
         model = models.SponsorProducts
-        fields = ['product_name', 'product_description', 'product_image'] 
+        fields = ['product_name', 'product_description', 'product_image', 'price'] 
 
 
 

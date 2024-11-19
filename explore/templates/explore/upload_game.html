@@ -1,14 +1,21 @@
 {% extends 'template.html' %}
+{% load static %}
 
 {% block title %}
     Subir Juego
 {% endblock %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'explore/upload.css' %}">
+{% endblock %}
+
 {% block content %}
+<div class="upload-container">
     <h1>Subir Juego</h1>
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" class="upload-form">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Subir</button>
     </form>
+</div>
 {% endblock %}

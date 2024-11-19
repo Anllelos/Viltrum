@@ -14,16 +14,26 @@ Viltrum | Tienda de Productos
   <h2>Tienda de Productos</h2>
   <div class="shop-body">
     {% if products %}
-      {% for product in products %}
-        <div class="shop-product-item">
-          <img src="{% if product.product_image %}{{ product.product_image.url }}{% else %}https://ui-avatars.com/api/?name={{ product.product_name }}{% endif %}" alt="{{ product.product_name }}" class="product-image">
-          <div class="shop-product-info">
-            <a href="{% url 'profile_sponsor' product.user.username %}"><h3>{{ product.user.username }}</h3></a>
-            <a href="{% url 'shop:product_detail' product.id %}"><p>{{ product.product_name }}</p></a>
-            
-          </div>
-        </div>
-      {% endfor %}
+    {% for product in products %}
+    <div class="shop-product-item">
+      <!-- Enlace para el producto -->
+      <a href="{% url 'shop:product_detail' product.id %}" class="product-link">
+        <img src="{% if product.product_image %}{{ product.product_image.url }}{% else %}https://ui-avatars.com/api/?name={{ product.product_name }}{% endif %}" alt="{{ product.product_name }}" class="product-image">
+      </a>
+      
+      <!-- Información del producto -->
+      <div class="shop-product-info">
+        <!-- Enlace para el perfil del patrocinador -->
+        <a href="{% url 'profile_sponsor' product.user.username %}" class="sponsor-link">
+          <h3>{{ product.user.username }}</h3>
+        </a>
+        <p>{{ product.product_name }}</p>
+      </div>
+    </div>
+  {% endfor %}
+  
+  
+  
     {% else %}
       <p class="no-products">Actualmente no hay productos disponibles en la tienda.</p>
     {% endif %}

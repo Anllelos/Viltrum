@@ -30,9 +30,8 @@ SECRET_KEY = os.environ['SECRET']
 
 DEBUG = False
 
-ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']]
- 
-CSRF_TRUSTED_ORIGINS = 'https://'+ os.environ['WEBSITE_HOSTNAME']
+ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME'], 'viltrum.es']
+CSRF_TRUSTED_ORIGINS = ['https://'+ os.environ['WEBSITE_HOSTNAME'], 'https://viltrum.es']
 
 # Aplicaciones instaladas
 INSTALLED_APPS = [
@@ -47,6 +46,7 @@ INSTALLED_APPS = [
     'sponsors.apps.SponsorsConfig',
     'notifications.apps.NotificationsConfig',
     'chat.apps.ChatConfig',
+    'shop.apps.ShopConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -163,7 +163,6 @@ EMAIL_HOST_USER = 'sviltrum@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 DEFAULT_FROM_EMAIL = 'no-reply@viltrum.com'
 
-# Configuración de capas de canales (Daphne)
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',

@@ -1,65 +1,62 @@
 from django.shortcuts import render
 from django.contrib.auth.models import Group
-from users.models import PlayerStats
+from users.models import PlayerStats  # Asegúrate de importar correctamente
+from django.db.models import Q
 
-# List of players by game with filtering options
 def clasifications(request):
     group = Group.objects.get(name='Gamer')
-    users = group.user_set.all().select_related('extendeddata')
+    users = group.user_set.all()
     game_stats = {}
-    
-    # Get the filter values from the request (GET)
-    selected_game = request.GET.getlist('game')
-    selected_rank = request.GET.get('viltrum_rank')
+
+    # Obtener los valores de los filtros desde el request GET
+    selected_games = request.GET.getlist('game')
     wins_filter = request.GET.get('wins_filter')
     losses_filter = request.GET.get('losses_filter')
     hours_filter = request.GET.get('hours_filter')
 
-    # Iterate over each user and their game profiles
-    for user in users:
-        profiles = PlayerStats.objects.filter(user=user, is_active=True)
-        extended_data = user.extendeddata
-        viltrum_rank = extended_data.get_viltrum_rank_display() if extended_data else None
-        
-        # Apply filtering logic based on the selected filters
-        for profile in profiles:
-            game_name = profile.game  # Name of the game
+    # Obtener todos los juegos disponibles
+    all_games = PlayerStats.objects.values_list('game', flat=True).distinct()
 
-            # Filter by selected game
-            if selected_game and game_name not in selected_game:
-                continue
+    # Construir la consulta base
+    filters = Q()
+    if selected_games:
+        filters &= Q(game__in=selected_games)
+    if wins_filter:
+        try:
+            filters &= Q(wins__gte=int(wins_filter))
+        except ValueError:
+            pass  # Manejar entrada no válida
+    if losses_filter:
+        try:
+            filters &= Q(losses__lte=int(losses_filter))
+        except ValueError:
+            pass  # Manejar entrada no válida
+    if hours_filter:
+        try:
+            filters &= Q(total_played__gte=int(hours_filter))  # Aquí agregamos el filtro de horas jugadas
+        except ValueError:
+            pass  # Manejar entrada no válida
 
-            # Filter by Viltrum rank
-            if selected_rank and selected_rank != viltrum_rank:
-                continue
+    # Obtener los perfiles que coinciden con los filtros
+    profiles = PlayerStats.objects.filter(filters)
 
-            # Filter by number of wins and losses
-            if wins_filter and int(profile.wins) < int(wins_filter):
-                continue
-            if losses_filter and int(profile.losses) > int(losses_filter):
-                continue
+    # Organizar los perfiles por juego
+    for profile in profiles:
+        game_name = profile.game
+        if game_name not in game_stats:
+            game_stats[game_name] = []
+        game_stats[game_name].append({
+            'user': profile.user,
+            'profile': profile,
+        })
 
-            # Filter by hours played
-            if hours_filter and int(profile.total_played) < int(hours_filter):
-                continue
-
-            # Add to game stats if it passes the filters
-            if game_name not in game_stats:
-                game_stats[game_name] = []
-            game_stats[game_name].append({
-                'user': user,
-                'profile': profile,
-                'viltrum_rank': viltrum_rank
-            })
-
-    # Pass the filter values back to the template for display
     data_context = {
         'game_stats': game_stats,
-        'selected_game': selected_game,
-        'selected_rank': selected_rank,
+        'selected_games': selected_games,
         'wins_filter': wins_filter,
         'losses_filter': losses_filter,
-        'hours_filter': hours_filter
+        'hours_filter': hours_filter,
+        'all_games': all_games,
     }
-    
-    return render(request, 'clasifications.html', data_context)
+
+    return render(request, 'clasifications/clasifications.html', data_context)

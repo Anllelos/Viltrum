@@ -9,6 +9,9 @@ Viltrum | Perfil {{ profile_user.username }}
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/myProfile.css' %}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+<link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
 {% endblock %}
 
 {% block content %}
@@ -16,7 +19,7 @@ Viltrum | Perfil {{ profile_user.username }}
     <!-- Encabezado del perfil -->
     <div class="profile-header">
         <div class="profile-banner">
-            <img src="{% if profile.profile_banner %}{{ profile.profile_banner.url }}{% else %}https://via.placeholder.com/900x200{% endif %}" alt="Banner">
+            <img src="{% if profile.profile_banner %}{{ profile.profile_banner.url }}{% else %}{% static 'images/900x200.png' %}{% endif %}" alt="Banner">
         </div>
 
         <!-- Imagen de perfil -->
@@ -25,6 +28,26 @@ Viltrum | Perfil {{ profile_user.username }}
         </div>
     </div>
 
+    <!-- Botones de interacción con el usuario -->
+    <div class="interaction-buton">
+        {% if user.is_authenticated %}
+            {% if role == 'sponsor' %}
+                {% if notify_sended %}
+                    <button disabled><i class="bi bi-cash-stack"></i> Patrocinar</button>
+                {% else %}
+                    <button id="notificationForm" onclick="sendInvitationNotify(this)"><i class="bi bi-cash-stack"></i> Patrocinar</button>
+                {% endif %}
+            {% endif %}
+            {% if profile_user != user %}
+                <a href="{% url 'start_chat' profile_user.username %}"><i class="bi bi-chat-left"></i> Enviar Mensaje</a>
+            {% endif %}
+        {% else %}
+        <br>
+        <br>
+        {% endif %}
+    </div>
+
+
     <!-- Información del usuario -->
     <div class="profile-info text-center">
         <h2 class="username">{{ profile_user.username }}</h2>
@@ -32,6 +55,19 @@ Viltrum | Perfil {{ profile_user.username }}
         <i class="bi bi-check-circle-fill verificado-icon"></i>
         {% endif %}
         <p class="user-description">{{ profile.user_description|default:"El usuario no ha agregado información aún." }}</p>
+        <br>
+        <p>País <i class="bi bi-geo-alt-fill"></i> {{profile.country_display}}</p>
+    </div>
+
+    <div class="profile-sponsors">
+        <h2>Patrocinadores</h2>
+        <div class="sponsors">
+        {% for sponsor in sponsors %}
+        <a href="{% url 'profile_sponsor' sponsor.sponsor %}">{{sponsor.sponsor}}</a>
+        {% empty %}
+        <span>El usuario no cuenta con Patrocinadores</span>
+        {% endfor %}
+        </div>
     </div>
 
     <!-- Estadísticas de juegos -->
@@ -40,7 +76,7 @@ Viltrum | Perfil {{ profile_user.username }}
         <div class="stats-container">
             {% for game in games %}
             <div class="game-card">
-                <h4 class="game-title">{{ game.game }}</h4>
+                <h4 class="game-title">{{ game.name }}</h4>
                 <div class="game-info">
                     <span><strong>Usuario:</strong> {{ game.user_game }}</span>
                     <span><strong>Rango:</strong> {{ game.rank }}</span>
@@ -55,16 +91,31 @@ Viltrum | Perfil {{ profile_user.username }}
     </div>
 
     <!-- Enlaces a redes sociales -->
-    <div class="profile-footer text-center mt-5">
+    <!-- <div class="profile-footer text-center mt-5">
         <a href="#"><i class="bi bi-facebook"></i> Facebook</a>
         <a href="#"><i class="bi bi-twitter"></i> Twitter</a>
         <a href="#"><i class="bi bi-instagram"></i> Instagram</a>
         <a href="#"><i class="bi bi-youtube"></i> YouTube</a>
         <a href="#"><i class="bi bi-twitch"></i> Twitch</a>
-    </div>
+    </div> -->
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% if user.is_authenticated and role == 'sponsor'%}
+<script>
+    const receiver = "{{ profile.id }}";
+    function sendInvitationNotify(button) {
+        button.disabled = true;
+        const message = "¡Un patrocinador quiere colaborar contigo!, {{ user }}";
+        // Enviar el mensaje al WebSocket
+        notificationSocket.send(JSON.stringify({
+            "message": message,
+            "receiver": receiver,
+            "type": 'sponsorship'
+        }));
+    };
+</script>
+{% endif %}
 {% endblock %}

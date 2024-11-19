@@ -13,21 +13,26 @@
 {% block content %}
 <div class="explore-container">
 
-    <!-- Barra de Categorías -->
-    <div class="category-bar">
-        <button class="category-button">Juegos</button>
-        <button class="category-button">IRL</button>
-        <button class="category-button">Música y DJ</button>
-        <button class="category-button">Creative</button>
-        <button class="category-button">Esports</button>
+    <!-- Barra de Categorías y Búsqueda -->
+    <div class="top-options">
+        <!-- Búsqueda -->
+        <form method="get" action="{% url 'explore' %}" class="search-form">
+            <input type="text" name="q" placeholder="Buscar juegos por nombre o tag" value="{{ query }}">
+            <button type="submit">Buscar</button>
+        </form>
+
+        <!-- Botón para subir nuevo juego -->
+        <button class="upload-button" id="addGameButton">Subir Nuevo Juego</button>
     </div>
 
-    <!-- Búsqueda y Subir Juego -->
-    <div class="top-options">
-        <div class="category-search">
-            <input type="text" placeholder="Buscar etiquetas de categoría">
+    <!-- Filtros por Tags -->
+    <div class="tag-filters">
+        <h3>Filtrar por Tags:</h3>
+        <div class="tag-list">
+            {% for tag in popular_tags %}
+                <a href="{% url 'explore' %}?q={{ tag.name }}" class="tag">{{ tag.name }}</a>
+            {% endfor %}
         </div>
-        <button class="upload-button" id="addGameButton">Subir Nuevo Juego</button>
     </div>
 
     <!-- Título y Opciones de Orden -->
@@ -45,18 +50,23 @@
 
     <!-- Cuadrícula de Juegos -->
     <div class="game-grid">
-        {% for game in games %}
-        <div class="game-card">
-            <div class="game-image">
-                <img src="{{ game.image.url }}" alt="{{ game.name }}">
+        {% if games %}
+            {% for game in games %}
+            <div class="game-card">
+                <div class="game-image">
+                    <img src="{{ game.image.url }}" alt="{{ game.name }}">
+                </div>
+                <div class="game-info">
+                    <p class="game-name">{{ game.name }}</p>
+                    <p class="game-category">{{ game.category }}</p>
+                    <p class="game-description">{{ game.description|truncatewords:10 }}</p>
+                    <a href="{% url 'game_detail' game.id %}" class="detail-link">Ver detalles</a>
+                </div>
             </div>
-            <div class="game-info">
-                <p class="game-name">{{ game.name }}</p>
-                <p class="game-category">{{ game.category }}</p>
-                <p class="game-description">{{ game.description|truncatewords:10 }}</p>
-            </div>
-        </div>
-        {% endfor %}
+            {% endfor %}
+        {% else %}
+            <p>No se encontraron juegos con ese criterio.</p>
+        {% endif %}
     </div>
 
 </div>
@@ -64,8 +74,8 @@
 
 {% block extra_js %}
 <script>
-    document.getElementById('addGameButton').addEventListener('click', function(){
-        window.location.href = "{% url 'upload_game' %}"
+    document.getElementById('addGameButton').addEventListener('click', function() {
+        window.location.href = "{% url 'upload_game' %}";
     });
 </script>
 {% endblock %}

@@ -22,6 +22,8 @@ Viltrum | Editar Producto {{product.product_name}}
         <div class="form-group">
             <label for="product_name">Nombre del producto</label>
             <input type="text" id="product_name" name="product_name" value="{{product.product_name}}" required>
+            <label for="price">Precio en USD:</label>
+            <input type="number" id="price" name="price" step="0.01" min="0" max="99999999.99" required>
         </div>
         <div class="form-group">
             <label for="product_description">Descripción del producto</label>

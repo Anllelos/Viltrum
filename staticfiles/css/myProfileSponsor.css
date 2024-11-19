@@ -1,182 +1,191 @@
-/* General styles */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4; /* Fondo suave */
-    color: #333; /* Color de texto estándar */
+/* Estilos generales */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    background: linear-gradient(135deg, #ece9e6, #ffffff);
 }
 
-/* Container */
-.profile-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #ffffff; /* Fondo blanco para el perfil */
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+/* Fondo del perfil */
+.profile-background {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    text-align: center;
 }
 
-/* Header */
+/* Banner del perfil */
 .profile-header {
     position: relative;
-}
-
-.profile-banner {
-    height: 200px; /* Altura del banner */
-    overflow: hidden; /* Asegura que no haya desbordamiento */
-    border-radius: 8px; /* Bordes redondeados en todo el banner */
-    z-index: 0;
+    margin-bottom: 50px;
 }
 
 .profile-banner img {
-    width: 100%; /* Ocupa todo el ancho del contenedor */
-    height: 100%; /* Ocupa toda la altura del contenedor */
-    object-fit: cover; /* Ajusta la imagen para cubrir el área sin distorsionarse */
-    border-radius: 8px 8px 0 0; /* Bordes redondeados en la parte superior */
-    top: 0; /* Alinea la imagen en la parte superior */
-    left: 0; /* Alinea la imagen a la izquierda */
-}
-
-.profile-header-user {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: -60px; /* Superpone la imagen de perfil */
-    z-index: 3;
-}
-
-.profile-image {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 4px solid #007bff; /* Borde azul alrededor de la imagen de perfil */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-#profile-pic {
     width: 100%;
-    height: auto;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    filter: brightness(0.6);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
+
+/* Imagen de perfil */
+.profile-image {
+    width: 140px;
+    height: 140px;
+    border: 5px solid #fff;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00e1ff, #0400ff);
+    position: absolute;
+    top: 140px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px;
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.6), 0 0 30px rgba(0, 153, 255, 0.6);
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Información del patrocinador */
+.profile-info {
+    margin-top: 140px; /* Aumentamos el margen superior */
+    margin-bottom: 40px;
+    color: #383838;
+}
+
 
 .username {
-    font-size: 20px;
+    font-size: 2.8rem;
     font-weight: bold;
-    margin-top: 10px;
-    color: #007bff; /* Color del nombre del usuario */
+    background: linear-gradient(90deg, #00e1ff, #1900ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(122, 122, 122, 0.171);
 }
 
-/* Productos */
-h2 {
-    font-size: 24px;
-    margin: 20px 0;
-    color: #333;
+.user-description {
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto;
+    padding-top: 10px;
+    color: #383838;
 }
 
-/* Estilos para la lista de productos con grid */
-.profile-body {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Productos flexibles */
-    gap: 20px;
-    justify-content: space-around;
+/* Sección de productos */
+.products-section {
+    margin-top: 50px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
 }
 
-.profile-products {
-    background: #f0f0f0; /* Fondo gris claro */
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s; /* Transición suave */
+.section-title {
+    font-size: 2rem;
+    color: #FFFFFF;
+    background: linear-gradient(90deg, #0099ff, #4400ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(212, 212, 212, 0.8);
+    margin-bottom: 25px;
+}
+
+/* Contenedor de productos */
+.products-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+}
+
+/* Tarjeta de producto */
+.product-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #00b7ff;
+    border-radius: 10px;
+    padding: 20px;
+    width: 280px;
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 200px;
+    text-align: center;
 }
 
-.profile-products:hover {
-    transform: scale(1.05); /* Efecto de hover */
+.product-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 110, 255, 0.4);
 }
 
-.product-image {
-    max-width: 100%;
-    max-height: 200px; /* Controla la altura máxima de las imágenes */
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 10px; /* Espacio entre la imagen y el texto */
+.product-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
 }
 
-.profile-products-info {
-    margin-top: 10px;
+.product-title {
+    color: #006eff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-transform: uppercase;
 }
 
-.profile-products-info h3 {
-    font-size: 18px;
-    color: #007bff; /* Tono azul para los nombres de los productos */
+.product-description {
+    font-size: 1rem;
+    color: #9b9b9b;
+    margin-bottom: 15px;
 }
 
-.profile-products-info p {
-    font-size: 14px;
-    color: #666; /* Color de la descripción */
+/* Acciones de producto */
+.product-actions {
+    display: flex;
+    gap: 10px;
 }
 
-/* Botones de edición y borrado */
-.edit-buttons {
-    display: flex; /* Cambia a flex para alineación horizontal */
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center; /* Centra verticalmente */
-    gap: 10px; /* Espacio entre los botones */
-    margin-bottom: 10px; /* Espacio entre los botones y la imagen */
+.product-actions .btn {
+    text-decoration: none;
+    color: rgb(0, 204, 255);
+    font-weight: bold;
+    font-size: 17px;
+    background-color: #152052;
+    border-radius: 10px;
+    padding: 10px;
+    border: #FF00FF 1px solid;
+    transition: 0.2s ease;
+    cursor: pointer;
 }
 
-.edit-btn,
-.delete-btn {
-    background-color: #4098e0; /* Color de fondo de los botones */
-    color: #ffffff; /* Color de texto */
-    border: none; /* Sin borde */
-    border-radius: 5px; /* Bordes redondeados */
-    padding: 5px 10px; /* Espaciado interno */
-    text-decoration: none; /* Sin subrayado */
-    cursor: pointer; /* Cambia el cursor al pasar */
-    transition: background-color 0.3s; /* Transición para el hover */
+.product-actions .btn:hover {
+    color: rgb(0, 204, 255);
+    transform: scale(1.1);
+    text-decoration: none;
 }
 
-.edit-btn:hover,
-.delete-btn:hover {
-    background-color: #006cd1; /* Color de fondo al pasar el ratón */
-}
-
-/* Estilo cuando no hay productos */
+/* Mensaje sin productos */
 .no-products {
     text-align: center;
-    color: #777; /* Texto gris claro */
-}
-
-/* Descripción */
-.description p {
-    margin: 30px auto;
-    color: #666;
-    font-size: 1rem;
-    text-align: center;
+    font-size: 1.2rem;
+    color: #bbb;
 }
 
 /* Responsividad */
 @media (max-width: 768px) {
-    .profile-body {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Menor cantidad de productos por fila en pantallas pequeñas */
+    .products-container {
+        flex-direction: column;
+        align-items: center;
     }
 
-    .profile-products {
+    .product-card {
         width: 100%;
-        padding: 10px;
-    }
-
-    .product-image {
-        max-height: 150px; /* Ajusta la altura de las imágenes para pantallas pequeñas */
-    }
-
-    .profile-header-user {
-        margin-top: -40px; /* Ajustar la superposición de la imagen de perfil en pantallas pequeñas */
     }
 }

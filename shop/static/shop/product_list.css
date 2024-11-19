@@ -1,30 +1,44 @@
-/* Fondo oscuro para la tienda */
+/* Fondo claro para la tienda */
 body, html {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
-    background-color: #0A0B1A;
-    color: #FFF;
+    background-color: #F4F8FB;
+    color: #333;
+    height: 100%;
 }
 
 /* Contenedor principal de la tienda */
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 40px;
     text-align: center;
 }
 
 /* Título de la tienda */
 .shop-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #FFFFFF;
-    margin-bottom: 30px;
-    background: linear-gradient(90deg, #00FFFF, #FF00FF);
+    font-size: 3rem;
+    font-weight: 700;
+    color: #007BFF;
+    margin-bottom: 40px;
+    background: linear-gradient(90deg, #00A9FF, #66BFFF);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    text-shadow: 0 0 10px rgba(0, 123, 255, 0.6);
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% {
+        text-shadow: 0 0 10px rgba(0, 123, 255, 0.6), 0 0 20px rgba(0, 255, 255, 0.5);
+    }
+    50% {
+        text-shadow: 0 0 20px rgba(0, 123, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.7);
+    }
+    100% {
+        text-shadow: 0 0 10px rgba(0, 123, 255, 0.6), 0 0 20px rgba(0, 255, 255, 0.5);
+    }
 }
 
 /* Contenedor de productos */
@@ -32,22 +46,44 @@ body, html {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 30px;
+    margin-top: 30px;
 }
 
 /* Tarjeta de producto */
 .shop-product-item {
-    background-color: #1C1C3A;
-    border-radius: 10px;
+    position: relative; /* Para que los elementos dentro de él se comporten de manera independiente */
+    background-color: #FFFFFF;
+    border-radius: 12px;
     padding: 20px;
-    color: #FFF;
+    color: #333;
     text-align: left;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    text-decoration: none;
 }
 
 .shop-product-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(255, 0, 255, 0.3);
+    transform: translateY(-10px);
+    box-shadow: 0 12px 30px rgba(0, 123, 255, 0.4);
+}
+
+/* Efecto de brillo al pasar el mouse */
+.shop-product-item:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 123, 255, 0.1);
+    border-radius: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.shop-product-item:hover:before {
+    opacity: 1;
 }
 
 /* Imagen del producto */
@@ -55,35 +91,107 @@ body, html {
     width: 100%;
     height: 180px;
     object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
     filter: brightness(0.9);
+    transition: transform 0.3s ease;
+    display: block;
+}
+
+.product-image:hover {
+    transform: scale(1.05);
 }
 
 /* Información del producto */
 .shop-product-info h3 {
     font-size: 1.5rem;
-    color: #00FFFF;
+    color: #007BFF;
     margin-bottom: 8px;
+    transition: color 0.3s ease;
+    white-space: nowrap;        /* Evita que el texto se divida en varias líneas */
+    overflow: hidden;           /* Oculta el texto que sobrepasa el contenedor */
+    text-overflow: ellipsis;
+}
+
+.shop-product-info h3:hover {
+    color: #0056b3;
 }
 
 .shop-product-info p {
     font-size: 1rem;
-    color: #BBB;
+    color: #555;
     margin-bottom: 15px;
+    transition: color 0.3s ease;
+}
+
+.shop-product-info p:hover {
+    color: #007BFF;
 }
 
 /* Precio del producto */
 .product-price {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #FF00FF;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #0066cc;
+    margin-top: 10px;
+    transition: transform 0.3s ease;
+}
+
+.product-price:hover {
+    transform: scale(1.1);
 }
 
 /* Mensaje sin productos */
 .no-products {
     text-align: center;
     font-size: 1.2rem;
-    color: #BBB;
+    color: #888;
     margin-top: 20px;
+    font-weight: bold;
+}
+
+/* Adaptación para pantallas pequeñas */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    .shop-title {
+        font-size: 2rem;
+    }
+
+    .shop-product-item {
+        padding: 15px;
+    }
+
+    .product-price {
+        font-size: 1.1rem;
+    }
+
+    .product-image {
+        height: 150px;
+    }
+}
+
+/* Hacer que el enlace ocupe todo el área del contenedor */
+.product-link {
+    display: block;          /* Hace que todo el contenido dentro sea un contenedor flexible */
+    flex-direction: column; /* Hace que los elementos internos estén en columna */
+    width: 100%;            /* Asegura que el enlace ocupe el 100% del ancho del contenedor */
+    text-decoration: none;  /* Elimina el subrayado del enlace */
+}
+
+
+.product-link:hover {
+    display: block;          /* Hace que todo el contenido dentro sea un contenedor flexible */
+    flex-direction: column; /* Hace que los elementos internos estén en columna */
+    width: 100%;            /* Asegura que el enlace ocupe el 100% del ancho del contenedor */
+    text-decoration: none;  /* Elimina el subrayado del enlace */
+    color: inherit;         /* Mantiene el color del texto heredado de los elementos dentro */
+}
+
+.sponsor-link {
+    z-index: 10; /* Asegura que el enlace esté por encima de otros elementos */
+    position: relative;
+    display: block; /* Asegura que el enlace ocupa todo el bloque para facilitar el clic */
 }
