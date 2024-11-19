@@ -419,7 +419,7 @@ def update_product(request, product_id):
             edit_product = EditProduct(request.POST, request.FILES, instance=product)
             if edit_product.is_valid():
                 edit_product.save()
-                return redirect('profile_sponsor', username=active_user.username)  # Asegúrate de pasar el username
+                return redirect('product_view')  # Asegúrate de pasar el username
 
         # Si no es POST, muestra el formulario para editar
         edit_product = EditProduct(instance=product)  # Crear instancia del formulario para GET
@@ -562,4 +562,11 @@ def games_stats(request):
         return render(request,'stats.html', data_context)
     return redirect('home')
 
-    
+
+def product_view(request):
+    active_user = request.user
+    if active_user.groups.filter(name='Sponsor').exists():
+        user_products = SponsorProducts.objects.filter(user=active_user, is_active=True)
+        data_context = {'user_products':user_products}
+        return render(request, 'my_products.html', data_context)
+    return redirect('home')

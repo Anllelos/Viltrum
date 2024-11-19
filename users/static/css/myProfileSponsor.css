@@ -4,7 +4,7 @@ body, html {
     padding: 0;
     font-family: 'Poppins', sans-serif;
     color: #fff;
-    background: linear-gradient(135deg, #0A0B1A, #0B0D24);
+    background: linear-gradient(135deg, #ece9e6, #ffffff);
 }
 
 /* Fondo del perfil */
@@ -36,7 +36,7 @@ body, html {
     height: 140px;
     border: 5px solid #fff;
     border-radius: 50%;
-    background: linear-gradient(135deg, #0099FF, #FF00FF);
+    background: linear-gradient(135deg, #00e1ff, #0400ff);
     position: absolute;
     top: 140px;
     left: 50%;
@@ -56,17 +56,17 @@ body, html {
 .profile-info {
     margin-top: 140px; /* Aumentamos el margen superior */
     margin-bottom: 40px;
-    color: #e0e0e0;
+    color: #383838;
 }
 
 
 .username {
     font-size: 2.8rem;
     font-weight: bold;
-    background: linear-gradient(90deg, #00FFFF, #FF00FF);
+    background: linear-gradient(90deg, #00e1ff, #1900ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    text-shadow: 0 0 10px rgba(122, 122, 122, 0.171);
 }
 
 .user-description {
@@ -74,13 +74,13 @@ body, html {
     max-width: 700px;
     margin: 0 auto;
     padding-top: 10px;
-    color: #bbb;
+    color: #383838;
 }
 
 /* Sección de productos */
 .products-section {
     margin-top: 50px;
-    background: rgba(15, 15, 30, 0.9);
+    background: rgba(255, 255, 255, 0.9);
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
@@ -89,10 +89,10 @@ body, html {
 .section-title {
     font-size: 2rem;
     color: #FFFFFF;
-    background: linear-gradient(90deg, #00FFFF, #FF00FF);
+    background: linear-gradient(90deg, #0099ff, #4400ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    text-shadow: 0 0 10px rgba(212, 212, 212, 0.8);
     margin-bottom: 25px;
 }
 
@@ -106,8 +106,8 @@ body, html {
 
 /* Tarjeta de producto */
 .product-card {
-    background: rgba(0, 0, 50, 0.8);
-    border: 1px solid #FF00FF;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #00b7ff;
     border-radius: 10px;
     padding: 20px;
     width: 280px;
@@ -122,7 +122,7 @@ body, html {
 
 .product-card:hover {
     transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 10px 20px rgba(255, 0, 255, 0.4);
+    box-shadow: 0 10px 20px rgba(0, 110, 255, 0.4);
 }
 
 .product-image img {
@@ -133,7 +133,7 @@ body, html {
 }
 
 .product-title {
-    color: #00FFFF;
+    color: #006eff;
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 10px;
@@ -142,7 +142,7 @@ body, html {
 
 .product-description {
     font-size: 1rem;
-    color: #bbb;
+    color: #9b9b9b;
     margin-bottom: 15px;
 }
 
