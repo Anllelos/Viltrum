@@ -1,0 +1,101 @@
+{% extends 'template.html' %}
+{% load static %}
+
+{% block title %}
+Clasificaciones
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'clasifications/css/clasifications.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+
+    <!-- Panel de Filtros -->
+    <form method="GET" class="filter-panel fade-in">
+        <h3>Filtrar Resultados</h3>
+
+        <!-- Filtrar por Juego -->
+        <div class="filter-section">
+            <h4>Videojuego</h4>
+            <ul>
+                {% for game in all_games %}
+                <li>
+                    <label>
+                        <input type="checkbox" name="game" value="{{ game }}" {% if game in selected_games %}checked{% endif %}> {{ game }}
+                    </label>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Filtrar por Victorias y Derrotas -->
+        <div class="filter-section">
+            <h4>Victorias y Derrotas</h4>
+            <label for="wins_filter">Victorias mínimas:
+                <input type="number" name="wins_filter" min="0" value="{{ wins_filter|default_if_none:'' }}">
+            </label><br>
+            <label for="losses_filter">Derrotas máximas:
+                <input type="number" name="losses_filter" min="0" value="{{ losses_filter|default_if_none:'' }}">
+            </label>
+        </div>
+
+        <!-- Filtrar por Horas Jugadas -->
+        <div class="filter-section">
+            <h4>Horas Jugadas</h4>
+            <label for="hours_filter">Horas mínimas:
+                <input type="number" name="hours_filter" min="0" value="{{ hours_filter|default_if_none:'' }}">
+            </label>
+        </div>
+
+        <!-- Botón de Aplicar Filtros -->
+        <button class="filter-button" type="submit">Aplicar Filtros</button>
+    </form>
+
+    <!-- Contenido de Clasificaciones -->
+    <div class="content-section">
+        {% if game_stats %}
+            {% for game, stats in game_stats.items %}
+            <div class="game-section" data-game="{{ game }}">
+                <h2 class="game-title">{{ game }}</h2>
+
+                <div class="player-list">
+                    {% for item in stats %}
+                    <div class="player-card fade-in">
+                        <div class="player-info">
+                            <a class="player-username" href="{% url 'profile' username=item.user.username %}">
+                                {{ item.user.username }}
+                            </a>
+                            <p class="player-details">
+                                <strong>Usuario en el juego:</strong> {{ item.profile.user_game }}<br>
+                                <strong>Victorias:</strong> {{ item.profile.wins }} | <strong>Derrotas:</strong> {{ item.profile.losses }}<br>
+                                <strong>Horas Jugadas:</strong> {{ item.profile.total_played }}
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No se encontraron jugadores con los filtros seleccionados.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Animación de fade-in para el panel de filtros y tarjetas de jugador
+    document.addEventListener("DOMContentLoaded", function () {
+        const elements = document.querySelectorAll('.fade-in');
+        elements.forEach((element, index) => {
+            setTimeout(() => {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+    });
+</script>
+{% endblock %}
