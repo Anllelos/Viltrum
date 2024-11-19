@@ -165,7 +165,10 @@ DEFAULT_FROM_EMAIL = 'no-reply@viltrum.com'
 
 # Configuración de capas de canales (Daphne)
 CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [f"redis://:{os.environ['REDIS_PASSWORD']}@{os.environ['REDIS_SERVER']}:6380"],
+        },
     },
 }
