@@ -515,6 +515,7 @@ def verification(request, username):
                 form.save()
                 identification_photo = extended_data.user_identification.url
                 user_photo = extended_data.user_photo.url
+                print(identification_photo, "\n", user_photo)
                 verification = imgia.llm_promt_engineering_image(identification_photo, user_photo)
                 print(verification)
                 if verification is None:

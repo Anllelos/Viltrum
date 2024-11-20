@@ -5,6 +5,8 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/verify_profile.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+
 {% endblock %}
 
 {% block content %}
@@ -22,17 +24,99 @@
     <div class="verification-header">
         <h2><i class="fas fa-user-check"></i> Verificación de Perfil</h2>
     </div>
-    <form action="" method="POST" enctype="multipart/form-data">
+    <form id="verification-form" action="" method="POST" enctype="multipart/form-data" onsubmit="showLoading()">
         {% csrf_token %}
         <div class="form-group">
             <label for="user_photo"><i class="fas fa-camera"></i> Foto Personal</label>
-            <input type="file" id="user_photo" name="user_photo" accept="image/*" required>
+            <input type="file" id="user_photo" name="user_photo" accept="image/*" required onchange="previewImage(event, 'preview_user_photo')">
+            <img id="preview_user_photo" src="#" alt="Vista previa" style="display:none; max-width: 100px; margin-top: 10px;">
         </div>
         <div class="form-group">
             <label for="user_identification"><i class="fas fa-id-card"></i> Identificación Oficial</label>
-            <input type="file" id="user_identification" name="user_identification" accept="image/*" required>
+            <input type="file" id="user_identification" name="user_identification" accept="image/*" required onchange="openCropper(event)">
+            <div id="crop-container" style="display:none; margin-top: 10px;">
+                <img id="crop-image" src="#" alt="Recorte" style="max-width: 100%;">
+                <button type="button" id="save-crop-btn" onclick="saveCrop()">Guardar Recorte</button>
+            </div>
+            <img id="final-preview" src="#" alt="Imagen Recortada" style="display:none; max-width: 100%; margin-top: 10px;">
         </div>
         <button type="submit"><i class="fas fa-paper-plane"></i> Enviar</button>
     </form>
 </div>
+
+<!-- Contenedor de la animación de carga -->
+<div class="loading-container" id="loading-container">
+    <div class="spinner"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
+<script>
+    let cropper;
+
+    function previewImage(event, previewId) {
+        const file = event.target.files[0];
+        const preview = document.getElementById(previewId);
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function openCropper(event) {
+        const file = event.target.files[0];
+        const cropContainer = document.getElementById('crop-container');
+        const cropImage = document.getElementById('crop-image');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                cropImage.src = e.target.result;
+                cropContainer.style.display = 'block';
+
+                if (cropper) cropper.destroy(); // Reinicia el cropper si ya estaba inicializado
+                cropper = new Cropper(cropImage, {
+                    aspectRatio: 1,
+                    viewMode: 1,
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function saveCrop() {
+        const cropContainer = document.getElementById('crop-container');
+        const finalPreview = document.getElementById('final-preview');
+        const saveCropBtn = document.getElementById('save-crop-btn');
+        const fileInput = document.getElementById('user_identification');
+
+        if (cropper) {
+            cropper.getCroppedCanvas().toBlob((blob) => {
+                finalPreview.src = URL.createObjectURL(blob);
+                finalPreview.style.display = 'block';
+                cropContainer.style.display = 'none';
+                saveCropBtn.style.display = 'none';
+
+                const croppedFile = new File([blob], fileInput.files[0].name, { type: blob.type });
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(croppedFile);
+                fileInput.files = dataTransfer.files;
+
+                console.log("Cropped image is ready to be submitted.");
+            }, 'image/jpeg');
+        }
+    }
+
+    function showLoading() {
+        const form = document.getElementById('verification-form');
+        const loading = document.getElementById('loading-container');
+
+        form.style.display = 'none'; // Oculta el formulario
+        loading.style.display = 'flex'; // Muestra la animación de carga
+    }
+</script>
 {% endblock %}

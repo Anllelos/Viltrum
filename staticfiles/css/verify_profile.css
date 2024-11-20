@@ -133,13 +133,6 @@ body {
     right: -50px;
 }
 
-.verification-container::after {
-    width: 300px;
-    height: 300px;
-    bottom: -100px;
-    left: -100px;
-}
-
 @keyframes float {
     0% {
         transform: translateY(0) rotate(0deg);
@@ -305,4 +298,31 @@ button[type="submit"]:hover {
         font-size: 18px;
         padding: 12px;
     }
+}
+
+.loading-container {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 1000;
+}
+
+.loading-container .spinner {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
