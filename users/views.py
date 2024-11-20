@@ -12,6 +12,9 @@ from tournaments.models import Tournament
 from notifications.models import NotificationSystem
 import iamodule as imgia
 import json
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
 
 #-------------------------------------------------------------- Ver perfil --------------------------------------------------------------#
 # Verificación de roles dentro de la página
@@ -119,7 +122,8 @@ def edit_profile_user(request, username):
         'edit_user': EditUserForm(instance=active_user),
         'edit_extended_data_user': EditExtendedDataUserForm(instance=extended_data),
         'edit_profile_pic': ProfilePicForm(instance=extended_data),
-        'edit_profile_banner': BannerPicForm(instance=extended_data)
+        'edit_profile_banner': BannerPicForm(instance=extended_data),
+        'form':PasswordChangeForm(request.user, request.POST)
     }
 
     if request.method == 'POST':
@@ -149,6 +153,17 @@ def edit_profile_user(request, username):
                 banner = form.save(commit=False)
                 banner.user = active_user
                 banner.save()
+        elif form_type == 'security_data':
+            form = PasswordChangeForm(request.user, request.POST)
+            if form.is_valid():
+                user = form.save()
+                # Actualiza la sesión para evitar que el usuario tenga que iniciar sesión de nuevo
+                update_session_auth_hash(request, user)
+                messages.success(request, '¡Tu contraseña ha sido actualizada exitosamente!')
+                return redirect('edit_profile_user', request.user)  # Redirige a la misma página
+            else:
+                messages.error(request, 'Hubo un error al actualizar la contraseña.')
+        
 
     return render(request, 'edit_profile_user.html', data_context)
 
@@ -171,7 +186,8 @@ def edit_profile_sponsor(request, username):
         'edit_user': EditSponsorForm(instance=active_user),
         'edit_extended_data_user': EditExtendedDataUserForm(instance=extended_data),
         'edit_profile_pic': ProfilePicForm(instance=extended_data),
-        'edit_profile_banner': BannerPicForm(instance=extended_data)
+        'edit_profile_banner': BannerPicForm(instance=extended_data),
+        'form':PasswordChangeForm(request.user, request.POST)
     }
 
     if request.method == 'POST':
@@ -201,8 +217,18 @@ def edit_profile_sponsor(request, username):
                 banner = form.save(commit=False)
                 banner.user = active_user
                 banner.save()
+        elif form_type == 'security_data':
+            form = PasswordChangeForm(request.user, request.POST)
+            if form.is_valid():
+                user = form.save()
+                # Actualiza la sesión para evitar que el usuario tenga que iniciar sesión de nuevo
+                update_session_auth_hash(request, user)
+                messages.success(request, '¡Tu contraseña ha sido actualizada exitosamente!')
+                return redirect('edit_profile_sponsor', request.user)  # Redirige a la misma página
+            else:
+                messages.error(request, 'Hubo un error al actualizar la contraseña.')
 
-    return render(request, 'edit_profile_user.html', data_context)
+    return render(request, 'edit_profile_sponsor.html', data_context)
 
 
 #-------------------------------------------------------------- Crear usuario --------------------------------------------------------------#

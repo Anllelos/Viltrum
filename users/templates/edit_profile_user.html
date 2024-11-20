@@ -18,6 +18,15 @@ input, button, select, textarea {
 {% endblock %}
 
 {% block content %}
+<div class="notifications">
+    {% if messages %}
+        <ul class="notification-list">
+            {% for message in messages %}
+                <li class="notification {{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
 <div class="profile-container">
     <div class="sidebar">
         <ul>
@@ -94,15 +103,17 @@ input, button, select, textarea {
             <form method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="submit_form" value="security_data">
-                <div class="profile-data">
-                    <div class="input-group">
-                        <input type="password" name="password" id="password" placeholder="Contraseña" required class="profile-input">
-                        <label for="password">Nueva Contraseña</label>
-                    </div>
-                    <div class="input-group">
-                        <input type="password" name="confirm_password" id="confirm-password" placeholder="Confirmar contraseña" required class="profile-input">
-                        <label for="confirm-password">Confirmar Contraseña</label>
-                    </div>
+                <div class="input-group">
+                <label for="id_old_password">Contraseña actual:</label>
+                <input type="password" name="old_password" autocomplete="current-password" autofocus="" required="" aria-invalid="true" id="id_old_password" class="profile-input">
+                </div>
+                <div class="input-group">
+                <label for="id_new_password1">Nueva Contraseña:</label>
+                <input type="password" name="new_password1" autocomplete="new-password" required="" aria-invalid="true" aria-describedby="id_new_password1_helptext" id="id_new_password1" class="profile-input">
+                </div>
+                <div class="input-group">
+                <label for="id_new_password2">Confirmar nueva contraseña:</label>
+                <input type="password" name="new_password2" autocomplete="new-password" required="" aria-invalid="true" id="id_new_password2" class="profile-input">
                 </div>
                 <div class="button-group">
                     <button type="submit" class="save-button">
@@ -164,5 +175,14 @@ input, button, select, textarea {
             this.classList.add('active');
         });
     });
+</script>
+<script>
+    // Elimina notificaciones después de 5 segundos
+    setTimeout(() => {
+        const notifications = document.querySelectorAll('.notification');
+        notifications.forEach(notification => {
+            notification.style.display = 'none';
+        });
+    }, 5000);
 </script>
 {% endblock %}

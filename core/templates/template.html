@@ -78,10 +78,6 @@
         </nav>
 
         <div class="header-right">
-            <div class="search-bar">
-                <input type="text" placeholder="Buscar...">
-                <button class="search-btn"><i class="bi bi-search"></i></button>
-            </div>
 
             {% if user.is_authenticated %}
             <a class="icon-button" href="{% url 'chats_list' %}"><i class="bi bi-chat-left-fill"></i></a>
@@ -107,7 +103,7 @@
             <!-- Dropdown de Perfil -->
             <div class="dropdown">
                 <button class="profile-button">
-                    <img src="{% static 'images/profile_placeholder.png' %}" alt="Perfil">
+                    <img src="{% if prof_img %}{{ prof_img }}{% else %}https://ui-avatars.com/api/?name={{user}}{% endif %}" alt="Foto de perfil" id="profile-pic">
                 </button>
                 <div class="dropdown-content">
                     <a href="{% url 'redirect_profile'%}"><i class="bi bi-person-circle"></i> Mi Perfil</a>

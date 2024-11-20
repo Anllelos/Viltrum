@@ -95,6 +95,7 @@ TEMPLATES = [
                 'core.context_processors.user_role',
                 'core.context_processors.notifications',
                 'core.context_processors.verification',
+                'core.context_processors.profile_img'
             ],
         },
     },
